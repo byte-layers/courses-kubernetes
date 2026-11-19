@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: survey
+  labels:
+    app: survey
+spec:
+  selector:
+    app: survey
+  ports:
+    - port: 8080
+      targetPort: 80

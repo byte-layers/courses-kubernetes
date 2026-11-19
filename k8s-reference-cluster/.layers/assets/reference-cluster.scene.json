@@ -1,0 +1,1173 @@
+{
+  "format": "bl-scenes/0.2",
+  "id": "k8s-reference-cluster",
+  "title": "Un cluster de référence, pièce par pièce",
+  "lang": "fr",
+  "kit": "block",
+  "legend": [
+    {
+      "kind": "req",
+      "label": "demande"
+    },
+    {
+      "kind": "res",
+      "label": "réponse"
+    },
+    {
+      "kind": "read",
+      "label": "données"
+    }
+  ],
+  "entities": [
+    {
+      "id": "wl",
+      "kind": "zone",
+      "at": [
+        0,
+        0
+      ],
+      "size": [
+        14.8,
+        12.0
+      ],
+      "tone": "v",
+      "label": "cluster de travail"
+    },
+    {
+      "id": "talos",
+      "kind": "node",
+      "at": [
+        0,
+        -1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "n",
+      "title": "Talos Linux",
+      "sub": "le système",
+      "detail": "**Talos Linux** est le système installé sur les machines du cluster. Il est minimal et immuable, conçu pour Kubernetes : ni SSH, ni shell, ni gestionnaire de paquets, tout se règle par une API. Il remplace une distribution Linux classique, qu'il faudrait durcir et tenir à jour machine par machine."
+    },
+    {
+      "id": "api",
+      "kind": "node",
+      "at": [
+        -5.6,
+        -4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "v",
+      "title": "kube-apiserver",
+      "sub": "l'API",
+      "detail": "Le **kube-apiserver** expose l'API de Kubernetes : `kubectl`, Argo CD et tous les outils du cluster passent par lui. C'est une pièce d'origine de Kubernetes, déjà présente dans le cluster sur lequel vous avez travaillé."
+    },
+    {
+      "id": "etcd",
+      "kind": "store",
+      "at": [
+        -2.8,
+        -4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.1
+      ],
+      "tone": "v",
+      "title": "etcd",
+      "sub": "la mémoire",
+      "detail": "**etcd** est la base clé-valeur, cohérente et hautement disponible, où Kubernetes range toutes les données de son API : l'état souhaité comme l'état observé. C'est aussi une pièce d'origine de Kubernetes."
+    },
+    {
+      "id": "containerd",
+      "kind": "node",
+      "at": [
+        2.8,
+        -4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "n",
+      "title": "containerd",
+      "sub": "les conteneurs",
+      "detail": "**containerd** est le moteur d'exécution de conteneurs (*container runtime*) : sur chaque nœud, c'est lui qui lance les conteneurs. Kubernetes lui parle par une interface standard, la **CRI** (*Container Runtime Interface*)."
+    },
+    {
+      "id": "cilium",
+      "kind": "node",
+      "at": [
+        5.6,
+        -4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "n",
+      "title": "Cilium",
+      "sub": "le réseau",
+      "detail": "**Cilium** fournit le réseau du cluster : c'est le plugin **CNI** (*Container Network Interface*). Il s'appuie sur **eBPF**, peut remplacer kube-proxy, applique les règles réseau, et son outil **Hubble** montre qui parle à qui. Il tient ici la place de Calico dans un cluster minikube lancé avec `--cni=calico`."
+    },
+    {
+      "id": "csi",
+      "kind": "node",
+      "at": [
+        2.8,
+        -1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "n",
+      "title": "CSI",
+      "sub": "le stockage",
+      "detail": "La **CSI** (*Container Storage Interface*) est l'interface standard par laquelle Kubernetes obtient des volumes d'un système de stockage. Derrière elle : le stockage du fournisseur cloud ou, sur ses propres machines, **Longhorn**, un stockage par blocs distribué qui réplique chaque volume."
+    },
+    {
+      "id": "app-a",
+      "kind": "node",
+      "at": [
+        -2.8,
+        1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "b",
+      "title": "App A",
+      "detail": "**App A** et **App B** sont les applications métier, celles pour lesquelles le cluster existe. Tout le reste du schéma sert à les déployer, à les exposer, à les protéger et à les observer."
+    },
+    {
+      "id": "app-b",
+      "kind": "node",
+      "at": [
+        0,
+        1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "b",
+      "title": "App B",
+      "detail": "**App A** et **App B** sont les applications métier, celles pour lesquelles le cluster existe. Tout le reste du schéma sert à les déployer, à les exposer, à les protéger et à les observer."
+    },
+    {
+      "id": "registry",
+      "kind": "store",
+      "at": [
+        -9.9,
+        1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.1
+      ],
+      "tone": "y",
+      "title": "Registre",
+      "sub": "les images",
+      "detail": "Le **registre d'images** stocke les images de conteneurs. Chaque nœud y télécharge l'image d'un pod avant de le démarrer, comme votre cluster l'a fait avec `ghcr.io`."
+    },
+    {
+      "id": "git",
+      "kind": "file",
+      "at": [
+        -5.6,
+        8.6
+      ],
+      "size": [
+        1.9,
+        1.9,
+        0.5
+      ],
+      "tone": "y",
+      "title": "Git",
+      "detail": "Le dépôt **Git** est la source de vérité : il décrit tout ce qui doit tourner dans le cluster. Les fichiers y sont rangés en *charts* **Helm**, le gestionnaire de paquets de Kubernetes, et en variantes **Kustomize** (*overlays*), qui adaptent les mêmes fichiers à chaque environnement.",
+      "note": "Helm et Kustomize"
+    },
+    {
+      "id": "argo",
+      "kind": "node",
+      "at": [
+        -5.6,
+        4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "Argo CD",
+      "sub": "déploie",
+      "detail": "**Argo CD** est un outil de livraison continue **GitOps**. Il compare en permanence ce qui tourne dans le cluster avec ce que décrit Git, signale tout écart et peut le corriger. Il remplace les `kubectl apply` lancés à la main ou depuis une chaîne d'intégration."
+    },
+    {
+      "id": "users",
+      "kind": "actor",
+      "at": [
+        0,
+        8.8
+      ],
+      "label": "utilisateurs"
+    },
+    {
+      "id": "gw",
+      "kind": "node",
+      "at": [
+        0,
+        4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "Envoy Gateway",
+      "sub": "l'entrée HTTPS",
+      "detail": "**Envoy Gateway** fait entrer le trafic HTTPS dans le cluster. Il pilote des proxys Envoy à partir des objets de la **Gateway API**, le projet officiel de Kubernetes qui prend la suite de l'Ingress. L'API Ingress reste disponible, mais elle est gelée : elle n'évoluera plus."
+    },
+    {
+      "id": "cert",
+      "kind": "node",
+      "at": [
+        2.8,
+        4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "cert-manager",
+      "sub": "les certificats",
+      "detail": "**cert-manager** crée les certificats TLS des applications et les renouvelle avant leur expiration, par exemple auprès de Let's Encrypt. Il remplace le renouvellement à la main, et l'oubli qui va avec."
+    },
+    {
+      "id": "eso",
+      "kind": "node",
+      "at": [
+        5.6,
+        4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "External Secrets",
+      "sub": "lit le coffre",
+      "detail": "**External Secrets Operator** lit les secrets dans un coffre extérieur et en fait automatiquement des objets Secret de Kubernetes. Les mots de passe ne sont plus écrits dans Git ni recopiés à la main."
+    },
+    {
+      "id": "vault",
+      "kind": "store",
+      "at": [
+        9.9,
+        4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.1
+      ],
+      "tone": "y",
+      "title": "Vault",
+      "sub": "le coffre",
+      "detail": "**HashiCorp Vault** est le coffre : il centralise les secrets, contrôle qui y accède et en garde la trace. Il vit hors du cluster. Il complète le Secret de Kubernetes, qui est encodé et non chiffré."
+    },
+    {
+      "id": "kyverno",
+      "kind": "node",
+      "at": [
+        -2.8,
+        4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "Kyverno",
+      "sub": "les règles",
+      "detail": "**Kyverno** est un moteur de règles (*policies*), écrites comme des objets Kubernetes. Branché sur l'API en contrôleur d'admission, il valide, modifie ou refuse ce qu'on demande au cluster : par exemple, refuser un pod qui ne déclare pas ses ressources."
+    },
+    {
+      "id": "falco",
+      "kind": "node",
+      "at": [
+        -5.6,
+        -1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "Falco",
+      "sub": "surveille",
+      "detail": "**Falco** surveille les applications pendant qu'elles tournent : il observe les appels système sur chaque nœud et alerte dès qu'un comportement est suspect. Il complète les règles d'admission, qui ne voient que ce qu'on déploie."
+    },
+    {
+      "id": "trivy",
+      "kind": "node",
+      "at": [
+        -2.8,
+        -1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "Trivy Operator",
+      "sub": "les failles",
+      "detail": "**Trivy Operator** produit et tient à jour des rapports de sécurité sur ce qui tourne dans le cluster : failles connues dans les images, erreurs de configuration. Ces rapports sont des objets Kubernetes, qu'on lit avec `kubectl`."
+    },
+    {
+      "id": "keda",
+      "kind": "node",
+      "at": [
+        2.8,
+        1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "KEDA",
+      "sub": "les pods",
+      "detail": "**KEDA** ajuste le nombre de pods d'une application selon des événements : messages en attente dans une file, requêtes entrantes. Il peut descendre jusqu'à zéro pod. Il ne remplace pas le HorizontalPodAutoscaler de Kubernetes : il lui apporte ces mesures venues de l'extérieur."
+    },
+    {
+      "id": "karpenter",
+      "kind": "node",
+      "at": [
+        5.6,
+        1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "Karpenter",
+      "sub": "les nœuds",
+      "detail": "**Karpenter** ajuste le nombre de nœuds : il repère les pods que l'ordonnanceur ne peut placer nulle part, crée des nœuds à leur mesure, et retire ceux qui ne servent plus. Il lui faut un fournisseur capable de créer des machines à la demande. Le projet Kubernetes soutient deux outils de ce type : Cluster Autoscaler et lui."
+    },
+    {
+      "id": "velero",
+      "kind": "node",
+      "at": [
+        5.6,
+        -1.4
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "r",
+      "title": "Velero",
+      "sub": "sauvegarde",
+      "detail": "**Velero** sauvegarde et restaure les objets du cluster et les volumes persistants. Il dépose ses sauvegardes dans un stockage d'objets, hors du cluster, et sert aussi à migrer des applications vers un autre cluster."
+    },
+    {
+      "id": "s3",
+      "kind": "store",
+      "at": [
+        11.8,
+        -5.6
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.1
+      ],
+      "tone": "y",
+      "title": "S3 / MinIO",
+      "sub": "objets",
+      "detail": "Un **stockage d'objets** qui parle l'API S3 : celui d'un fournisseur cloud ou, sur ses propres machines, un logiciel comme MinIO. Il garde les sauvegardes de Velero et les données de longue durée de l'observabilité, hors des clusters."
+    },
+    {
+      "id": "alloy",
+      "kind": "node",
+      "at": [
+        0,
+        -4.199999999999999
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "g",
+      "title": "Grafana Alloy",
+      "sub": "collecte",
+      "detail": "**Grafana Alloy** est le collecteur installé dans le cluster : il ramasse les métriques, les journaux et les traces des applications, puis les envoie plus loin. C'est une distribution du Collector OpenTelemetry. Il succède à Grafana Agent, arrivé en fin de vie le 1er novembre 2025."
+    },
+    {
+      "id": "obs",
+      "kind": "zone",
+      "at": [
+        6.5,
+        -12.5
+      ],
+      "size": [
+        7.6,
+        7.6
+      ],
+      "tone": "g",
+      "label": "cluster d'observabilité"
+    },
+    {
+      "id": "otelgw",
+      "kind": "node",
+      "at": [
+        4.0,
+        -12.5
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "g",
+      "title": "OTel Collector",
+      "sub": "reçoit",
+      "detail": "Le **Collector OpenTelemetry**, déployé en passerelle : un point d'entrée unique qui reçoit la télémétrie en **OTLP**, le protocole d'OpenTelemetry, et la répartit vers les trois stockages."
+    },
+    {
+      "id": "mimir",
+      "kind": "store",
+      "at": [
+        6.5,
+        -10.0
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.1
+      ],
+      "tone": "g",
+      "title": "Mimir",
+      "sub": "métriques",
+      "detail": "**Grafana Mimir** garde les **métriques**, des chiffres relevés dans le temps comme la mémoire utilisée ou le nombre de requêtes. Il offre un stockage de longue durée aux métriques Prometheus et OpenTelemetry."
+    },
+    {
+      "id": "loki",
+      "kind": "store",
+      "at": [
+        6.5,
+        -12.5
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.1
+      ],
+      "tone": "g",
+      "title": "Loki",
+      "sub": "journaux",
+      "detail": "**Grafana Loki** garde les **journaux** (*logs*). Il n'indexe que des étiquettes et non le texte des lignes, ce qui réduit son coût. Il prend le relais de `kubectl logs` quand il faut chercher dans tout le cluster, ou dans le passé."
+    },
+    {
+      "id": "tempo",
+      "kind": "store",
+      "at": [
+        6.5,
+        -15.0
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.1
+      ],
+      "tone": "g",
+      "title": "Tempo",
+      "sub": "traces",
+      "detail": "**Grafana Tempo** garde les **traces** : le parcours d'une requête à travers plusieurs services, avec le temps passé dans chacun. Il n'a besoin que d'un stockage d'objets pour fonctionner."
+    },
+    {
+      "id": "grafana",
+      "kind": "node",
+      "at": [
+        9.0,
+        -12.5
+      ],
+      "size": [
+        1.9,
+        1.9,
+        1.0
+      ],
+      "tone": "g",
+      "title": "Grafana",
+      "sub": "l'écran",
+      "detail": "**Grafana** est l'écran unique : on y interroge et on y affiche les métriques, les journaux et les traces, où qu'ils soient rangés, et on y règle les alertes."
+    }
+  ],
+  "steps": [
+    {
+      "id": "runtime",
+      "label": "Le socle",
+      "title": "Qui fait tourner les conteneurs ?",
+      "body": [
+        "Des machines sous **Talos Linux**, un système réduit à ce qu'il faut pour Kubernetes. Dessus, les pièces que tout cluster possède : l'API et sa mémoire **etcd**, **containerd** qui lance les conteneurs, **Cilium** pour le réseau, et la **CSI** pour le stockage.",
+        "Les images viennent d'un registre, hors du cluster."
+      ],
+      "links": [
+        {
+          "from": "api",
+          "to": "etcd"
+        }
+      ],
+      "flows": [
+        {
+          "path": [
+            "registry",
+            "app-a"
+          ],
+          "label": "image",
+          "kind": "read",
+          "explain": [
+            "Le nœud télécharge l'image, puis containerd lance le conteneur."
+          ]
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 9
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b"
+      ]
+    },
+    {
+      "id": "deploy",
+      "label": "Déployer",
+      "title": "Qui déploie ?",
+      "body": [
+        "Plus personne ne lance `kubectl apply`. Tout ce qui doit tourner est décrit dans **Git**, et **Argo CD**, installé dans le cluster, vient y lire l'état souhaité pour l'appliquer.",
+        "C'est le **GitOps** : pour changer le cluster, on change Git."
+      ],
+      "flows": [
+        {
+          "path": [
+            "git",
+            "argo",
+            "app-a"
+          ],
+          "label": "état souhaité",
+          "explain": [
+            "Argo CD lit dans Git ce qui doit tourner.",
+            "Il compare avec le cluster et applique ce qui a changé."
+          ]
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 11
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b",
+        "git",
+        "argo"
+      ]
+    },
+    {
+      "id": "traffic",
+      "label": "Faire entrer",
+      "title": "Qui fait entrer le trafic ?",
+      "body": [
+        "Les utilisateurs arrivent en HTTPS sur une seule porte, **Envoy Gateway**, qui route chaque requête vers la bonne application.",
+        "**cert-manager** fournit les certificats TLS et les renouvelle avant leur expiration."
+      ],
+      "links": [
+        {
+          "from": "cert",
+          "to": "gw",
+          "label": "certificat",
+          "dashed": true
+        }
+      ],
+      "flows": [
+        {
+          "path": [
+            "users",
+            "gw",
+            "app-b"
+          ],
+          "label": "HTTPS",
+          "reply": "page",
+          "explain": [
+            "La requête arrive en HTTPS sur la Gateway, la seule porte ouverte.",
+            "La Gateway la passe à la bonne application.",
+            "La réponse repart par le même chemin."
+          ]
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 13
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b",
+        "git",
+        "argo",
+        "users",
+        "gw",
+        "cert"
+      ]
+    },
+    {
+      "id": "secrets",
+      "label": "Les secrets",
+      "title": "Où sont les secrets ?",
+      "body": [
+        "Dans un coffre, **Vault**, hors du cluster et hors de Git. **External Secrets Operator** va y lire chaque secret et en fait un Secret Kubernetes, que l'application utilise comme d'habitude."
+      ],
+      "flows": [
+        {
+          "path": [
+            "eso",
+            "vault"
+          ],
+          "label": "demande",
+          "reply": "secret",
+          "explain": [
+            "L'opérateur demande au coffre le secret d'une application.",
+            "Le coffre répond : l'opérateur en fait un Secret Kubernetes."
+          ]
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 15
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b",
+        "git",
+        "argo",
+        "users",
+        "gw",
+        "cert",
+        "eso",
+        "vault"
+      ]
+    },
+    {
+      "id": "policies",
+      "label": "Les règles",
+      "title": "Qui applique les règles et surveille la sécurité ?",
+      "body": [
+        "Trois outils, à trois moments. **Kyverno** contrôle ce qu'on demande au cluster, avant que cela existe. **Trivy Operator** cherche les failles dans ce qui est déployé. **Falco** surveille ce que font les applications pendant qu'elles tournent."
+      ],
+      "script": [
+        {
+          "do": "wait",
+          "ms": 600
+        },
+        {
+          "do": "pulse",
+          "at": "kyverno:top"
+        },
+        {
+          "do": "wait",
+          "ms": 1500
+        },
+        {
+          "do": "pulse",
+          "at": "trivy:top"
+        },
+        {
+          "do": "wait",
+          "ms": 1500
+        },
+        {
+          "do": "pulse",
+          "at": "falco:top"
+        },
+        {
+          "do": "wait",
+          "ms": 2400
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 18
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b",
+        "git",
+        "argo",
+        "users",
+        "gw",
+        "cert",
+        "eso",
+        "vault",
+        "kyverno",
+        "falco",
+        "trivy"
+      ]
+    },
+    {
+      "id": "capacity",
+      "label": "La capacité",
+      "title": "Qui adapte la capacité ?",
+      "body": [
+        "Deux outils, à deux étages. **KEDA** ajoute ou retire des pods selon la demande. Quand les pods ne tiennent plus sur les machines, **Karpenter** ajoute des nœuds, puis les retire quand ils ne servent plus."
+      ],
+      "script": [
+        {
+          "do": "wait",
+          "ms": 600
+        },
+        {
+          "do": "pulse",
+          "at": "keda:top"
+        },
+        {
+          "do": "wait",
+          "ms": 1500
+        },
+        {
+          "do": "pulse",
+          "at": "karpenter:top"
+        },
+        {
+          "do": "wait",
+          "ms": 2400
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 20
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b",
+        "git",
+        "argo",
+        "users",
+        "gw",
+        "cert",
+        "eso",
+        "vault",
+        "kyverno",
+        "falco",
+        "trivy",
+        "keda",
+        "karpenter"
+      ]
+    },
+    {
+      "id": "backup",
+      "label": "Sauvegarder",
+      "title": "Qui sauvegarde ?",
+      "body": [
+        "**Velero** copie les objets du cluster et les volumes vers un **stockage d'objets**, hors du cluster. Si le cluster est perdu, on en recrée un et on restaure."
+      ],
+      "flows": [
+        {
+          "path": [
+            "velero",
+            "s3"
+          ],
+          "label": "sauvegarde",
+          "kind": "read",
+          "explain": [
+            "Velero dépose une copie du cluster dans le stockage d'objets."
+          ]
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 22
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b",
+        "git",
+        "argo",
+        "users",
+        "gw",
+        "cert",
+        "eso",
+        "vault",
+        "kyverno",
+        "falco",
+        "trivy",
+        "keda",
+        "karpenter",
+        "velero",
+        "s3"
+      ]
+    },
+    {
+      "id": "observe",
+      "label": "Observer",
+      "title": "Qui observe ?",
+      "body": [
+        "Un second cluster, réservé à l'observabilité : si le premier va mal, on voit encore ce qui s'y passe. **Alloy** collecte la télémétrie des applications et l'envoie au **Collector OpenTelemetry**.",
+        "Les métriques vont dans **Mimir**, les journaux dans **Loki**, les traces dans **Tempo**, et tout se lit dans **Grafana**."
+      ],
+      "links": [
+        {
+          "from": "otelgw",
+          "to": "mimir"
+        },
+        {
+          "from": "otelgw",
+          "to": "loki"
+        },
+        {
+          "from": "otelgw",
+          "to": "tempo"
+        },
+        {
+          "from": "mimir",
+          "to": "grafana"
+        },
+        {
+          "from": "loki",
+          "to": "grafana"
+        },
+        {
+          "from": "tempo",
+          "to": "grafana"
+        },
+        {
+          "from": "alloy",
+          "to": "otelgw",
+          "label": "OTLP"
+        },
+        {
+          "from": "mimir",
+          "to": "s3",
+          "dashed": true
+        },
+        {
+          "from": "loki",
+          "to": "s3",
+          "label": "longue durée",
+          "dashed": true
+        },
+        {
+          "from": "tempo",
+          "to": "s3",
+          "dashed": true
+        }
+      ],
+      "flows": [
+        {
+          "path": [
+            "app-a",
+            "alloy",
+            "otelgw"
+          ],
+          "label": "télémétrie",
+          "kind": "read",
+          "explain": [
+            "Alloy ramasse métriques, journaux et traces des applications.",
+            "Il les envoie en OTLP au Collector de l'autre cluster."
+          ]
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 28
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b",
+        "git",
+        "argo",
+        "users",
+        "gw",
+        "cert",
+        "eso",
+        "vault",
+        "kyverno",
+        "falco",
+        "trivy",
+        "keda",
+        "karpenter",
+        "velero",
+        "s3",
+        "alloy",
+        "obs",
+        "otelgw",
+        "mimir",
+        "loki",
+        "tempo",
+        "grafana"
+      ]
+    },
+    {
+      "id": "overview",
+      "label": "L'ensemble",
+      "title": "Le cluster de référence, en entier",
+      "body": [
+        "Trois trajets traversent le cluster. Git vers Argo CD vers les applications : le déploiement. L'utilisateur vers la Gateway vers les applications : le trafic. Les applications vers Alloy puis le cluster d'observabilité : la télémétrie.",
+        "Chaque pastille rose ouvre le détail d'une pièce."
+      ],
+      "links": [
+        {
+          "from": "otelgw",
+          "to": "mimir"
+        },
+        {
+          "from": "otelgw",
+          "to": "loki"
+        },
+        {
+          "from": "otelgw",
+          "to": "tempo"
+        },
+        {
+          "from": "mimir",
+          "to": "grafana"
+        },
+        {
+          "from": "loki",
+          "to": "grafana"
+        },
+        {
+          "from": "tempo",
+          "to": "grafana"
+        },
+        {
+          "from": "alloy",
+          "to": "otelgw"
+        },
+        {
+          "from": "cert",
+          "to": "gw",
+          "dashed": true
+        },
+        {
+          "from": "eso",
+          "to": "vault",
+          "dashed": true
+        },
+        {
+          "from": "velero",
+          "to": "s3",
+          "dashed": true
+        },
+        {
+          "from": "mimir",
+          "to": "s3",
+          "dashed": true
+        },
+        {
+          "from": "loki",
+          "to": "s3",
+          "dashed": true
+        },
+        {
+          "from": "tempo",
+          "to": "s3",
+          "dashed": true
+        },
+        {
+          "from": "registry",
+          "to": "app-a",
+          "dashed": true
+        }
+      ],
+      "flows": [
+        {
+          "path": [
+            "git",
+            "argo",
+            "app-a"
+          ],
+          "label": "état souhaité",
+          "explain": [
+            "Argo CD lit dans Git ce qui doit tourner.",
+            "Il compare avec le cluster et applique ce qui a changé."
+          ]
+        },
+        {
+          "path": [
+            "users",
+            "gw",
+            "app-b"
+          ],
+          "label": "HTTPS",
+          "reply": "page",
+          "explain": [
+            "La requête arrive en HTTPS sur la Gateway, la seule porte ouverte.",
+            "La Gateway la passe à la bonne application.",
+            "La réponse repart par le même chemin."
+          ],
+          "delay": 1500
+        },
+        {
+          "path": [
+            "app-a",
+            "alloy",
+            "otelgw"
+          ],
+          "label": "télémétrie",
+          "kind": "read",
+          "explain": [
+            "Alloy ramasse métriques, journaux et traces des applications.",
+            "Il les envoie en OTLP au Collector de l'autre cluster."
+          ],
+          "delay": 3000
+        }
+      ],
+      "hud": [
+        {
+          "label": "pièces",
+          "value": 28
+        }
+      ],
+      "show": [
+        "wl",
+        "talos",
+        "api",
+        "etcd",
+        "containerd",
+        "cilium",
+        "csi",
+        "registry",
+        "app-a",
+        "app-b",
+        "git",
+        "argo",
+        "users",
+        "gw",
+        "cert",
+        "eso",
+        "vault",
+        "kyverno",
+        "falco",
+        "trivy",
+        "keda",
+        "karpenter",
+        "velero",
+        "s3",
+        "alloy",
+        "obs",
+        "otelgw",
+        "mimir",
+        "loki",
+        "tempo",
+        "grafana"
+      ]
+    }
+  ]
+}

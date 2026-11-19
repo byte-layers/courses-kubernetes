@@ -1,0 +1,64 @@
+title: "Kubernetes, de l'état souhaité à la production"
+description: "Déployer une application sur Kubernetes, la casser, la réparer, la mettre à jour et revenir en arrière : une compétence à la fois, sur la même application de vote, à vérifier sur votre cluster."
+level: beginner
+tags: [kubernetes]
+prerequisites: "Savoir utiliser un terminal, et avoir Docker installé. Savoir ce qu'est un conteneur aide, et l'échauffement du premier layer le rappelle."
+layers:
+  - title: "Installer"
+    summary: "L'application en conteneurs, puis un cluster prêt sur votre poste"
+    contents:
+      - { slug: voting-app-containers-warmup }
+      - { slug: orchestrator-why, role: read-first }
+      - { slug: k8s-install }
+      - { slug: k8s-cluster-anatomy }
+      - { slug: k8s-install-challenge, role: proof }
+  - title: "Déployer"
+    summary: "Décrire ce qu'on veut, et voir Kubernetes réparer tout seul"
+    contents:
+      - { slug: k8s-deployment }
+      - { slug: desired-state }
+      - { slug: k8s-pod-vs-container-restart }
+      - { slug: k8s-deployment-challenge, role: proof }
+  - title: "Passer à l'échelle"
+    summary: "Plusieurs exemplaires, des ressources réservées"
+    contents:
+      - { slug: k8s-scaling }
+      - { slug: file-is-the-source }
+      - { slug: k8s-requests-pending }
+      - { slug: k8s-scaling-challenge, role: proof }
+  - title: "Exposer"
+    summary: "Une adresse stable, l'application complète, une porte d'entrée"
+    contents:
+      - { slug: k8s-services }
+      - { slug: k8s-voting-app }
+      - { slug: k8s-ingress }
+      - { slug: k8s-expose-challenge, role: proof }
+  - title: "Isoler"
+    summary: "Un namespace, un quota, un réseau fermé"
+    contents:
+      - { slug: k8s-namespaces-quotas }
+      - { slug: k8s-network-open-by-default }
+      - { slug: k8s-network-policies }
+      - { slug: k8s-isolation-challenge, role: proof }
+  - title: "Configurer"
+    summary: "Des réglages et des secrets hors de l'image"
+    contents:
+      - { slug: k8s-configmap }
+      - { slug: k8s-secret }
+      - { slug: k8s-secret-is-encoded }
+      - { slug: k8s-config-challenge, role: proof }
+  - title: "Mettre à jour"
+    summary: "Une nouvelle version sans coupure, un retour arrière, des sondes"
+    contents:
+      - { slug: k8s-rolling-update }
+      - { slug: k8s-probes }
+      - { slug: k8s-failure-catalog }
+      - { slug: k8s-update-challenge, role: proof }
+  - title: "Livrer"
+    summary: "Une mise en production, une chasse aux pannes, et la suite"
+    contents:
+      - { slug: k8s-voting-app-production }
+      - { slug: k8s-troubleshooting-challenge, role: proof }
+      - { slug: vm-to-kubernetes }
+      - { slug: k8s-when-to-use }
+      - { slug: k8s-reference-cluster }

@@ -1,0 +1,22 @@
+# L'état souhaité : "je veux 1 exemplaire de challenge-web, depuis l'image de vote en version 1.0"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: challenge-web
+  labels:
+    app: challenge-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: challenge-web
+  template:
+    metadata:
+      labels:
+        app: challenge-web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/bngams/kube-vote:1.0
+          ports:
+            - containerPort: 80

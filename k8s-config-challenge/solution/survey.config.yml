@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: survey-config
+data:
+  OPTION_A: Train
+  OPTION_B: Bateau

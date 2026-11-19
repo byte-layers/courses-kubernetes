@@ -1,0 +1,38 @@
+# Règles réseau de la boutique : tout est fermé par défaut, puis on n'ouvre que les flux utiles.
+# 1. Par défaut, aucun pod du namespace n'accepte de connexion entrante.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: shop-deny-all
+spec:
+  podSelector: {}
+  policyTypes: [Ingress]
+--- # règle 2
+# 2. front est la page web : ouverte à tous, sur le port 80.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: shop-front-open
+spec:
+  podSelector:
+    matchLabels: { app: front }
+  policyTypes: [Ingress]
+  ingress:
+    - ports:
+        - port: 80
+--- # règle 3
+# 3. cache n'accepte que front, sur le port 6379.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: shop-cache-from-front
+spec:
+  podSelector:
+    matchLabels: { app: cache }
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: { app: front }
+      ports:
+        - port: 6379

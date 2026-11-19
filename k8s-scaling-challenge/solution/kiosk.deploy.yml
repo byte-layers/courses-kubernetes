@@ -1,0 +1,26 @@
+# État demandé à la tâche 4 du challenge : 3 réplicas de kiosk, chacun réservant 50m de processeur et 32 Mi de mémoire
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiosk
+  labels:
+    app: kiosk
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kiosk
+  template:
+    metadata:
+      labels:
+        app: kiosk
+    spec:
+      containers:
+        - name: kiosk
+          image: ghcr.io/bngams/kube-vote:1.0
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi

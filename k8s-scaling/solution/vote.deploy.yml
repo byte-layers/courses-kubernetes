@@ -1,0 +1,22 @@
+# État à la fin du cours « Passer à l'échelle avec les réplicas » : 3 réplicas de vote
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote
+  labels:
+    app: vote
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vote
+  template:
+    metadata:
+      labels:
+        app: vote
+    spec:
+      containers:
+        - name: vote
+          image: ghcr.io/bngams/kube-vote:1.0
+          ports:
+            - containerPort: 80
