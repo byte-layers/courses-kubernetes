@@ -9,6 +9,7 @@ layers:
     contents:
       - { slug: voting-app-containers-warmup }
       - { slug: orchestrator-why, role: read-first }
+      - { slug: k8s-overview }
       - { slug: k8s-install }
       - { slug: k8s-cluster-anatomy }
       - { slug: k8s-install-challenge, role: proof }

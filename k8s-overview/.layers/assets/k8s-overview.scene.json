@@ -1,0 +1,930 @@
+{
+ "format": "bl-scenes/0.2",
+ "id": "k8s-overview",
+ "title": "Kubernetes en un coup d'œil",
+ "lang": "fr",
+ "kit": "block",
+ "legend": [
+  {
+   "kind": "req",
+   "label": "demande"
+  },
+  {
+   "kind": "res",
+   "label": "réponse"
+  },
+  {
+   "kind": "read",
+   "label": "écriture"
+  }
+ ],
+ "entities": [
+  {
+   "id": "cluster",
+   "kind": "zone",
+   "at": [
+    0,
+    -0.4
+   ],
+   "size": [
+    13.8,
+    13.6
+   ],
+   "tone": "v",
+   "label": "cluster"
+  },
+  {
+   "id": "you",
+   "kind": "actor",
+   "at": [
+    -1.6,
+    -9.4
+   ],
+   "label": "vous, avec kubectl",
+   "detail": "**kubectl** est l'outil en ligne de commande de Kubernetes, votre télécommande. Il ne parle qu'à une seule pièce du cluster : l'API server."
+  },
+  {
+   "id": "users",
+   "kind": "actor",
+   "at": [
+    0,
+    8.0
+   ],
+   "label": "les utilisateurs",
+   "detail": "Les **utilisateurs** de l'application ne passent pas par l'API server : leurs requêtes arrivent directement sur les nœuds, là où tournent les pods."
+  },
+  {
+   "id": "brain",
+   "kind": "node",
+   "at": [
+    0,
+    -5.4
+   ],
+   "size": [
+    3.4,
+    2.2,
+    1.2
+   ],
+   "tone": "v",
+   "title": "control plane",
+   "detail": "Le **control plane** reçoit les demandes, s'en souvient et décide quoi lancer, et où. Il ne fait pas tourner vos applications.",
+   "sub": "le cerveau"
+  },
+  {
+   "id": "api",
+   "kind": "node",
+   "at": [
+    -1.6,
+    -5.4
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "v",
+   "title": "API server",
+   "detail": "L'**API server** reçoit toutes les demandes : les vôtres, et celles des autres pièces du cluster. Lui seul lit et écrit dans etcd.",
+   "sub": "la porte unique"
+  },
+  {
+   "id": "etcd",
+   "kind": "store",
+   "at": [
+    -4.8,
+    -5.4
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.1
+   ],
+   "tone": "v",
+   "title": "etcd",
+   "detail": "**etcd** est la base de données du cluster : tout ce qu'on a demandé et tout ce qui existe y est noté.",
+   "sub": "la mémoire"
+  },
+  {
+   "id": "sched",
+   "kind": "node",
+   "at": [
+    1.6,
+    -5.4
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "v",
+   "title": "scheduler",
+   "detail": "L'**ordonnanceur** (*scheduler*) choisit sur quel nœud placer chaque nouveau pod, selon la place disponible.",
+   "sub": "place les pods"
+  },
+  {
+   "id": "ctrl",
+   "kind": "node",
+   "at": [
+    4.8,
+    -5.4
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "v",
+   "title": "contrôleurs",
+   "detail": "Les **contrôleurs** (*controller manager*) comparent sans arrêt ce qui est demandé à ce qui existe, et corrigent l'écart.",
+   "sub": "corrigent l'écart"
+  },
+  {
+   "id": "n1",
+   "kind": "layer",
+   "at": [
+    -4.5,
+    1.6,
+    0
+   ],
+   "size": [
+    2.6,
+    5.2,
+    0.5
+   ],
+   "tone": "n",
+   "title": "nœud 1",
+   "detail": "Un **nœud** (*node*) est un serveur du cluster, physique ou virtuel. Il fait tourner les applications, dans des pods."
+  },
+  {
+   "id": "n2",
+   "kind": "layer",
+   "at": [
+    0,
+    1.6,
+    0
+   ],
+   "size": [
+    2.6,
+    5.2,
+    0.5
+   ],
+   "tone": "n",
+   "title": "nœud 2"
+  },
+  {
+   "id": "n3",
+   "kind": "layer",
+   "at": [
+    4.5,
+    1.6,
+    0
+   ],
+   "size": [
+    2.6,
+    5.2,
+    0.5
+   ],
+   "tone": "n",
+   "title": "nœud 3"
+  },
+  {
+   "id": "pod-a",
+   "kind": "node",
+   "at": [
+    0,
+    -1.2
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "b",
+   "title": "pod",
+   "detail": "Un **pod** enveloppe un conteneur, parfois plusieurs : c'est la plus petite unité que Kubernetes lance."
+  },
+  {
+   "id": "pod-b",
+   "kind": "node",
+   "at": [
+    0,
+    1.2
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "b",
+   "title": "pod",
+   "detail": "Un autre **pod** : une application, ou une copie de plus de la même."
+  },
+  {
+   "id": "pod-c",
+   "kind": "node",
+   "at": [
+    0,
+    -1.2
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "b",
+   "title": "pod",
+   "detail": "Un **pod**, placé sur ce nœud par le control plane."
+  },
+  {
+   "id": "pod-d",
+   "kind": "node",
+   "at": [
+    0,
+    1.2
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "b",
+   "title": "pod",
+   "detail": "Un **pod**, placé sur ce nœud par le control plane."
+  },
+  {
+   "id": "pod-e",
+   "kind": "node",
+   "at": [
+    0,
+    -1.2
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "b",
+   "title": "pod",
+   "detail": "Un **pod**, placé sur ce nœud par le control plane."
+  },
+  {
+   "id": "kubelet",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "r",
+   "title": "kubelet",
+   "detail": "Le **kubelet** est l'agent installé sur chaque nœud. Il reçoit de l'API server la liste des pods de son nœud, et veille à ce qu'ils tournent.",
+   "sub": "l'agent du nœud"
+  },
+  {
+   "id": "proxy",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "n",
+   "title": "kube-proxy",
+   "detail": "**kube-proxy** tient à jour, sur chaque nœud, les règles réseau qui conduisent une requête jusqu'à un pod.",
+   "sub": "route vers les pods"
+  },
+  {
+   "id": "runtime",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "n",
+   "title": "runtime",
+   "detail": "Le **runtime** est le programme qui crée réellement les conteneurs : containerd le plus souvent. Le kubelet lui délègue ce travail.",
+   "sub": "lance les conteneurs"
+  },
+  {
+   "id": "cni",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "g",
+   "title": "réseau",
+   "detail": "**CNI** (*Container Network Interface*) : l'interface par laquelle un plugin réseau, Calico ou Cilium par exemple, donne une adresse à chaque pod et relie les pods entre eux.",
+   "sub": "interface CNI"
+  },
+  {
+   "id": "csi",
+   "kind": "store",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.1
+   ],
+   "tone": "y",
+   "title": "stockage",
+   "detail": "**CSI** (*Container Storage Interface*) : l'interface par laquelle un pilote de stockage fournit des disques aux pods, sur un cloud ou sur vos propres baies.",
+   "sub": "interface CSI"
+  }
+ ],
+ "steps": [
+  {
+   "id": "cluster",
+   "label": "Le cluster",
+   "title": "Un cluster : un cerveau, et des machines qui travaillent",
+   "body": [
+    "Un **cluster** est un groupe de machines pilotées comme une seule. Il a deux parties : le **control plane**, qui décide, et les **nœuds**, qui font tourner les applications dans des **pods**.",
+    "Vous ne vous connectez à aucune de ces machines : avec `kubectl`, vous dites au control plane ce que vous voulez."
+   ],
+   "hud": [
+    {
+     "label": "nœuds",
+     "value": 3
+    },
+    {
+     "label": "pods",
+     "value": 5
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "you",
+      "brain",
+      "pod-c"
+     ],
+     "label": "demande",
+     "explain": [
+      "Vous décrivez ce que vous voulez au control plane.",
+      "Le control plane choisit un nœud, qui lance le pod."
+     ]
+    }
+   ],
+   "show": [
+    "cluster",
+    "you",
+    "brain",
+    "n1",
+    "n2",
+    "n3",
+    {
+     "id": "pod-a",
+     "in": "n1"
+    },
+    {
+     "id": "pod-b",
+     "in": "n1"
+    },
+    {
+     "id": "pod-c",
+     "in": "n2"
+    },
+    {
+     "id": "pod-d",
+     "in": "n2"
+    },
+    {
+     "id": "pod-e",
+     "in": "n3"
+    }
+   ]
+  },
+  {
+   "id": "control-plane",
+   "label": "Le control plane",
+   "title": "Dans le control plane : quatre pièces, une seule porte",
+   "body": [
+    "Le cerveau est fait de quatre pièces. L'**API server** reçoit toutes les demandes. **etcd** les garde en mémoire. Le **scheduler** place les pods sur les nœuds. Les **contrôleurs** surveillent et corrigent.",
+    "Le scheduler et les contrôleurs ne se parlent pas entre eux : tout passe par l'API server, comme vous."
+   ],
+   "hud": [
+    {
+     "label": "pièces",
+     "value": 4
+    }
+   ],
+   "links": [
+    {
+     "from": "api",
+     "to": "etcd"
+    },
+    {
+     "from": "sched",
+     "to": "api",
+     "dashed": true
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "you",
+      "api",
+      "etcd"
+     ],
+     "label": "demande",
+     "reply": "noté",
+     "explain": [
+      "`kubectl` envoie votre demande à l'API server.",
+      "L'API server la note dans etcd.",
+      "Il vous répond : c'est enregistré."
+     ]
+    }
+   ],
+   "show": [
+    "cluster",
+    "you",
+    "api",
+    "etcd",
+    "sched",
+    "ctrl",
+    "n1",
+    "n2",
+    "n3",
+    {
+     "id": "pod-a",
+     "in": "n1"
+    },
+    {
+     "id": "pod-b",
+     "in": "n1"
+    },
+    {
+     "id": "pod-c",
+     "in": "n2"
+    },
+    {
+     "id": "pod-d",
+     "in": "n2"
+    },
+    {
+     "id": "pod-e",
+     "in": "n3"
+    }
+   ]
+  },
+  {
+   "id": "node",
+   "label": "Un nœud",
+   "title": "Dans un nœud : un agent, un moteur, des pods",
+   "body": [
+    "Chaque nœud porte les mêmes pièces. Le **kubelet** est l'agent du cluster sur la machine : il apprend de l'API server quels pods lui sont confiés. Le **runtime** crée les conteneurs. **kube-proxy** règle le réseau du nœud pour que les requêtes trouvent les pods.",
+    "Retenez la répartition : Kubernetes décide quoi lancer et où, le runtime sait comment le lancer."
+   ],
+   "hud": [
+    {
+     "label": "pièces du nœud",
+     "value": 3
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "api",
+      "kubelet",
+      "runtime",
+      "pod-a"
+     ],
+     "label": "pod à lancer",
+     "explain": [
+      "Le kubelet apprend de l'API server qu'un pod lui est confié.",
+      "Il demande au runtime de lancer les conteneurs.",
+      "Le runtime télécharge l'image et démarre le conteneur."
+     ]
+    }
+   ],
+   "show": [
+    "cluster",
+    "you",
+    "api",
+    "etcd",
+    "sched",
+    "ctrl",
+    {
+     "id": "n1",
+     "at": [
+      0,
+      2.6,
+      0
+     ],
+     "size": [
+      11.4,
+      6.4,
+      0.5
+     ],
+     "title": "un nœud"
+    },
+    {
+     "id": "kubelet",
+     "in": "n1",
+     "at": [
+      -4.2,
+      -1.6
+     ]
+    },
+    {
+     "id": "runtime",
+     "in": "n1",
+     "at": [
+      -1.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "proxy",
+     "in": "n1",
+     "at": [
+      -4.2,
+      1.6
+     ]
+    },
+    {
+     "id": "pod-a",
+     "in": "n1",
+     "at": [
+      2.2,
+      -1.6
+     ]
+    },
+    {
+     "id": "pod-b",
+     "in": "n1",
+     "at": [
+      4.4,
+      -1.6
+     ]
+    }
+   ]
+  },
+  {
+   "id": "request",
+   "label": "Une demande",
+   "title": "Le trajet d'une demande, de kubectl au conteneur",
+   "body": [
+    "Vous demandez un pod. Cinq temps s'enchaînent, et aucun ne saute l'API server.",
+    "Utilisez le pas à pas de la scène pour les suivre un par un."
+   ],
+   "hud": [
+    {
+     "label": "temps",
+     "value": 5
+    }
+   ],
+   "loop": true,
+   "script": [
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "pulse",
+     "at": "you:top"
+    },
+    {
+     "do": "send",
+     "path": [
+      "you",
+      "api"
+     ],
+     "label": "un pod",
+     "explain": [
+      "Vous demandez un pod : `kubectl` l'envoie à l'API server."
+     ]
+    },
+    {
+     "do": "send",
+     "path": [
+      "api",
+      "etcd"
+     ],
+     "label": "à noter",
+     "kind": "read",
+     "explain": [
+      "L'API server note dans etcd : un pod est demandé, il n'existe pas encore."
+     ]
+    },
+    {
+     "do": "send",
+     "path": [
+      "sched",
+      "api"
+     ],
+     "label": "nœud choisi",
+     "explain": [
+      "Le scheduler voit ce pod sans nœud, et lui en choisit un."
+     ]
+    },
+    {
+     "do": "send",
+     "path": [
+      "api",
+      "kubelet",
+      "runtime",
+      "pod-a"
+     ],
+     "label": "à lancer",
+     "explain": [
+      "Le kubelet de ce nœud apprend qu'un pod lui est confié.",
+      "Il demande au runtime de le lancer.",
+      "Le runtime télécharge l'image et démarre le conteneur."
+     ]
+    },
+    {
+     "do": "send",
+     "path": [
+      "kubelet",
+      "api"
+     ],
+     "label": "Running",
+     "explain": [
+      "Le kubelet rapporte l'état du pod : c'est ce qu'affiche `kubectl get pods`."
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    }
+   ],
+   "show": [
+    "cluster",
+    "you",
+    "api",
+    "etcd",
+    "sched",
+    "ctrl",
+    {
+     "id": "n1",
+     "at": [
+      0,
+      2.6,
+      0
+     ],
+     "size": [
+      11.4,
+      6.4,
+      0.5
+     ],
+     "title": "un nœud"
+    },
+    {
+     "id": "kubelet",
+     "in": "n1",
+     "at": [
+      -4.2,
+      -1.6
+     ]
+    },
+    {
+     "id": "runtime",
+     "in": "n1",
+     "at": [
+      -1.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "proxy",
+     "in": "n1",
+     "at": [
+      -4.2,
+      1.6
+     ]
+    },
+    {
+     "id": "pod-a",
+     "in": "n1",
+     "at": [
+      2.2,
+      -1.6
+     ]
+    },
+    {
+     "id": "pod-b",
+     "in": "n1",
+     "at": [
+      4.4,
+      -1.6
+     ]
+    }
+   ]
+  },
+  {
+   "id": "interfaces",
+   "label": "CRI, CNI, CSI",
+   "title": "Trois prises standard : CRI, CNI, CSI",
+   "body": [
+    "Kubernetes ne lance pas lui-même les conteneurs, ne câble pas lui-même le réseau, et ne fabrique pas de disques. Il délègue ces trois travaux à des pièces que l'on choisit, branchées sur trois interfaces standard.",
+    "**CRI** pour le runtime, **CNI** pour le réseau, **CSI** pour le stockage. C'est pour cela que deux clusters peuvent être très différents sous le capot, et se piloter avec les mêmes commandes."
+   ],
+   "hud": [
+    {
+     "label": "interfaces",
+     "value": 3
+    }
+   ],
+   "links": [
+    {
+     "from": "kubelet",
+     "to": "runtime",
+     "label": "CRI"
+    },
+    {
+     "from": "runtime",
+     "to": "cni",
+     "label": "CNI",
+     "dashed": true
+    },
+    {
+     "from": "kubelet",
+     "to": "csi",
+     "label": "CSI",
+     "dashed": true
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "kubelet",
+      "runtime",
+      "pod-a"
+     ],
+     "label": "lancer",
+     "explain": [
+      "Le kubelet parle au runtime par l'interface CRI.",
+      "Le runtime crée le conteneur, et le plugin réseau lui donne son adresse."
+     ]
+    }
+   ],
+   "show": [
+    "cluster",
+    "you",
+    "api",
+    "etcd",
+    "sched",
+    "ctrl",
+    {
+     "id": "n1",
+     "at": [
+      0,
+      2.6,
+      0
+     ],
+     "size": [
+      11.4,
+      6.4,
+      0.5
+     ],
+     "title": "un nœud"
+    },
+    {
+     "id": "kubelet",
+     "in": "n1",
+     "at": [
+      -4.2,
+      0
+     ]
+    },
+    {
+     "id": "runtime",
+     "in": "n1",
+     "at": [
+      -0.8,
+      -2.0
+     ],
+     "title": "runtime",
+     "sub": "interface CRI",
+     "detail": "**CRI** (*Container Runtime Interface*) : l'interface par laquelle le kubelet demande au runtime de lancer un conteneur. containerd et CRI-O la parlent tous les deux."
+    },
+    {
+     "id": "cni",
+     "in": "n1",
+     "at": [
+      -0.8,
+      0
+     ]
+    },
+    {
+     "id": "csi",
+     "in": "n1",
+     "at": [
+      -0.8,
+      2.0
+     ]
+    },
+    {
+     "id": "pod-a",
+     "in": "n1",
+     "at": [
+      2.6,
+      -2.0
+     ]
+    },
+    {
+     "id": "pod-b",
+     "in": "n1",
+     "at": [
+      2.6,
+      0.4
+     ]
+    }
+   ]
+  },
+  {
+   "id": "two-doors",
+   "label": "Deux entrées",
+   "title": "Deux entrées : la vôtre, et celle des utilisateurs",
+   "body": [
+    "Le cluster a deux portes, qui ne servent pas aux mêmes personnes. Par l'**API server**, vous dites ce qui doit tourner. Par les **nœuds**, les utilisateurs atteignent les applications.",
+    "Si le control plane s'arrête, plus rien ne se décide ni ne se répare, mais les pods déjà lancés continuent de répondre."
+   ],
+   "hud": [
+    {
+     "label": "portes",
+     "value": 2
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "you",
+      "api"
+     ],
+     "label": "kubectl",
+     "explain": [
+      "Vous pilotez le cluster par l'API server."
+     ]
+    },
+    {
+     "path": [
+      "users",
+      "pod-d"
+     ],
+     "label": "requête",
+     "reply": "page",
+     "delay": 1200,
+     "explain": [
+      "La requête d'un utilisateur arrive sur un nœud, qui la conduit à un pod.",
+      "Le pod répond, sans passer par le control plane."
+     ]
+    }
+   ],
+   "show": [
+    "cluster",
+    "you",
+    "users",
+    "api",
+    "etcd",
+    "sched",
+    "ctrl",
+    "n1",
+    "n2",
+    "n3",
+    {
+     "id": "pod-a",
+     "in": "n1"
+    },
+    {
+     "id": "pod-b",
+     "in": "n1"
+    },
+    {
+     "id": "pod-c",
+     "in": "n2"
+    },
+    {
+     "id": "pod-d",
+     "in": "n2"
+    },
+    {
+     "id": "pod-e",
+     "in": "n3"
+    }
+   ]
+  }
+ ]
+}
