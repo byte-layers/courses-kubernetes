@@ -3,7 +3,7 @@
  "id": "k8s-overview",
  "title": "Kubernetes en un coup d'œil",
  "lang": "fr",
- "kit": "block",
+ "kit": "feuillete",
  "legend": [
   {
    "kind": "req",
@@ -153,7 +153,7 @@
    ],
    "tone": "n",
    "title": "nœud 1",
-   "detail": "Un **nœud** (*node*) est un serveur du cluster, physique ou virtuel. Il fait tourner les applications, dans des pods."
+   "detail": "Un **nœud** (*node*) est un serveur du cluster, physique ou virtuel. Il fait tourner les applications, dans des pods. Ce cluster en compte trois."
   },
   {
    "id": "n2",
@@ -168,8 +168,7 @@
     5.2,
     0.5
    ],
-   "tone": "n",
-   "title": "nœud 2"
+   "tone": "n"
   },
   {
    "id": "n3",
@@ -184,8 +183,7 @@
     5.2,
     0.5
    ],
-   "tone": "n",
-   "title": "nœud 3"
+   "tone": "n"
   },
   {
    "id": "pod-a",
@@ -201,7 +199,7 @@
    ],
    "tone": "b",
    "title": "pod",
-   "detail": "Un **pod** enveloppe un conteneur, parfois plusieurs : c'est la plus petite unité que Kubernetes lance."
+   "detail": "Un **pod** enveloppe un conteneur, parfois plusieurs : c'est la plus petite unité que Kubernetes lance. Sur le schéma, chaque bloc bleu posé sur un nœud est un pod."
   },
   {
    "id": "pod-b",
@@ -215,9 +213,7 @@
     1.5,
     0.8
    ],
-   "tone": "b",
-   "title": "pod",
-   "detail": "Un autre **pod** : une application, ou une copie de plus de la même."
+   "tone": "b"
   },
   {
    "id": "pod-c",
@@ -231,9 +227,7 @@
     1.5,
     0.8
    ],
-   "tone": "b",
-   "title": "pod",
-   "detail": "Un **pod**, placé sur ce nœud par le control plane."
+   "tone": "b"
   },
   {
    "id": "pod-d",
@@ -247,9 +241,7 @@
     1.5,
     0.8
    ],
-   "tone": "b",
-   "title": "pod",
-   "detail": "Un **pod**, placé sur ce nœud par le control plane."
+   "tone": "b"
   },
   {
    "id": "pod-e",
@@ -263,9 +255,7 @@
     1.5,
     0.8
    ],
-   "tone": "b",
-   "title": "pod",
-   "detail": "Un **pod**, placé sur ce nœud par le control plane."
+   "tone": "b"
   },
   {
    "id": "kubelet",
@@ -543,7 +533,7 @@
      "id": "kubelet",
      "in": "n1",
      "at": [
-      -4.2,
+      -4.6,
       -1.6
      ]
     },
@@ -551,7 +541,7 @@
      "id": "runtime",
      "in": "n1",
      "at": [
-      -1.0,
+      -0.6,
       -1.6
      ]
     },
@@ -567,7 +557,7 @@
      "id": "pod-a",
      "in": "n1",
      "at": [
-      2.2,
+      4.4,
       -1.6
      ]
     },
@@ -575,11 +565,12 @@
      "id": "pod-b",
      "in": "n1",
      "at": [
-      4.4,
+      2.2,
       -1.6
      ]
     }
-   ]
+   ],
+   "labels": "left"
   },
   {
    "id": "request",
@@ -695,7 +686,7 @@
      "id": "kubelet",
      "in": "n1",
      "at": [
-      -4.2,
+      -4.6,
       -1.6
      ]
     },
@@ -703,7 +694,7 @@
      "id": "runtime",
      "in": "n1",
      "at": [
-      -1.0,
+      -0.6,
       -1.6
      ]
     },
@@ -719,7 +710,7 @@
      "id": "pod-a",
      "in": "n1",
      "at": [
-      2.2,
+      4.4,
       -1.6
      ]
     },
@@ -727,11 +718,12 @@
      "id": "pod-b",
      "in": "n1",
      "at": [
-      4.4,
+      2.2,
       -1.6
      ]
     }
-   ]
+   ],
+   "labels": "left"
   },
   {
    "id": "interfaces",
@@ -813,8 +805,8 @@
      "id": "runtime",
      "in": "n1",
      "at": [
-      -0.8,
-      -2.0
+      -0.4,
+      -2.2
      ],
      "title": "runtime",
      "sub": "interface CRI",
@@ -824,8 +816,8 @@
      "id": "cni",
      "in": "n1",
      "at": [
-      -0.8,
-      0
+      -1.2,
+      0.2
      ]
     },
     {
@@ -840,7 +832,7 @@
      "id": "pod-a",
      "in": "n1",
      "at": [
-      2.6,
+      3.4,
       -2.0
      ]
     },
@@ -848,11 +840,12 @@
      "id": "pod-b",
      "in": "n1",
      "at": [
-      2.6,
+      3.4,
       0.4
      ]
     }
-   ]
+   ],
+   "labels": "left"
   },
   {
    "id": "two-doors",

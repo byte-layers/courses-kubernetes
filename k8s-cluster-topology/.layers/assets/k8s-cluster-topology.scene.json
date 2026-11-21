@@ -1,0 +1,1341 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "k8s-cluster-topology",
+ "title": "Un ou trois control planes",
+ "lang": "fr",
+ "kit": "feuillete",
+ "legend": [
+  {
+   "tone": "v",
+   "label": "control plane"
+  },
+  {
+   "tone": "b",
+   "label": "application"
+  },
+  {
+   "tone": "r",
+   "label": "en panne"
+  },
+  {
+   "kind": "req",
+   "label": "requête"
+  }
+ ],
+ "entities": [
+  {
+   "id": "you",
+   "kind": "actor",
+   "at": [
+    -10.0,
+    4.0
+   ],
+   "label": "vous, avec kubectl",
+   "detail": "Toutes vos commandes `kubectl` passent par l'API du cluster. Si elle ne répond plus, vous ne pouvez ni déployer, ni corriger, ni même lister les pods."
+  },
+  {
+   "id": "users",
+   "kind": "actor",
+   "at": [
+    -1.25,
+    12.25
+   ],
+   "label": "les utilisateurs"
+  },
+  {
+   "id": "entry",
+   "kind": "node",
+   "at": [
+    4.75,
+    4.75
+   ],
+   "size": [
+    1.9,
+    1.9,
+    1.0
+   ],
+   "tone": "n",
+   "title": "entrée",
+   "sub": "des applications",
+   "detail": "Le point d'entrée des applications (un répartiteur de charge, un Ingress…) : il envoie les requêtes vers les nœuds, qui les passent aux pods."
+  },
+  {
+   "id": "lb",
+   "kind": "node",
+   "at": [
+    -3.0,
+    -3.0
+   ],
+   "size": [
+    1.9,
+    1.9,
+    1.0
+   ],
+   "tone": "y",
+   "title": "répartiteur",
+   "sub": "de l'API",
+   "detail": "Une seule adresse pour l'API, devant les trois control planes : `kubectl` et les kubelets s'adressent à elle, et elle envoie chaque demande à un API server qui répond. Il ne doit pas devenir à son tour le point unique de panne : répartiteur du cloud, ou deux machines qui se partagent une adresse (keepalived, kube-vip)."
+  },
+  {
+   "id": "m1",
+   "kind": "layer",
+   "at": [
+    -12.25,
+    -2.25,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "v",
+   "title": "control plane",
+   "detail": "Une machine du control plane. Ici, trois, chacune avec son API server et, sauf en etcd externe, son etcd."
+  },
+  {
+   "id": "m2",
+   "kind": "layer",
+   "at": [
+    -7.25,
+    -7.25,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "m3",
+   "kind": "layer",
+   "at": [
+    -2.25,
+    -12.25,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "api1",
+   "kind": "node",
+   "in": "m1",
+   "at": [
+    -0.65,
+    0.65,
+    0.5
+   ],
+   "size": [
+    1.4,
+    1.4,
+    0.8
+   ],
+   "tone": "v",
+   "title": "API server",
+   "sub": "et contrôleurs",
+   "detail": "L'**API server** reçoit toutes les demandes ; avec lui tournent l'**ordonnanceur** (il place les pods) et les **contrôleurs** (ils recréent ce qui manque). Avec trois control planes, les trois API servers répondent ; l'ordonnanceur et les contrôleurs n'agissent que sur une machine à la fois, les autres prennent le relais."
+  },
+  {
+   "id": "api2",
+   "kind": "node",
+   "in": "m2",
+   "at": [
+    -0.65,
+    0.65,
+    0.5
+   ],
+   "size": [
+    1.4,
+    1.4,
+    0.8
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "api3",
+   "kind": "node",
+   "in": "m3",
+   "at": [
+    -0.65,
+    0.65,
+    0.5
+   ],
+   "size": [
+    1.4,
+    1.4,
+    0.8
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "e1",
+   "kind": "store",
+   "in": "m1",
+   "at": [
+    0.7,
+    -0.7,
+    0.5
+   ],
+   "size": [
+    1.2,
+    1.2,
+    0.8
+   ],
+   "tone": "v",
+   "title": "etcd",
+   "detail": "etcd est la base où le cluster range tout son état : les Deployments, les pods, les Services… Avec trois membres, une écriture n'est acceptée que si une **majorité** (deux sur trois) l'enregistre."
+  },
+  {
+   "id": "e2",
+   "kind": "store",
+   "in": "m2",
+   "at": [
+    0.7,
+    -0.7,
+    0.5
+   ],
+   "size": [
+    1.2,
+    1.2,
+    0.8
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "e3",
+   "kind": "store",
+   "in": "m3",
+   "at": [
+    0.7,
+    -0.7,
+    0.5
+   ],
+   "size": [
+    1.2,
+    1.2,
+    0.8
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "x1",
+   "kind": "layer",
+   "at": [
+    -17.75,
+    -7.75,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "v",
+   "title": "nœud etcd",
+   "detail": "Une machine qui ne fait tourner qu'un membre etcd. Les API servers s'y connectent par le réseau. Ici, trois."
+  },
+  {
+   "id": "x2",
+   "kind": "layer",
+   "at": [
+    -12.75,
+    -12.75,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "x3",
+   "kind": "layer",
+   "at": [
+    -7.75,
+    -17.75,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "xe1",
+   "kind": "store",
+   "in": "x1",
+   "at": [
+    0.0,
+    0.0,
+    0.5
+   ],
+   "size": [
+    1.3,
+    1.3,
+    0.85
+   ],
+   "tone": "v",
+   "title": "etcd",
+   "detail": "etcd est la base où le cluster range tout son état : les Deployments, les pods, les Services… Avec trois membres, une écriture n'est acceptée que si une **majorité** (deux sur trois) l'enregistre."
+  },
+  {
+   "id": "xe2",
+   "kind": "store",
+   "in": "x2",
+   "at": [
+    0.0,
+    0.0,
+    0.5
+   ],
+   "size": [
+    1.3,
+    1.3,
+    0.85
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "xe3",
+   "kind": "store",
+   "in": "x3",
+   "at": [
+    0.0,
+    0.0,
+    0.5
+   ],
+   "size": [
+    1.3,
+    1.3,
+    0.85
+   ],
+   "tone": "v"
+  },
+  {
+   "id": "w1",
+   "kind": "layer",
+   "at": [
+    -4.25,
+    5.75,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "n",
+   "title": "nœud",
+   "detail": "Un nœud de travail fait tourner les pods. Son agent, le **kubelet**, se connecte à l'API pour savoir quoi lancer et pour dire que le nœud est en vie. Si l'API ne répond plus, il garde ses pods tels qu'ils sont. Sur le schéma, trois nœuds de travail."
+  },
+  {
+   "id": "w2",
+   "kind": "layer",
+   "at": [
+    0.75,
+    0.75,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "n"
+  },
+  {
+   "id": "w3",
+   "kind": "layer",
+   "at": [
+    5.75,
+    -4.25,
+    0
+   ],
+   "size": [
+    3.4,
+    3.4,
+    0.5
+   ],
+   "tone": "n"
+  },
+  {
+   "id": "pa",
+   "kind": "node",
+   "in": "w1",
+   "at": [
+    -0.75,
+    0.75,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b",
+   "title": "pod",
+   "detail": "Les pods de l'application : six, deux par nœud. Ils appartiennent à un Deployment qui en demande six."
+  },
+  {
+   "id": "pb",
+   "kind": "node",
+   "in": "w1",
+   "at": [
+    0.75,
+    -0.75,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "pc",
+   "kind": "node",
+   "in": "w2",
+   "at": [
+    -0.75,
+    0.75,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "pd",
+   "kind": "node",
+   "in": "w2",
+   "at": [
+    0.75,
+    -0.75,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "pe",
+   "kind": "node",
+   "in": "w3",
+   "at": [
+    -0.75,
+    0.75,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "pf",
+   "kind": "node",
+   "in": "w3",
+   "at": [
+    0.75,
+    -0.75,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "pe2",
+   "kind": "node",
+   "in": "w1",
+   "at": [
+    0.8,
+    0.8,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "pf2",
+   "kind": "node",
+   "in": "w2",
+   "at": [
+    0.8,
+    0.8,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  }
+ ],
+ "steps": [
+  {
+   "id": "single",
+   "label": "Un control plane",
+   "title": "Un seul control plane : les applications tournent, plus rien ne se répare",
+   "body": [
+    "Trois nœuds font tourner six pods ; une seule machine les commande : le control plane, avec son etcd.",
+    "S'il tombe, les pods continuent de servir. Mais plus personne ne peut rien changer, ni rien réparer."
+   ],
+   "hud": [
+    {
+     "label": "control plane",
+     "value": "en service"
+    },
+    {
+     "label": "kubectl",
+     "value": "répond"
+    },
+    {
+     "label": "applications",
+     "value": "en service"
+    },
+    {
+     "label": "pods",
+     "value": "6 sur 6"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "entry"
+     ],
+     "spread": true,
+     "gap": 380,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "entry",
+    "w1",
+    "w2",
+    "w3",
+    "pa",
+    "pb",
+    "pc",
+    "pd",
+    "pe",
+    "pf",
+    "you",
+    {
+     "id": "m2",
+     "title": "control plane",
+     "detail": "Une machine du control plane. Elle fait tourner l'**API server** (la porte d'entrée de toutes les demandes), l'**ordonnanceur** (il place les pods sur les nœuds) et les **contrôleurs** (ils recréent ce qui manque)."
+    },
+    {
+     "id": "api2",
+     "title": "API server",
+     "sub": "et contrôleurs",
+     "detail": "L'**API server** reçoit toutes les demandes ; avec lui tournent l'**ordonnanceur** (il place les pods) et les **contrôleurs** (ils recréent ce qui manque). Avec trois control planes, les trois API servers répondent ; l'ordonnanceur et les contrôleurs n'agissent que sur une machine à la fois, les autres prennent le relais."
+    },
+    {
+     "id": "e2",
+     "title": "etcd",
+     "detail": "etcd est la base où le cluster range tout son état : les Deployments, les pods, les Services… Avec trois membres, une écriture n'est acceptée que si une **majorité** (deux sur trois) l'enregistre."
+    }
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "entry"
+    },
+    {
+     "from": "entry",
+     "to": "w1"
+    },
+    {
+     "from": "entry",
+     "to": "w2"
+    },
+    {
+     "from": "entry",
+     "to": "w3"
+    },
+    {
+     "from": "you",
+     "to": "api2"
+    },
+    {
+     "from": "w1",
+     "to": "api2"
+    },
+    {
+     "from": "w2",
+     "to": "api2"
+    },
+    {
+     "from": "w3",
+     "to": "api2"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2400
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "api2",
+       "tone": "r"
+      },
+      {
+       "id": "e2",
+       "tone": "r"
+      },
+      {
+       "id": "m2",
+       "tone": "r",
+       "sub": "en panne"
+      }
+     ],
+     "hud": [
+      {
+       "label": "control plane",
+       "value": "en panne",
+       "tone": "r"
+      },
+      {
+       "label": "kubectl",
+       "value": "ne répond plus",
+       "tone": "r"
+      }
+     ],
+     "say": "Le control plane tombe : la machine s'arrête, avec son etcd."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "applications",
+       "value": "toujours en service",
+       "tone": "g"
+      }
+     ],
+     "say": "Les applications répondent toujours : les nœuds n'ont pas besoin de lui pour faire tourner leurs pods."
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "w3"
+     ],
+     "hud": [
+      {
+       "label": "pods",
+       "value": "4 sur 6",
+       "tone": "r"
+      }
+     ],
+     "say": "Puis un nœud tombe à son tour. Ses deux pods disparaissent avec lui.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "pods",
+       "value": "4 sur 6, pas recréés",
+       "tone": "r"
+      }
+     ],
+     "say": "Personne ne les recrée ailleurs : c'est le control plane qui le ferait."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ],
+   "labels": "left"
+  },
+  {
+   "id": "ha",
+   "label": "Trois control planes",
+   "title": "Trois control planes, un répartiteur devant",
+   "body": [
+    "Trois machines de control plane, chacune avec son etcd. Devant elles, un répartiteur donne une seule adresse à l'API.",
+    "Quand l'une tombe, le répartiteur envoie les demandes aux deux autres, et le cluster continue de se réparer."
+   ],
+   "hud": [
+    {
+     "label": "control planes",
+     "value": "3 sur 3"
+    },
+    {
+     "label": "etcd",
+     "value": "3 sur 3"
+    },
+    {
+     "label": "kubectl",
+     "value": "répond"
+    },
+    {
+     "label": "pods",
+     "value": "6 sur 6"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "entry"
+     ],
+     "spread": true,
+     "gap": 380,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "entry",
+    "w1",
+    "w2",
+    "w3",
+    "pa",
+    "pb",
+    "pc",
+    "pd",
+    "pe",
+    "pf",
+    "you",
+    "lb",
+    "m1",
+    "m2",
+    "m3",
+    "api1",
+    "api2",
+    "api3",
+    "e1",
+    "e2",
+    "e3"
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "entry"
+    },
+    {
+     "from": "entry",
+     "to": "w1"
+    },
+    {
+     "from": "entry",
+     "to": "w2"
+    },
+    {
+     "from": "entry",
+     "to": "w3"
+    },
+    {
+     "from": "you",
+     "to": "lb"
+    },
+    {
+     "from": "w1",
+     "to": "lb"
+    },
+    {
+     "from": "w2",
+     "to": "lb"
+    },
+    {
+     "from": "w3",
+     "to": "lb"
+    },
+    {
+     "from": "lb",
+     "to": "api1"
+    },
+    {
+     "from": "lb",
+     "to": "api2"
+    },
+    {
+     "from": "lb",
+     "to": "api3"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2400
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "m3",
+       "tone": "r"
+      },
+      {
+       "id": "api3",
+       "tone": "r"
+      },
+      {
+       "id": "e3",
+       "tone": "r"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "api3"
+      }
+     ],
+     "hud": [
+      {
+       "label": "control planes",
+       "value": "2 sur 3"
+      },
+      {
+       "label": "etcd",
+       "value": "2 sur 3 : la majorité"
+      }
+     ],
+     "say": "Le control plane 3 tombe. Le répartiteur ne lui envoie plus rien."
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "send",
+     "path": [
+      "you",
+      "lb",
+      "api1"
+     ],
+     "label": "kubectl",
+     "reply": "ok",
+     "explain": [
+      "Votre commande part vers l'adresse de l'API : le répartiteur.",
+      "Il la passe à un control plane qui répond.",
+      "La réponse revient : le cluster obéit toujours."
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "w3"
+     ],
+     "hud": [
+      {
+       "label": "pods",
+       "value": "4 sur 6",
+       "tone": "r"
+      }
+     ],
+     "say": "Un nœud tombe. Ses deux pods disparaissent…",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "pe2",
+       "dim": true
+      },
+      {
+       "id": "pf2",
+       "dim": true
+      }
+     ],
+     "say": "… et le control plane les recrée sur les nœuds qui restent."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "pe2",
+       "dim": null
+      },
+      {
+       "id": "pf2",
+       "dim": null
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods",
+       "value": "6 sur 6",
+       "tone": null
+      }
+     ],
+     "say": "Ils sont prêts : six pods de nouveau."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ],
+   "labels": "left"
+  },
+  {
+   "id": "quorum",
+   "label": "La majorité",
+   "title": "Pourquoi trois : etcd a besoin d'une majorité",
+   "body": [
+    "etcd n'enregistre une écriture que si la majorité de ses membres l'accepte : deux sur trois.",
+    "Un membre perdu, la majorité tient. Deux perdus, elle tombe : l'API ne peut plus rien enregistrer."
+   ],
+   "hud": [
+    {
+     "label": "control planes",
+     "value": "3 sur 3"
+    },
+    {
+     "label": "etcd",
+     "value": "3 sur 3"
+    },
+    {
+     "label": "kubectl",
+     "value": "répond"
+    },
+    {
+     "label": "applications",
+     "value": "en service"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "entry"
+     ],
+     "spread": true,
+     "gap": 380,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "entry",
+    "w1",
+    "w2",
+    "w3",
+    "pa",
+    "pb",
+    "pc",
+    "pd",
+    "pe",
+    "pf",
+    "you",
+    "lb",
+    "m1",
+    "m2",
+    "m3",
+    "api1",
+    "api2",
+    "api3",
+    "e1",
+    "e2",
+    "e3"
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "entry"
+    },
+    {
+     "from": "entry",
+     "to": "w1"
+    },
+    {
+     "from": "entry",
+     "to": "w2"
+    },
+    {
+     "from": "entry",
+     "to": "w3"
+    },
+    {
+     "from": "you",
+     "to": "lb"
+    },
+    {
+     "from": "w1",
+     "to": "lb"
+    },
+    {
+     "from": "w2",
+     "to": "lb"
+    },
+    {
+     "from": "w3",
+     "to": "lb"
+    },
+    {
+     "from": "lb",
+     "to": "api1"
+    },
+    {
+     "from": "lb",
+     "to": "api2"
+    },
+    {
+     "from": "lb",
+     "to": "api3"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2400
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "m3",
+       "tone": "r"
+      },
+      {
+       "id": "api3",
+       "tone": "r"
+      },
+      {
+       "id": "e3",
+       "tone": "r"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "api3"
+      }
+     ],
+     "hud": [
+      {
+       "label": "control planes",
+       "value": "2 sur 3"
+      },
+      {
+       "label": "etcd",
+       "value": "2 sur 3 : la majorité"
+      }
+     ],
+     "say": "Un control plane tombe : deux etcd sur trois, c'est encore la majorité."
+    },
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "m2",
+       "tone": "r"
+      },
+      {
+       "id": "api2",
+       "tone": "r"
+      },
+      {
+       "id": "e2",
+       "tone": "r"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "api2"
+      }
+     ],
+     "hud": [
+      {
+       "label": "control planes",
+       "value": "1 sur 3",
+       "tone": "r"
+      },
+      {
+       "label": "etcd",
+       "value": "1 sur 3 : sans majorité",
+       "tone": "r"
+      }
+     ],
+     "say": "Un deuxième tombe : un etcd sur trois, il n'y a plus de majorité."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "kubectl",
+       "value": "en erreur",
+       "tone": "r"
+      }
+     ],
+     "say": "Le dernier etcd refuse d'écrire seul : vos commandes échouent."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "applications",
+       "value": "toujours en service",
+       "tone": "g"
+      }
+     ],
+     "say": "Les applications, elles, répondent toujours."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ],
+   "labels": "left"
+  },
+  {
+   "id": "external",
+   "label": "etcd à part",
+   "title": "etcd externe : six machines, deux pannes séparées",
+   "body": [
+    "Les control planes ne portent plus etcd : il tourne sur trois machines à lui, derrière eux.",
+    "Perdre un control plane ne coûte plus de membre etcd, et perdre un nœud etcd ne coûte plus de control plane."
+   ],
+   "hud": [
+    {
+     "label": "machines",
+     "value": "6"
+    },
+    {
+     "label": "control planes",
+     "value": "3 sur 3"
+    },
+    {
+     "label": "etcd",
+     "value": "3 sur 3"
+    },
+    {
+     "label": "kubectl",
+     "value": "répond"
+    }
+   ],
+   "show": [
+    "you",
+    "lb",
+    {
+     "id": "api1",
+     "at": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "id": "api2",
+     "at": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "id": "api3",
+     "at": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    "m1",
+    "m2",
+    "m3",
+    "x1",
+    "x2",
+    "x3",
+    "xe1",
+    "xe2",
+    "xe3"
+   ],
+   "links": [
+    {
+     "from": "you",
+     "to": "lb"
+    },
+    {
+     "from": "lb",
+     "to": "api1"
+    },
+    {
+     "from": "lb",
+     "to": "api2"
+    },
+    {
+     "from": "lb",
+     "to": "api3"
+    },
+    {
+     "from": "api1",
+     "to": "xe1"
+    },
+    {
+     "from": "api2",
+     "to": "xe2"
+    },
+    {
+     "from": "api3",
+     "to": "xe3"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2400
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "x3",
+       "tone": "r"
+      },
+      {
+       "id": "xe3",
+       "tone": "r"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "api3",
+       "to": "xe3"
+      }
+     ],
+     "link": [
+      {
+       "from": "api3",
+       "to": "xe2"
+      }
+     ],
+     "hud": [
+      {
+       "label": "etcd",
+       "value": "2 sur 3 : la majorité"
+      }
+     ],
+     "say": "Un nœud etcd tombe. Deux membres sur trois : la majorité tient, les trois control planes travaillent."
+    },
+    {
+     "do": "wait",
+     "ms": 2400
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "m1",
+       "tone": "r",
+       "sub": "en panne"
+      },
+      {
+       "id": "api1",
+       "tone": "r"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "api1"
+      },
+      {
+       "from": "api1",
+       "to": "xe1"
+      }
+     ],
+     "hud": [
+      {
+       "label": "control planes",
+       "value": "2 sur 3"
+      }
+     ],
+     "say": "Puis un control plane tombe. Il n'emporte aucun membre etcd avec lui."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "kubectl",
+       "value": "répond toujours",
+       "tone": "g"
+      }
+     ],
+     "say": "Deux pannes, et le cluster obéit toujours."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ],
+   "labels": "left"
+  }
+ ]
+}
