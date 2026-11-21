@@ -1,0 +1,2006 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "deployment-strategies",
+ "title": "Les stratégies de déploiement",
+ "lang": "fr",
+ "kit": "feuillete",
+ "legend": [
+  {
+   "tone": "b",
+   "label": "version 1"
+  },
+  {
+   "tone": "g",
+   "label": "version 2"
+  },
+  {
+   "kind": "req",
+   "label": "requête"
+  },
+  {
+   "kind": "res",
+   "label": "réponse"
+  },
+  {
+   "kind": "read",
+   "label": "écriture"
+  },
+  {
+   "tone": "r",
+   "label": "en erreur"
+  }
+ ],
+ "entities": [
+  {
+   "id": "users",
+   "kind": "actor",
+   "at": [
+    6.5,
+    6.5
+   ],
+   "label": "les utilisateurs",
+   "detail": "Les utilisateurs ne choisissent pas l'exemplaire qui leur répond : ils s'adressent à une seule adresse, celle du répartiteur."
+  },
+  {
+   "id": "group-a",
+   "kind": "actor",
+   "at": [
+    4.25,
+    8.75
+   ],
+   "label": "groupe A",
+   "detail": "Le groupe A garde l'ancienne version : il sert de point de comparaison."
+  },
+  {
+   "id": "group-b",
+   "kind": "actor",
+   "at": [
+    8.75,
+    4.25
+   ],
+   "label": "groupe B",
+   "detail": "Le groupe B est choisi sur un critère : un pays, un type d'appareil, un tirage au sort mémorisé. Il voit la nouvelle version."
+  },
+  {
+   "id": "lb",
+   "kind": "node",
+   "at": [
+    2.8,
+    2.8
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "v",
+   "title": "répartiteur",
+   "sub": "aiguille le trafic",
+   "detail": "Le répartiteur de charge (*load balancer*) reçoit toutes les requêtes et les distribue aux exemplaires de l'application. Toutes les stratégies jouent sur ses réglages."
+  },
+  {
+   "id": "blue",
+   "kind": "zone",
+   "at": [
+    -3.5,
+    1.5
+   ],
+   "size": [
+    5.4,
+    5.4
+   ],
+   "tone": "b",
+   "label": "bleu"
+  },
+  {
+   "id": "green",
+   "kind": "zone",
+   "at": [
+    1.5,
+    -3.5
+   ],
+   "size": [
+    5.4,
+    5.4
+   ],
+   "tone": "g",
+   "label": "vert"
+  },
+  {
+   "id": "a1",
+   "kind": "node",
+   "at": [
+    -3.2,
+    1.2
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "b",
+   "detail": "Un exemplaire de l'application en version 1, celle que les utilisateurs connaissent."
+  },
+  {
+   "id": "a2",
+   "kind": "node",
+   "at": [
+    -1.0,
+    -1.0
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "b",
+   "detail": "Un exemplaire de l'application en version 1, celle que les utilisateurs connaissent."
+  },
+  {
+   "id": "a3",
+   "kind": "node",
+   "at": [
+    1.2,
+    -3.2
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "b",
+   "detail": "Un exemplaire de l'application en version 1, celle que les utilisateurs connaissent."
+  },
+  {
+   "id": "b1",
+   "kind": "node",
+   "at": [
+    -3.2,
+    1.2
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "g",
+   "detail": "Un exemplaire de l'application en version 2, celle que l'équipe veut livrer."
+  },
+  {
+   "id": "b2",
+   "kind": "node",
+   "at": [
+    -1.0,
+    -1.0
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "g",
+   "detail": "Un exemplaire de l'application en version 2, celle que l'équipe veut livrer."
+  },
+  {
+   "id": "b3",
+   "kind": "node",
+   "at": [
+    1.2,
+    -3.2
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "g",
+   "detail": "Un exemplaire de l'application en version 2, celle que l'équipe veut livrer."
+  },
+  {
+   "id": "db",
+   "kind": "store",
+   "at": [
+    -5.25,
+    -5.25
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.1
+   ],
+   "tone": "y",
+   "title": "base de données",
+   "sub": "une seule pour tous",
+   "detail": "La base de données est partagée : les exemplaires en version 1 et en version 2 y lisent et y écrivent les mêmes données. Sa structure doit donc convenir aux deux versions."
+  },
+  {
+   "id": "team",
+   "kind": "actor",
+   "at": [
+    8.05,
+    -2.45
+   ],
+   "tone": "n",
+   "label": "l'équipe",
+   "detail": "L'équipe teste la version 2 directement dans l'environnement vert, avant qu'aucun utilisateur n'y accède."
+  },
+  {
+   "id": "flags",
+   "kind": "store",
+   "at": [
+    -5.25,
+    -5.25
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.1
+   ],
+   "tone": "y",
+   "title": "flags",
+   "sub": "lu à chaque requête",
+   "detail": "Un feature flag est un interrupteur lu par le code à chaque requête : allumé, la nouvelle fonctionnalité s'affiche ; éteint, l'ancienne. On le change sans redéployer."
+  }
+ ],
+ "steps": [
+  {
+   "id": "recreate",
+   "label": "Tout d'un coup",
+   "title": "Le point de départ : tout arrêter, tout relancer",
+   "body": [
+    "La façon la plus simple de livrer : on arrête tous les exemplaires de la version 1, puis on démarre ceux de la version 2.",
+    "Entre les deux, plus rien ne répond. Et si la version 2 a un défaut, tous les utilisateurs le subissent en même temps."
+   ],
+   "hud": [
+    {
+     "label": "système",
+     "value": "en service"
+    },
+    {
+     "label": "disponibilité",
+     "value": "100 %"
+    },
+    {
+     "label": "version",
+     "value": "v1",
+     "tone": "b"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "lb"
+     ],
+     "spread": true,
+     "gap": 380,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "lb",
+    {
+     "id": "a1",
+     "at": [
+      -4.0,
+      2.0
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a2",
+     "at": [
+      -1.0,
+      -1.0
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a3",
+     "at": [
+      2.0,
+      -4.0
+     ],
+     "label": "v1"
+    }
+   ],
+   "links": [
+    {
+     "from": "lb",
+     "to": "a1"
+    },
+    {
+     "from": "lb",
+     "to": "a2"
+    },
+    {
+     "from": "lb",
+     "to": "a3"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "a1",
+       "label": "v1 s'arrête…",
+       "dim": true
+      },
+      {
+       "id": "a2",
+       "label": "v1 s'arrête…",
+       "dim": true
+      },
+      {
+       "id": "a3",
+       "label": "v1 s'arrête…",
+       "dim": true
+      }
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "a1"
+      },
+      {
+       "from": "lb",
+       "to": "a2"
+      },
+      {
+       "from": "lb",
+       "to": "a3"
+      }
+     ],
+     "hud": [
+      {
+       "label": "système",
+       "value": "hors service"
+      },
+      {
+       "label": "disponibilité",
+       "value": "0 %"
+      },
+      {
+       "label": "version",
+       "value": "aucune",
+       "tone": null
+      }
+     ],
+     "say": "On arrête les trois exemplaires de la version 1."
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "a1",
+      "a2",
+      "a3"
+     ],
+     "say": "Plus rien ne répond : chaque requête revient en erreur."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "b1",
+       "at": [
+        -4.0,
+        2.0
+       ],
+       "label": "v2 démarre…",
+       "dim": true
+      },
+      {
+       "id": "b2",
+       "at": [
+        -1.0,
+        -1.0
+       ],
+       "label": "v2 démarre…",
+       "dim": true
+      },
+      {
+       "id": "b3",
+       "at": [
+        2.0,
+        -4.0
+       ],
+       "label": "v2 démarre…",
+       "dim": true
+      }
+     ],
+     "say": "La version 2 démarre."
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "b1",
+       "label": "v2 prête",
+       "dim": null
+      },
+      {
+       "id": "b2",
+       "label": "v2 prête",
+       "dim": null
+      },
+      {
+       "id": "b3",
+       "label": "v2 prête",
+       "dim": null
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b1"
+      },
+      {
+       "from": "lb",
+       "to": "b2"
+      },
+      {
+       "from": "lb",
+       "to": "b3"
+      }
+     ],
+     "hud": [
+      {
+       "label": "système",
+       "value": "en service"
+      },
+      {
+       "label": "disponibilité",
+       "value": "100 %"
+      },
+      {
+       "label": "version",
+       "value": "v2",
+       "tone": "g"
+      }
+     ],
+     "say": "La version 2 est prête : le répartiteur lui envoie tout."
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    }
+   ]
+  },
+  {
+   "id": "rolling",
+   "label": "Rolling",
+   "title": "Rolling : remplacer les exemplaires un par un",
+   "body": [
+    "On remplace un exemplaire à la fois. Un exemplaire en version 2 démarre, et quand il est prêt, un exemplaire en version 1 s'arrête. Puis on recommence.",
+    "Il reste toujours de quoi répondre : pas de coupure. Pendant le remplacement, les deux versions répondent en même temps."
+   ],
+   "hud": [
+    {
+     "label": "système",
+     "value": "en service"
+    },
+    {
+     "label": "disponibilité",
+     "value": "100 %"
+    },
+    {
+     "label": "version",
+     "value": "v1",
+     "tone": "b"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "lb"
+     ],
+     "spread": true,
+     "gap": 380,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "lb",
+    {
+     "id": "a1",
+     "at": [
+      -4.375,
+      2.375
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a2",
+     "at": [
+      -2.125,
+      0.125
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a3",
+     "at": [
+      0.125,
+      -2.125
+     ],
+     "label": "v1"
+    }
+   ],
+   "links": [
+    {
+     "from": "lb",
+     "to": "a1"
+    },
+    {
+     "from": "lb",
+     "to": "a2"
+    },
+    {
+     "from": "lb",
+     "to": "a3"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "b1",
+       "at": [
+        2.375,
+        -4.375
+       ],
+       "label": "v2 démarre…",
+       "dim": true
+      }
+     ],
+     "say": "Un exemplaire v2 démarre, en plus des trois autres."
+    },
+    {
+     "do": "wait",
+     "ms": 1000
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "b1",
+       "label": "v2 prête",
+       "dim": null
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b1"
+      }
+     ],
+     "hud": [
+      {
+       "label": "version",
+       "value": "v1 + v2",
+       "tone": null
+      }
+     ],
+     "say": "Il est prêt : le répartiteur lui envoie sa part du trafic."
+    },
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "a1",
+       "label": "v1 s'arrête…",
+       "dim": true
+      }
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "a1"
+      }
+     ],
+     "say": "Un exemplaire v1 ne reçoit plus rien, puis s'arrête."
+    },
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "a1"
+     ],
+     "set": [
+      {
+       "id": "a2",
+       "at": [
+        -4.375,
+        2.375
+       ]
+      },
+      {
+       "id": "a3",
+       "at": [
+        -2.125,
+        0.125
+       ]
+      },
+      {
+       "id": "b1",
+       "at": [
+        0.125,
+        -2.125
+       ],
+       "label": "v2"
+      }
+     ],
+     "say": "La place libérée sert au suivant.",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "b2",
+       "at": [
+        2.375,
+        -4.375
+       ],
+       "label": "v2 démarre…",
+       "dim": true
+      }
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "b2",
+       "label": "v2 prête",
+       "dim": null
+      },
+      {
+       "id": "a2",
+       "label": "v1 s'arrête…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b2"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "a2"
+      }
+     ],
+     "say": "On recommence : un v2 de plus, un v1 de moins."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "a2"
+     ],
+     "set": [
+      {
+       "id": "a3",
+       "at": [
+        -4.375,
+        2.375
+       ]
+      },
+      {
+       "id": "b1",
+       "at": [
+        -2.125,
+        0.125
+       ]
+      },
+      {
+       "id": "b2",
+       "at": [
+        0.125,
+        -2.125
+       ],
+       "label": "v2"
+      }
+     ],
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "b3",
+       "at": [
+        2.375,
+        -4.375
+       ],
+       "label": "v2 démarre…",
+       "dim": true
+      }
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "b3",
+       "label": "v2 prête",
+       "dim": null
+      },
+      {
+       "id": "a3",
+       "label": "v1 s'arrête…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b3"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "a3"
+      }
+     ],
+     "say": "Puis avec le dernier."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "a3"
+     ],
+     "set": [
+      {
+       "id": "b1",
+       "at": [
+        -3.25,
+        1.25
+       ]
+      },
+      {
+       "id": "b2",
+       "at": [
+        -1.0,
+        -1.0
+       ]
+      },
+      {
+       "id": "b3",
+       "at": [
+        1.25,
+        -3.25
+       ],
+       "label": "v2"
+      }
+     ],
+     "hud": [
+      {
+       "label": "version",
+       "value": "v2",
+       "tone": "g"
+      }
+     ],
+     "say": "Tout tourne en version 2, sans coupure.",
+     "ms": 1000
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    }
+   ]
+  },
+  {
+   "id": "blue-green",
+   "label": "Blue/green",
+   "title": "Blue/green : deux environnements, une bascule",
+   "body": [
+    "On garde l'environnement en service, le **bleu**, et on installe la version 2 à côté, dans un second environnement complet : le **vert**. L'équipe le teste sans qu'aucun utilisateur le voie.",
+    "Puis on bascule le trafic vers le vert, en changeant un réglage du répartiteur. Si quelque chose ne va pas, le même réglage renvoie le trafic vers le bleu, qui n'a pas bougé."
+   ],
+   "hud": [
+    {
+     "label": "trafic vers",
+     "value": "bleu",
+     "tone": "b"
+    },
+    {
+     "label": "machines",
+     "value": "×1"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "lb"
+     ],
+     "spread": true,
+     "gap": 380,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "lb",
+    "blue",
+    "green",
+    {
+     "id": "a1",
+     "at": [
+      -4.8,
+      2.8
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a2",
+     "at": [
+      -2.2,
+      0.2
+     ],
+     "label": "v1"
+    }
+   ],
+   "links": [
+    {
+     "from": "lb",
+     "to": "a1"
+    },
+    {
+     "from": "lb",
+     "to": "a2"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "b1",
+       "at": [
+        0.2,
+        -2.2
+       ],
+       "label": "v2 démarre…",
+       "dim": true
+      },
+      {
+       "id": "b2",
+       "at": [
+        2.8,
+        -4.8
+       ],
+       "label": "v2 démarre…",
+       "dim": true
+      }
+     ],
+     "hud": [
+      {
+       "label": "machines",
+       "value": "×2"
+      }
+     ],
+     "say": "On installe la version 2 à côté, dans l'environnement vert."
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "show": [
+      "team"
+     ],
+     "set": [
+      {
+       "id": "b1",
+       "label": "v2 en test",
+       "dim": null
+      },
+      {
+       "id": "b2",
+       "label": "v2 en test",
+       "dim": null
+      }
+     ],
+     "link": [
+      {
+       "from": "team",
+       "to": "b1"
+      },
+      {
+       "from": "team",
+       "to": "b2"
+      }
+     ],
+     "say": "L'équipe la teste : aucun utilisateur n'y accède."
+    },
+    {
+     "do": "send",
+     "path": [
+      "team",
+      "b1"
+     ],
+     "label": "test",
+     "reply": "ok"
+    },
+    {
+     "do": "send",
+     "path": [
+      "team",
+      "b2"
+     ],
+     "label": "test",
+     "reply": "ok"
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "team"
+     ],
+     "unlink": [
+      {
+       "from": "lb",
+       "to": "a1"
+      },
+      {
+       "from": "lb",
+       "to": "a2"
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b1"
+      },
+      {
+       "from": "lb",
+       "to": "b2"
+      }
+     ],
+     "set": [
+      {
+       "id": "b1",
+       "label": "v2"
+      },
+      {
+       "id": "b2",
+       "label": "v2"
+      }
+     ],
+     "hud": [
+      {
+       "label": "trafic vers",
+       "value": "vert",
+       "tone": "g"
+      }
+     ],
+     "say": "La bascule : un réglage, et tout le trafic passe au vert.",
+     "ms": 1100
+    },
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "a1",
+       "label": "v1 en réserve",
+       "dim": true
+      },
+      {
+       "id": "a2",
+       "label": "v1 en réserve",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "a2",
+       "dashed": true
+      }
+     ],
+     "hud": [
+      {
+       "label": "bleu",
+       "value": "en réserve",
+       "tone": "b"
+      }
+     ],
+     "say": "Le bleu reste prêt : le même réglage le remettrait en service."
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    }
+   ]
+  },
+  {
+   "id": "canary",
+   "label": "Canary",
+   "title": "Canary : une petite part du trafic d'abord",
+   "body": [
+    "On ajoute un seul exemplaire en version 2, et on ne lui envoie qu'une petite part du trafic réel, 10 % par exemple. On observe ses erreurs et ses temps de réponse.",
+    "Si tout va bien, on augmente la part, palier par palier, jusqu'à 100 %. Sinon, on retire l'exemplaire : seule une petite part des requêtes a vu le défaut."
+   ],
+   "hud": [
+    {
+     "label": "trafic v1",
+     "value": "100 %",
+     "tone": "b"
+    },
+    {
+     "label": "trafic v2",
+     "value": "0 %",
+     "tone": "g"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "lb"
+     ],
+     "spread": true,
+     "gap": 300,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "lb",
+    {
+     "id": "a1",
+     "at": [
+      -4.375,
+      2.375
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a2",
+     "at": [
+      -2.125,
+      0.125
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a3",
+     "at": [
+      0.125,
+      -2.125
+     ],
+     "label": "v1"
+    }
+   ],
+   "links": [
+    {
+     "from": "lb",
+     "to": "a1"
+    },
+    {
+     "from": "lb",
+     "to": "a2"
+    },
+    {
+     "from": "lb",
+     "to": "a3"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "b3",
+       "at": [
+        2.375,
+        -4.375
+       ],
+       "label": "v2 canari"
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "a1",
+       "weight": 30
+      },
+      {
+       "from": "lb",
+       "to": "a2",
+       "weight": 30
+      },
+      {
+       "from": "lb",
+       "to": "a3",
+       "weight": 30
+      },
+      {
+       "from": "lb",
+       "to": "b3",
+       "label": "10 %",
+       "weight": 10
+      }
+     ],
+     "hud": [
+      {
+       "label": "trafic v1",
+       "value": "90 %"
+      },
+      {
+       "label": "trafic v2",
+       "value": "10 %"
+      }
+     ],
+     "say": "Un seul exemplaire v2, le canari, reçoit 10 % des requêtes."
+    },
+    {
+     "do": "wait",
+     "ms": 4200
+    },
+    {
+     "do": "scene",
+     "link": [
+      {
+       "from": "lb",
+       "to": "a1",
+       "weight": 17
+      },
+      {
+       "from": "lb",
+       "to": "a2",
+       "weight": 17
+      },
+      {
+       "from": "lb",
+       "to": "a3",
+       "weight": 16
+      },
+      {
+       "from": "lb",
+       "to": "b3",
+       "label": "50 %",
+       "weight": 50
+      }
+     ],
+     "hud": [
+      {
+       "label": "trafic v1",
+       "value": "50 %"
+      },
+      {
+       "label": "trafic v2",
+       "value": "50 %"
+      }
+     ],
+     "say": "Ses mesures sont bonnes : palier suivant, la moitié du trafic."
+    },
+    {
+     "do": "wait",
+     "ms": 3400
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "a1",
+      "a2",
+      "a3"
+     ],
+     "show": [
+      {
+       "id": "b1",
+       "at": [
+        -3.25,
+        1.25
+       ],
+       "label": "v2"
+      },
+      {
+       "id": "b2",
+       "at": [
+        -1.0,
+        -1.0
+       ],
+       "label": "v2"
+      }
+     ],
+     "set": [
+      {
+       "id": "b3",
+       "at": [
+        1.25,
+        -3.25
+       ],
+       "label": "v2"
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b1"
+      },
+      {
+       "from": "lb",
+       "to": "b2"
+      },
+      {
+       "from": "lb",
+       "to": "b3"
+      }
+     ],
+     "hud": [
+      {
+       "label": "trafic v1",
+       "value": "0 %"
+      },
+      {
+       "label": "trafic v2",
+       "value": "100 %"
+      }
+     ],
+     "say": "Dernier palier : la version 2 prend tout le trafic.",
+     "ms": 1100
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    }
+   ]
+  },
+  {
+   "id": "db-break",
+   "label": "La base",
+   "title": "Deux versions, une seule base",
+   "body": [
+    "Les exemplaires changent, la **base de données** reste : la v1 et la v2 utilisent la même.",
+    "Si la v2 change la base d'une façon que la v1 ne comprend pas, la v1 tombe en erreur."
+   ],
+   "hud": [
+    {
+     "label": "version",
+     "value": "v1",
+     "tone": "b"
+    },
+    {
+     "label": "colonnes",
+     "value": "nom"
+    }
+   ],
+   "show": [
+    "users",
+    "lb",
+    {
+     "id": "a1",
+     "at": [
+      -4.0,
+      2.0
+     ],
+     "label": null
+    },
+    {
+     "id": "a2",
+     "at": [
+      -1.0,
+      -1.0
+     ],
+     "label": null
+    },
+    {
+     "id": "a3",
+     "at": [
+      2.0,
+      -4.0
+     ],
+     "label": null
+    },
+    {
+     "id": "db",
+     "sub": "colonne : nom"
+    }
+   ],
+   "links": [
+    {
+     "from": "lb",
+     "to": "a1"
+    },
+    {
+     "from": "lb",
+     "to": "a2"
+    },
+    {
+     "from": "lb",
+     "to": "a3"
+    },
+    {
+     "from": "a1",
+     "to": "db"
+    },
+    {
+     "from": "a2",
+     "to": "db"
+    },
+    {
+     "from": "a3",
+     "to": "db"
+    }
+   ],
+   "script": [
+    {
+     "do": "send",
+     "path": [
+      "users",
+      "lb",
+      "a2",
+      "db"
+     ],
+     "tone": "b",
+     "label": "commande",
+     "kind": "read"
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "a3"
+     ],
+     "show": [
+      {
+       "id": "b3",
+       "at": [
+        2.0,
+        -4.0
+       ],
+       "label": null
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b3"
+      },
+      {
+       "from": "b3",
+       "to": "db"
+      }
+     ],
+     "hud": [
+      {
+       "label": "version",
+       "value": "v1 + v2",
+       "tone": null
+      }
+     ],
+     "say": "La v2 arrive, en remplacement d'un exemplaire.",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "db",
+       "sub": "colonne : nom_complet"
+      }
+     ],
+     "hud": [
+      {
+       "label": "colonnes",
+       "value": "nom_complet"
+      }
+     ],
+     "say": "Elle renomme la colonne « nom » en « nom_complet »."
+    },
+    {
+     "do": "send",
+     "path": [
+      "users",
+      "lb",
+      "a1",
+      "db"
+     ],
+     "tone": "b",
+     "label": "commande",
+     "kind": "read"
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "a1",
+       "tone": "r",
+       "label": "erreur"
+      },
+      {
+       "id": "a2",
+       "tone": "r",
+       "label": "erreur"
+      }
+     ],
+     "hud": [
+      {
+       "label": "v1",
+       "value": "en erreur",
+       "tone": "r"
+      }
+     ],
+     "say": "La v1 cherche encore « nom » : elle tombe en erreur."
+    },
+    {
+     "do": "wait",
+     "ms": 2200
+    }
+   ]
+  },
+  {
+   "id": "database",
+   "label": "En trois temps",
+   "title": "Changer la base en trois temps",
+   "body": [
+    "Élargir, déployer, resserrer : à chaque instant, chaque version trouve la colonne qu'elle connaît."
+   ],
+   "hud": [
+    {
+     "label": "version",
+     "value": "v1",
+     "tone": "b"
+    },
+    {
+     "label": "colonnes",
+     "value": "nom"
+    }
+   ],
+   "show": [
+    "users",
+    "lb",
+    {
+     "id": "a1",
+     "at": [
+      -4.0,
+      2.0
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a2",
+     "at": [
+      -1.0,
+      -1.0
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a3",
+     "at": [
+      2.0,
+      -4.0
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "db",
+     "sub": "une seule base"
+    }
+   ],
+   "links": [
+    {
+     "from": "lb",
+     "to": "a1"
+    },
+    {
+     "from": "lb",
+     "to": "a2"
+    },
+    {
+     "from": "lb",
+     "to": "a3"
+    },
+    {
+     "from": "a1",
+     "to": "db"
+    },
+    {
+     "from": "a2",
+     "to": "db"
+    },
+    {
+     "from": "a3",
+     "to": "db"
+    }
+   ],
+   "script": [
+    {
+     "do": "send",
+     "path": [
+      "users",
+      "lb",
+      "a2",
+      "db"
+     ],
+     "label": "commande",
+     "kind": "read"
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "colonnes",
+       "value": "nom + nom_complet"
+      }
+     ],
+     "say": "1. Élargir : on ajoute la nouvelle colonne, l'ancienne reste."
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "a3"
+     ],
+     "show": [
+      {
+       "id": "b3",
+       "at": [
+        2.0,
+        -4.0
+       ],
+       "label": "v2"
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b3"
+      },
+      {
+       "from": "b3",
+       "to": "db"
+      }
+     ],
+     "hud": [
+      {
+       "label": "version",
+       "value": "v1 + v2",
+       "tone": null
+      }
+     ],
+     "say": "2. Déployer : la version 2 arrive, les deux versions écrivent dans la même base.",
+     "ms": 900
+    },
+    {
+     "do": "send",
+     "path": [
+      "users",
+      "lb",
+      "b3",
+      "db"
+     ],
+     "label": "commande",
+     "kind": "read"
+    },
+    {
+     "do": "send",
+     "path": [
+      "users",
+      "lb",
+      "a1",
+      "db"
+     ],
+     "label": "commande",
+     "kind": "read"
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "a1",
+      "a2"
+     ],
+     "show": [
+      {
+       "id": "b1",
+       "at": [
+        -4.0,
+        2.0
+       ],
+       "label": "v2"
+      },
+      {
+       "id": "b2",
+       "at": [
+        -1.0,
+        -1.0
+       ],
+       "label": "v2"
+      }
+     ],
+     "link": [
+      {
+       "from": "lb",
+       "to": "b1"
+      },
+      {
+       "from": "lb",
+       "to": "b2"
+      },
+      {
+       "from": "b1",
+       "to": "db"
+      },
+      {
+       "from": "b2",
+       "to": "db"
+      }
+     ],
+     "hud": [
+      {
+       "label": "version",
+       "value": "v2",
+       "tone": "g"
+      }
+     ],
+     "say": "Chaque version trouve la colonne qu'elle connaît. Puis les dernières v1 sont remplacées.",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "colonnes",
+       "value": "nom_complet"
+      }
+     ],
+     "say": "3. Resserrer : plus aucune v1 ne tourne, on retire l'ancienne colonne."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    }
+   ]
+  },
+  {
+   "id": "ab-testing",
+   "label": "A/B testing",
+   "title": "A/B testing : comparer deux versions sur de vrais utilisateurs",
+   "body": [
+    "Les deux versions tournent en même temps, et ce n'est plus le hasard qui choisit : le répartiteur envoie le **groupe A** vers l'une et le **groupe B** vers l'autre, selon un critère (pays, appareil, tirage au sort mémorisé).",
+    "C'est un **test produit** plus qu'une façon de livrer : on mesure laquelle des deux donne le meilleur résultat (clics, achats). Le marketing ou l'UX le pilote."
+   ],
+   "hud": [
+    {
+     "label": "groupe A",
+     "value": "v1",
+     "tone": "b"
+    },
+    {
+     "label": "groupe B",
+     "value": "v2",
+     "tone": "g"
+    },
+    {
+     "label": "on mesure",
+     "value": "l'usage"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "group-a",
+      "lb"
+     ],
+     "spread": [
+      "a1",
+      "a2"
+     ],
+     "label": "A",
+     "tone": "b",
+     "gap": 900
+    },
+    {
+     "path": [
+      "group-b",
+      "lb"
+     ],
+     "spread": [
+      "b2",
+      "b3"
+     ],
+     "label": "B",
+     "tone": "g",
+     "gap": 900,
+     "delay": 1250
+    }
+   ],
+   "show": [
+    {
+     "id": "group-a",
+     "tone": "b"
+    },
+    {
+     "id": "group-b",
+     "tone": "g"
+    },
+    "lb",
+    {
+     "id": "a1",
+     "at": [
+      -4.375,
+      2.375
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "a2",
+     "at": [
+      -2.125,
+      0.125
+     ],
+     "label": "v1"
+    },
+    {
+     "id": "b2",
+     "at": [
+      0.125,
+      -2.125
+     ],
+     "label": "v2"
+    },
+    {
+     "id": "b3",
+     "at": [
+      2.375,
+      -4.375
+     ],
+     "label": "v2"
+    }
+   ],
+   "links": [
+    {
+     "from": "group-a",
+     "to": "lb"
+    },
+    {
+     "from": "group-b",
+     "to": "lb"
+    },
+    {
+     "from": "lb",
+     "to": "a1"
+    },
+    {
+     "from": "lb",
+     "to": "a2"
+    },
+    {
+     "from": "lb",
+     "to": "b2"
+    },
+    {
+     "from": "lb",
+     "to": "b3"
+    }
+   ]
+  },
+  {
+   "id": "feature-flag",
+   "label": "Feature flag",
+   "title": "Feature flag : livrer le code, l'ouvrir à qui on veut",
+   "body": [
+    "Ici, il n'y a qu'une version en production. Elle contient déjà la nouvelle fonctionnalité, mais derrière un interrupteur : le **feature flag**. À chaque requête, le code lit le flag pour savoir quoi afficher.",
+    "On l'allume d'abord pour quelques **testeurs** : c'est souvent l'usage premier, ouvrir une fonctionnalité en avant-première (*preview*, bêta). Puis pour tous, sans rien redéployer. Et on l'éteint si elle pose problème, sans redéployer non plus."
+   ],
+   "hud": [
+    {
+     "label": "versions",
+     "value": 1
+    },
+    {
+     "label": "redéployer",
+     "value": "non"
+    },
+    {
+     "label": "flag allumé",
+     "value": "testeurs",
+     "tone": "g"
+    }
+   ],
+   "links": [
+    {
+     "from": "group-a",
+     "to": "lb"
+    },
+    {
+     "from": "group-b",
+     "to": "lb"
+    },
+    {
+     "from": "lb",
+     "to": "b1"
+    },
+    {
+     "from": "lb",
+     "to": "b2"
+    },
+    {
+     "from": "lb",
+     "to": "b3"
+    },
+    {
+     "from": "b1",
+     "to": "flags"
+    },
+    {
+     "from": "b2",
+     "to": "flags"
+    },
+    {
+     "from": "b3",
+     "to": "flags"
+    }
+   ],
+   "show": [
+    {
+     "id": "group-a",
+     "label": "utilisateurs",
+     "tone": "n",
+     "detail": "Pour eux, le flag est éteint : ils gardent l'ancien écran."
+    },
+    {
+     "id": "group-b",
+     "label": "testeurs",
+     "tone": "g",
+     "detail": "Pour les testeurs, le flag est allumé : ils voient la nouvelle fonctionnalité en avant-première."
+    },
+    "lb",
+    {
+     "id": "flags",
+     "sub": "lu à chaque requête"
+    },
+    {
+     "id": "b1",
+     "at": [
+      -4.0,
+      2.0
+     ],
+     "label": "même code",
+     "detail": "Le même code tourne sur tous les exemplaires : la nouvelle fonctionnalité y est déjà, cachée derrière le flag. C'est le flag, lu à chaque requête, qui décide de l'afficher."
+    },
+    {
+     "id": "b2",
+     "at": [
+      -1.0,
+      -1.0
+     ],
+     "label": "même code",
+     "detail": "Le même code tourne sur tous les exemplaires : la nouvelle fonctionnalité y est déjà, cachée derrière le flag. C'est le flag, lu à chaque requête, qui décide de l'afficher."
+    },
+    {
+     "id": "b3",
+     "at": [
+      2.0,
+      -4.0
+     ],
+     "label": "même code",
+     "detail": "Le même code tourne sur tous les exemplaires : la nouvelle fonctionnalité y est déjà, cachée derrière le flag. C'est le flag, lu à chaque requête, qui décide de l'afficher."
+    }
+   ],
+   "script": [
+    {
+     "do": "send",
+     "path": [
+      "group-a",
+      "lb",
+      "b1",
+      "flags"
+     ],
+     "tone": "n",
+     "label": "requête",
+     "reply": "ancien écran"
+    },
+    {
+     "do": "send",
+     "path": [
+      "group-b",
+      "lb",
+      "b3",
+      "flags"
+     ],
+     "tone": "g",
+     "label": "requête",
+     "reply": "nouvel écran"
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "group-a",
+       "tone": "g"
+      }
+     ],
+     "hud": [
+      {
+       "label": "flag allumé",
+       "value": "tous"
+      }
+     ],
+     "say": "On ouvre la fonctionnalité à tout le monde, sans rien redéployer."
+    },
+    {
+     "do": "send",
+     "path": [
+      "group-a",
+      "lb",
+      "b1",
+      "flags"
+     ],
+     "tone": "g",
+     "label": "requête",
+     "reply": "nouvel écran"
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    }
+   ]
+  }
+ ]
+}

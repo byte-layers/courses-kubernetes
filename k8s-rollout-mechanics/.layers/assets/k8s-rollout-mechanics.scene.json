@@ -1,0 +1,1643 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "k8s-rollout-mechanics",
+ "title": "Les stratégies de déploiement dans Kubernetes",
+ "lang": "fr",
+ "kit": "feuillete",
+ "legend": [
+  {
+   "tone": "b",
+   "label": "version 1"
+  },
+  {
+   "tone": "g",
+   "label": "version 2"
+  },
+  {
+   "kind": "req",
+   "label": "requête"
+  },
+  {
+   "tone": "r",
+   "label": "pas prêt"
+  }
+ ],
+ "entities": [
+  {
+   "id": "users",
+   "kind": "actor",
+   "at": [
+    -0.75,
+    8.75
+   ],
+   "label": "les utilisateurs",
+   "detail": "Les utilisateurs s'adressent au Service, jamais à un pod : ils ne savent pas lequel leur répond."
+  },
+  {
+   "id": "svc",
+   "kind": "node",
+   "at": [
+    4.0,
+    4.0
+   ],
+   "size": [
+    2.0,
+    2.0,
+    1.0
+   ],
+   "tone": "v",
+   "title": "Service web",
+   "sub": "vers les pods prêts",
+   "detail": "Le Service tient la liste des pods prêts (ses *endpoints*) et répartit les requêtes entre eux. Un pod qui démarre n'y entre qu'une fois prêt ; un pod qui s'arrête en sort tout de suite."
+  },
+  {
+   "id": "deploy",
+   "kind": "node",
+   "at": [
+    -4.25,
+    -4.25
+   ],
+   "size": [
+    2.2,
+    2.2,
+    1.0
+   ],
+   "tone": "v",
+   "title": "Deployment web",
+   "sub": "image : v1",
+   "detail": "Le Deployment décrit ce que tu veux : l'image et le nombre de pods. Quand l'image change, il ne touche pas aux pods lui-même : il crée un nouveau ReplicaSet et règle le nombre de pods de chacun."
+  },
+  {
+   "id": "rs1",
+   "kind": "node",
+   "at": [
+    -8.5,
+    0.0
+   ],
+   "size": [
+    2.0,
+    2.0,
+    0.9
+   ],
+   "tone": "b",
+   "title": "ReplicaSet v1",
+   "note": "replicas: 3",
+   "detail": "Un ReplicaSet garde en vie un nombre de pods identiques. Celui-ci fait tourner la version 1."
+  },
+  {
+   "id": "rs2",
+   "kind": "node",
+   "at": [
+    0.0,
+    -8.5
+   ],
+   "size": [
+    2.0,
+    2.0,
+    0.9
+   ],
+   "tone": "g",
+   "title": "ReplicaSet v2",
+   "note": "replicas: 0",
+   "detail": "Le ReplicaSet de la version 2, créé par le Deployment au changement d'image. Son nombre de pods monte pendant que celui du v1 descend."
+  },
+  {
+   "id": "p1a",
+   "kind": "program",
+   "at": [
+    -0.6,
+    -0.6
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "b",
+   "label": "Ready",
+   "detail": "Un pod de la version 1. Le Service ne lui envoie des requêtes que tant qu'il est **prêt** (*Ready*)."
+  },
+  {
+   "id": "p1b",
+   "kind": "program",
+   "at": [
+    -0.6,
+    -0.6
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "b",
+   "label": "Ready",
+   "detail": "Un pod de la version 1. Le Service ne lui envoie des requêtes que tant qu'il est **prêt** (*Ready*)."
+  },
+  {
+   "id": "p1c",
+   "kind": "program",
+   "at": [
+    -0.6,
+    -0.6
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "b",
+   "label": "Ready",
+   "detail": "Un pod de la version 1. Le Service ne lui envoie des requêtes que tant qu'il est **prêt** (*Ready*)."
+  },
+  {
+   "id": "p2a",
+   "kind": "program",
+   "at": [
+    -0.6,
+    -0.6
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "g",
+   "label": "Ready",
+   "detail": "Un pod de la version 2. Tant que sa sonde de disponibilité (*readiness probe*) ne répond pas, il n'est pas prêt, et le Service ne lui envoie rien."
+  },
+  {
+   "id": "p2b",
+   "kind": "program",
+   "at": [
+    -0.6,
+    -0.6
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "g",
+   "label": "Ready",
+   "detail": "Un pod de la version 2. Tant que sa sonde de disponibilité (*readiness probe*) ne répond pas, il n'est pas prêt, et le Service ne lui envoie rien."
+  },
+  {
+   "id": "p2c",
+   "kind": "program",
+   "at": [
+    -0.6,
+    -0.6
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.8
+   ],
+   "tone": "g",
+   "label": "Ready",
+   "detail": "Un pod de la version 2. Tant que sa sonde de disponibilité (*readiness probe*) ne répond pas, il n'est pas prêt, et le Service ne lui envoie rien."
+  }
+ ],
+ "steps": [
+  {
+   "id": "recreate",
+   "label": "Recreate",
+   "title": "Recreate : tout arrêter, puis tout relancer",
+   "body": [
+    "Le Deployment arrête tous les pods v1, puis démarre les pods v2.",
+    "Entre les deux, aucun pod n'est prêt : le Service n'a plus personne à qui envoyer les requêtes."
+   ],
+   "hud": [
+    {
+     "label": "type",
+     "value": "Recreate"
+    },
+    {
+     "label": "pods prêts",
+     "value": 3
+    },
+    {
+     "label": "service",
+     "value": "en service"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "svc"
+     ],
+     "spread": true,
+     "gap": 420,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "svc",
+    "deploy",
+    "rs1",
+    {
+     "id": "p1a",
+     "at": [
+      -3.1,
+      1.9
+     ]
+    },
+    {
+     "id": "p1b",
+     "at": [
+      -0.6,
+      -0.6
+     ]
+    },
+    {
+     "id": "p1c",
+     "at": [
+      1.9,
+      -3.1
+     ]
+    }
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "svc"
+    },
+    {
+     "from": "deploy",
+     "to": "rs1"
+    },
+    {
+     "from": "svc",
+     "to": "p1a"
+    },
+    {
+     "from": "svc",
+     "to": "p1b"
+    },
+    {
+     "from": "svc",
+     "to": "p1c"
+    },
+    {
+     "from": "rs1",
+     "to": "p1a"
+    },
+    {
+     "from": "rs1",
+     "to": "p1b"
+    },
+    {
+     "from": "rs1",
+     "to": "p1c"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "deploy",
+       "sub": "image : v2"
+      },
+      {
+       "id": "rs1",
+       "note": "replicas: 0"
+      },
+      {
+       "id": "p1a",
+       "label": "Terminating",
+       "dim": true
+      },
+      {
+       "id": "p1b",
+       "label": "Terminating",
+       "dim": true
+      },
+      {
+       "id": "p1c",
+       "label": "Terminating",
+       "dim": true
+      }
+     ],
+     "unlink": [
+      {
+       "from": "svc",
+       "to": "p1a"
+      },
+      {
+       "from": "svc",
+       "to": "p1b"
+      },
+      {
+       "from": "svc",
+       "to": "p1c"
+      },
+      {
+       "from": "rs1",
+       "to": "p1a"
+      },
+      {
+       "from": "rs1",
+       "to": "p1b"
+      },
+      {
+       "from": "rs1",
+       "to": "p1c"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 0,
+       "tone": "r"
+      },
+      {
+       "label": "service",
+       "value": "hors service",
+       "tone": "r"
+      }
+     ],
+     "say": "L'image passe en v2 : le Deployment arrête d'abord tous les pods v1."
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "p1a",
+      "p1b",
+      "p1c"
+     ],
+     "set": [
+      {
+       "id": "rs1",
+       "dim": true
+      }
+     ],
+     "say": "Plus aucun pod prêt : chaque requête revient en erreur."
+    },
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "rs2",
+       "note": "replicas: 3"
+      },
+      {
+       "id": "p2a",
+       "at": [
+        -3.1,
+        1.9
+       ],
+       "label": "démarre…",
+       "dim": true
+      },
+      {
+       "id": "p2b",
+       "at": [
+        -0.6,
+        -0.6
+       ],
+       "label": "démarre…",
+       "dim": true
+      },
+      {
+       "id": "p2c",
+       "at": [
+        1.9,
+        -3.1
+       ],
+       "label": "démarre…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "deploy",
+       "to": "rs2"
+      },
+      {
+       "from": "rs2",
+       "to": "p2a"
+      },
+      {
+       "from": "rs2",
+       "to": "p2b"
+      },
+      {
+       "from": "rs2",
+       "to": "p2c"
+      }
+     ],
+     "say": "Alors seulement, il crée le ReplicaSet v2, qui démarre trois pods."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p2a",
+       "label": "Ready",
+       "dim": null
+      },
+      {
+       "id": "p2b",
+       "label": "Ready",
+       "dim": null
+      },
+      {
+       "id": "p2c",
+       "label": "Ready",
+       "dim": null
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "p2a"
+      },
+      {
+       "from": "svc",
+       "to": "p2b"
+      },
+      {
+       "from": "svc",
+       "to": "p2c"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 3,
+       "tone": null
+      },
+      {
+       "label": "service",
+       "value": "en service",
+       "tone": null
+      }
+     ],
+     "say": "Les pods v2 sont prêts : le service revient."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "surge",
+   "label": "Un de plus",
+   "title": "maxSurge 1, maxUnavailable 0 : un pod de plus, d'abord",
+   "body": [
+    "On change l'image du Deployment. Il crée un second ReplicaSet, pour la v2, et fait passer les pods de l'un à l'autre.",
+    "`maxSurge: 1` autorise un pod de plus que demandé ; `maxUnavailable: 0` interdit d'avoir moins de pods prêts. Le Service n'envoie rien à un pod qui démarre."
+   ],
+   "hud": [
+    {
+     "label": "maxSurge",
+     "value": 1
+    },
+    {
+     "label": "maxUnavailable",
+     "value": 0
+    },
+    {
+     "label": "pods demandés",
+     "value": 3
+    },
+    {
+     "label": "pods prêts",
+     "value": 3
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "svc"
+     ],
+     "spread": true,
+     "gap": 420,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "svc",
+    "deploy",
+    "rs1",
+    {
+     "id": "p1a",
+     "at": [
+      -4.35,
+      3.15
+     ]
+    },
+    {
+     "id": "p1b",
+     "at": [
+      -1.85,
+      0.65
+     ]
+    },
+    {
+     "id": "p1c",
+     "at": [
+      0.65,
+      -1.85
+     ]
+    }
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "svc"
+    },
+    {
+     "from": "deploy",
+     "to": "rs1"
+    },
+    {
+     "from": "svc",
+     "to": "p1a"
+    },
+    {
+     "from": "svc",
+     "to": "p1b"
+    },
+    {
+     "from": "svc",
+     "to": "p1c"
+    },
+    {
+     "from": "rs1",
+     "to": "p1a"
+    },
+    {
+     "from": "rs1",
+     "to": "p1b"
+    },
+    {
+     "from": "rs1",
+     "to": "p1c"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "deploy",
+       "sub": "image : v2"
+      }
+     ],
+     "show": [
+      "rs2"
+     ],
+     "link": [
+      {
+       "from": "deploy",
+       "to": "rs2"
+      }
+     ],
+     "say": "L'image passe en v2 : le Deployment crée un ReplicaSet pour elle."
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "rs2",
+       "note": "replicas: 1"
+      }
+     ],
+     "show": [
+      {
+       "id": "p2a",
+       "at": [
+        3.15,
+        -4.35
+       ],
+       "label": "démarre…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "rs2",
+       "to": "p2a"
+      }
+     ],
+     "say": "Un pod v2 démarre, en plus des trois autres. Il n'est pas prêt : le Service ne lui envoie rien."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p2a",
+       "label": "Ready",
+       "dim": null
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "p2a"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 4
+      }
+     ],
+     "say": "Il est prêt : le Service l'ajoute à sa liste et lui envoie sa part."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "rs1",
+       "note": "replicas: 2"
+      },
+      {
+       "id": "p1a",
+       "label": "Terminating",
+       "dim": true
+      }
+     ],
+     "unlink": [
+      {
+       "from": "svc",
+       "to": "p1a"
+      },
+      {
+       "from": "rs1",
+       "to": "p1a"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 3
+      }
+     ],
+     "say": "Alors seulement, un pod v1 s'arrête. Le Service l'a retiré : il ne reçoit plus rien."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "p1a"
+     ],
+     "set": [
+      {
+       "id": "p1b",
+       "at": [
+        -4.35,
+        3.15
+       ]
+      },
+      {
+       "id": "p1c",
+       "at": [
+        -1.85,
+        0.65
+       ]
+      },
+      {
+       "id": "p2a",
+       "at": [
+        0.65,
+        -1.85
+       ]
+      }
+     ],
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "rs2",
+       "note": "replicas: 2"
+      }
+     ],
+     "show": [
+      {
+       "id": "p2b",
+       "at": [
+        3.15,
+        -4.35
+       ],
+       "label": "démarre…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "rs2",
+       "to": "p2b"
+      }
+     ],
+     "say": "On recommence : un pod v2 démarre…"
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p2b",
+       "label": "Ready",
+       "dim": null
+      },
+      {
+       "id": "rs1",
+       "note": "replicas: 1"
+      },
+      {
+       "id": "p1b",
+       "label": "Terminating",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "p2b"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "svc",
+       "to": "p1b"
+      },
+      {
+       "from": "rs1",
+       "to": "p1b"
+      }
+     ],
+     "say": "… il est prêt, un pod v1 s'arrête."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "p1b"
+     ],
+     "set": [
+      {
+       "id": "p1c",
+       "at": [
+        -4.35,
+        3.15
+       ]
+      },
+      {
+       "id": "p2a",
+       "at": [
+        -1.85,
+        0.65
+       ]
+      },
+      {
+       "id": "p2b",
+       "at": [
+        0.65,
+        -1.85
+       ]
+      }
+     ],
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "rs2",
+       "note": "replicas: 3"
+      }
+     ],
+     "show": [
+      {
+       "id": "p2c",
+       "at": [
+        3.15,
+        -4.35
+       ],
+       "label": "démarre…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "rs2",
+       "to": "p2c"
+      }
+     ],
+     "say": "Puis pour le dernier."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p2c",
+       "label": "Ready",
+       "dim": null
+      },
+      {
+       "id": "rs1",
+       "note": "replicas: 0"
+      },
+      {
+       "id": "p1c",
+       "label": "Terminating",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "p2c"
+      }
+     ],
+     "unlink": [
+      {
+       "from": "svc",
+       "to": "p1c"
+      },
+      {
+       "from": "rs1",
+       "to": "p1c"
+      }
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "p1c"
+     ],
+     "set": [
+      {
+       "id": "p2a",
+       "at": [
+        -3.1,
+        1.9
+       ]
+      },
+      {
+       "id": "p2b",
+       "at": [
+        -0.6,
+        -0.6
+       ]
+      },
+      {
+       "id": "p2c",
+       "at": [
+        1.9,
+        -3.1
+       ]
+      },
+      {
+       "id": "rs1",
+       "dim": true
+      }
+     ],
+     "say": "Trois pods v2. Le ReplicaSet v1 reste, vide : c'est lui qui servira à revenir en arrière.",
+     "ms": 1000
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "unavailable",
+   "label": "Un de moins",
+   "title": "maxSurge 0, maxUnavailable 1 : un pod de moins, d'abord",
+   "body": [
+    "L'autre réglage : pas un pod de plus, mais un pod prêt de moins. Le Deployment arrête d'abord un pod v1, puis démarre un pod v2 à sa place.",
+    "Aucune machine en plus n'est nécessaire. En échange, pendant la mise à jour, il reste **deux pods sur trois** pour répondre."
+   ],
+   "hud": [
+    {
+     "label": "maxSurge",
+     "value": 0
+    },
+    {
+     "label": "maxUnavailable",
+     "value": 1
+    },
+    {
+     "label": "pods demandés",
+     "value": 3
+    },
+    {
+     "label": "pods prêts",
+     "value": 3
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "svc"
+     ],
+     "spread": true,
+     "gap": 420,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "svc",
+    "deploy",
+    "rs1",
+    {
+     "id": "p1a",
+     "at": [
+      -3.1,
+      1.9
+     ]
+    },
+    {
+     "id": "p1b",
+     "at": [
+      -0.6,
+      -0.6
+     ]
+    },
+    {
+     "id": "p1c",
+     "at": [
+      1.9,
+      -3.1
+     ]
+    }
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "svc"
+    },
+    {
+     "from": "deploy",
+     "to": "rs1"
+    },
+    {
+     "from": "svc",
+     "to": "p1a"
+    },
+    {
+     "from": "svc",
+     "to": "p1b"
+    },
+    {
+     "from": "svc",
+     "to": "p1c"
+    },
+    {
+     "from": "rs1",
+     "to": "p1a"
+    },
+    {
+     "from": "rs1",
+     "to": "p1b"
+    },
+    {
+     "from": "rs1",
+     "to": "p1c"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "deploy",
+       "sub": "image : v2"
+      }
+     ],
+     "show": [
+      "rs2"
+     ],
+     "link": [
+      {
+       "from": "deploy",
+       "to": "rs2"
+      }
+     ],
+     "say": "L'image passe en v2 : le Deployment crée un ReplicaSet pour elle."
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "rs1",
+       "note": "replicas: 2"
+      },
+      {
+       "id": "p1c",
+       "label": "Terminating",
+       "dim": true
+      }
+     ],
+     "unlink": [
+      {
+       "from": "svc",
+       "to": "p1c"
+      },
+      {
+       "from": "rs1",
+       "to": "p1c"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 2,
+       "tone": "r"
+      }
+     ],
+     "say": "Cette fois, un pod v1 s'arrête d'abord : il ne reste que deux pods pour répondre."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "p1c"
+     ],
+     "set": [
+      {
+       "id": "rs2",
+       "note": "replicas: 1"
+      }
+     ],
+     "show": [
+      {
+       "id": "p2a",
+       "at": [
+        1.9,
+        -3.1
+       ],
+       "label": "démarre…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "rs2",
+       "to": "p2a"
+      }
+     ],
+     "say": "Un pod v2 prend sa place, et démarre.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p2a",
+       "label": "Ready",
+       "dim": null
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "p2a"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 3,
+       "tone": null
+      }
+     ],
+     "say": "Il est prêt : on revient à trois."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "rs1",
+       "note": "replicas: 1"
+      },
+      {
+       "id": "p1b",
+       "label": "Terminating",
+       "dim": true
+      }
+     ],
+     "unlink": [
+      {
+       "from": "svc",
+       "to": "p1b"
+      },
+      {
+       "from": "rs1",
+       "to": "p1b"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 2,
+       "tone": "r"
+      }
+     ],
+     "say": "Même chose pour le deuxième…"
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "p1b"
+     ],
+     "set": [
+      {
+       "id": "rs2",
+       "note": "replicas: 2"
+      }
+     ],
+     "show": [
+      {
+       "id": "p2b",
+       "at": [
+        -0.6,
+        -0.6
+       ],
+       "label": "démarre…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "rs2",
+       "to": "p2b"
+      }
+     ],
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p2b",
+       "label": "Ready",
+       "dim": null
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "p2b"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 3,
+       "tone": null
+      }
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "rs1",
+       "note": "replicas: 0"
+      },
+      {
+       "id": "p1a",
+       "label": "Terminating",
+       "dim": true
+      }
+     ],
+     "unlink": [
+      {
+       "from": "svc",
+       "to": "p1a"
+      },
+      {
+       "from": "rs1",
+       "to": "p1a"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 2,
+       "tone": "r"
+      }
+     ],
+     "say": "… et pour le troisième."
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "p1a"
+     ],
+     "set": [
+      {
+       "id": "rs2",
+       "note": "replicas: 3"
+      }
+     ],
+     "show": [
+      {
+       "id": "p2c",
+       "at": [
+        -3.1,
+        1.9
+       ],
+       "label": "démarre…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "rs2",
+       "to": "p2c"
+      }
+     ],
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p2c",
+       "label": "Ready",
+       "dim": null
+      },
+      {
+       "id": "rs1",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "p2c"
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods prêts",
+       "value": 3,
+       "tone": null
+      }
+     ],
+     "say": "Trois pods v2, sans pod en plus. Mais le service a tourné à deux sur trois."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "stuck",
+   "label": "Jamais prêt",
+   "title": "Et si le pod v2 n'est jamais prêt ?",
+   "body": [
+    "La v2 a un défaut : son pod démarre, mais sa sonde de disponibilité échoue. Il ne devient jamais prêt.",
+    "Avec `maxUnavailable: 0`, aucun pod v1 ne s'arrête tant qu'un pod v2 n'est pas prêt. La mise à jour reste bloquée, les utilisateurs ne voient rien."
+   ],
+   "hud": [
+    {
+     "label": "maxUnavailable",
+     "value": 0
+    },
+    {
+     "label": "pods prêts",
+     "value": 3
+    },
+    {
+     "label": "mise à jour",
+     "value": "—"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "svc"
+     ],
+     "spread": true,
+     "gap": 420,
+     "fallback": "erreur"
+    }
+   ],
+   "show": [
+    "users",
+    "svc",
+    "deploy",
+    "rs1",
+    {
+     "id": "p1a",
+     "at": [
+      -4.35,
+      3.15
+     ]
+    },
+    {
+     "id": "p1b",
+     "at": [
+      -1.85,
+      0.65
+     ]
+    },
+    {
+     "id": "p1c",
+     "at": [
+      0.65,
+      -1.85
+     ]
+    }
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "svc"
+    },
+    {
+     "from": "deploy",
+     "to": "rs1"
+    },
+    {
+     "from": "svc",
+     "to": "p1a"
+    },
+    {
+     "from": "svc",
+     "to": "p1b"
+    },
+    {
+     "from": "svc",
+     "to": "p1c"
+    },
+    {
+     "from": "rs1",
+     "to": "p1a"
+    },
+    {
+     "from": "rs1",
+     "to": "p1b"
+    },
+    {
+     "from": "rs1",
+     "to": "p1c"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "deploy",
+       "sub": "image : v2"
+      }
+     ],
+     "show": [
+      {
+       "id": "rs2",
+       "note": "replicas: 1"
+      },
+      {
+       "id": "p2a",
+       "at": [
+        3.15,
+        -4.35
+       ],
+       "label": "démarre…",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "deploy",
+       "to": "rs2"
+      },
+      {
+       "from": "rs2",
+       "to": "p2a"
+      }
+     ],
+     "hud": [
+      {
+       "label": "mise à jour",
+       "value": "en cours"
+      }
+     ],
+     "say": "L'image passe en v2, un pod v2 démarre."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p2a",
+       "label": "pas prêt",
+       "tone": "r",
+       "dim": null
+      }
+     ],
+     "say": "Sa sonde échoue : il n'est pas prêt, le Service ne lui envoie rien."
+    },
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "utilisateurs",
+       "value": "tous servis",
+       "tone": "b"
+      }
+     ],
+     "say": "Aucun pod v1 ne s'arrête : les trois répondent toujours."
+    },
+    {
+     "do": "wait",
+     "ms": 2400
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "deploy",
+       "label": "en échec"
+      }
+     ],
+     "hud": [
+      {
+       "label": "mise à jour",
+       "value": "en échec",
+       "tone": "r"
+      }
+     ],
+     "say": "Passé un délai, le Deployment déclare la mise à jour en échec. Il ne revient pas en arrière tout seul."
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "deploy",
+       "sub": "image : v1",
+       "label": null
+      },
+      {
+       "id": "rs2",
+       "note": "replicas: 0"
+      },
+      {
+       "id": "p2a",
+       "label": "Terminating",
+       "dim": true
+      }
+     ],
+     "unlink": [
+      {
+       "from": "rs2",
+       "to": "p2a"
+      }
+     ],
+     "hud": [
+      {
+       "label": "mise à jour",
+       "value": "annulée",
+       "tone": null
+      }
+     ],
+     "say": "`kubectl rollout undo` : l'image revient en v1, le pod v2 s'arrête."
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "p2a"
+     ],
+     "set": [
+      {
+       "id": "rs2",
+       "dim": true
+      }
+     ],
+     "say": "Les pods v1 n'ont jamais cessé de répondre."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  }
+ ]
+}

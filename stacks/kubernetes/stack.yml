@@ -60,6 +60,8 @@ layers:
     contents:
       - { slug: k8s-voting-app-production }
       - { slug: k8s-troubleshooting-challenge, role: proof }
+      - { slug: deployment-strategies }
+      - { slug: k8s-rollout-mechanics }
       - { slug: vm-to-kubernetes }
       - { slug: k8s-when-to-use }
       - { slug: k8s-reference-cluster }
