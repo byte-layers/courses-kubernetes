@@ -7,7 +7,7 @@ tags:
   - containers
 difficulty: beginner
 duration: 20
-requires: "0.5.0"
+requires: "0.6.0"
 ---
 
 Le cluster sur lequel vous avez travaillé tient sur votre machine : un nœud, l'application de vote, et `kubectl` entre vos mains. Un cluster de production est entouré d'outils, et leurs noms reviennent dans toutes les conversations : Argo CD, Cilium, Vault, Grafana… Cette page les pose un à un sur un même schéma, en répondant chaque fois à une question simple. Vous saurez à quoi sert chaque pièce, et ce qu'elle remplace ou complète dans ce que vous connaissez déjà.
@@ -20,7 +20,7 @@ Le cluster sur lequel vous avez travaillé tient sur votre machine : un nœud, l
 
 # Un cluster de référence, pièce par pièce
 
-Le schéma se construit en huit questions, puis une vue d'ensemble. Chaque section a sa scène : le bouton **Jouer** l'ouvre en grand, les pièces nouvelles s'ajoutent à celles des sections précédentes, et la pastille rose d'une pièce ouvre son détail. Personne n'installe tout cela d'un coup : c'est une cible, vers laquelle une équipe avance pièce par pièce.
+Le schéma se construit en huit questions, puis une vue d'ensemble. Chaque section a sa scène : le bouton **Jouer** l'ouvre en grand, chaque section nomme ses pièces nouvelles, celles des sections précédentes restent à leur place, et la pastille rose d'une carte ouvre le détail de la pièce. Personne n'installe tout cela d'un coup : c'est une cible, vers laquelle une équipe avance pièce par pièce.
 
 ## Qui fait tourner les conteneurs ?
 
@@ -179,7 +179,7 @@ Un détail compte : les pièces roses, les services de la plateforme, sont elles
 
 ## Une carte pour la suite
 
-Ce parcours vous a appris à vous servir d'un cluster. Chaque zone de ce schéma est un sujet à part entière, avec ses gestes et ses pièges, et ces sujets feront l'objet d'un prochain parcours :
+Ce parcours vous a appris à vous servir d'un cluster. Chaque famille de pièces de ce schéma est un sujet à part entière, avec ses gestes et ses pièges, et ces sujets feront l'objet d'un prochain parcours :
 
 - les paquets, avec Helm et Kustomize ;
 - la livraison par Git, le GitOps ;

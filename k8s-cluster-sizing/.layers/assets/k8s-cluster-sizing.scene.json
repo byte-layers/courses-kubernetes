@@ -1,0 +1,820 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "k8s-cluster-sizing",
+ "title": "Dimensionner les nœuds",
+ "lang": "fr",
+ "kit": "feuillete",
+ "legend": [
+  {
+   "tone": "b",
+   "label": "pod de l'application"
+  },
+  {
+   "tone": "y",
+   "label": "agents"
+  },
+  {
+   "tone": "v",
+   "label": "ordonnanceur"
+  },
+  {
+   "tone": "r",
+   "label": "attente ou panne"
+  }
+ ],
+ "entities": [
+  {
+   "id": "sched",
+   "kind": "node",
+   "at": [
+    -0.75,
+    8.75
+   ],
+   "size": [
+    1.6,
+    1.6,
+    0.9
+   ],
+   "tone": "v",
+   "title": "ordonnanceur",
+   "detail": "L'**ordonnanceur** (*scheduler*) choisit un nœud pour chaque nouveau pod. Il additionne les réservations des pods déjà placés : si la place réservable manque, le pod attend, à l'état **Pending**."
+  },
+  {
+   "id": "n1",
+   "kind": "layer",
+   "at": [
+    0.0,
+    0.0,
+    0
+   ],
+   "size": [
+    9.0,
+    9.0,
+    0.5
+   ],
+   "tone": "n",
+   "title": "un nœud",
+   "sub": "16 Go",
+   "detail": "Une machine du cluster : ici **16 Go** de mémoire et 4 processeurs. Tout n'est pas pour vos pods : le système, le kubelet et les agents en prennent une part. Ce qui reste s'appelle l'**allouable** (*allocatable*)."
+  },
+  {
+   "id": "sys",
+   "kind": "node",
+   "in": "n1",
+   "at": [
+    -2.3,
+    2.3,
+    0.5
+   ],
+   "size": [
+    1.8,
+    1.8,
+    1.0
+   ],
+   "tone": "n",
+   "title": "système et kubelet",
+   "sub": "2,5 Go",
+   "detail": "Le système d'exploitation, le runtime de conteneurs et le **kubelet** ont besoin de mémoire et de processeur. Kubernetes la leur réserve (*system-reserved*, *kube-reserved*) et garde un seuil avant d'évincer des pods. Un service géré règle cette réserve pour vous : de l'ordre de 2 à 3 Go sur un nœud de 16 Go."
+  },
+  {
+   "id": "ag",
+   "kind": "node",
+   "in": "n1",
+   "at": [
+    -1.1,
+    1.1,
+    0.5
+   ],
+   "size": [
+    1.3,
+    1.3,
+    0.8
+   ],
+   "tone": "y",
+   "title": "agents",
+   "sub": "1,5 Go",
+   "detail": "Les **DaemonSets** font tourner un pod sur chaque nœud : l'agent qui collecte les journaux, celui de la supervision, le réseau du cluster… Ils réservent leur part sur chaque nœud, avant vos applications."
+  },
+  {
+   "id": "p0",
+   "kind": "node",
+   "in": "n1",
+   "at": [
+    -0.5,
+    -0.9,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b",
+   "title": "pod",
+   "sub": "réserve 2 Go",
+   "detail": "Un pod de l'application. Il **réserve** 2 Go de mémoire (*requests*) : l'ordonnanceur ne le place que sur un nœud où il reste 2 Go non réservés. Sur le schéma, six pods tiennent sur le nœud."
+  },
+  {
+   "id": "p1",
+   "kind": "node",
+   "in": "n1",
+   "at": [
+    0.5,
+    -1.9,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "p2",
+   "kind": "node",
+   "in": "n1",
+   "at": [
+    1.5,
+    -2.9,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "p3",
+   "kind": "node",
+   "in": "n1",
+   "at": [
+    0.9,
+    0.5,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "p4",
+   "kind": "node",
+   "in": "n1",
+   "at": [
+    1.9,
+    -0.5,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "p5",
+   "kind": "node",
+   "in": "n1",
+   "at": [
+    2.9,
+    -1.5,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "p6",
+   "kind": "node",
+   "at": [
+    6.0,
+    6.0,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "r",
+   "title": "7ᵉ pod",
+   "sub": "Pending",
+   "detail": "Il demande 2 Go et il n'en reste aucun de réservable sur le nœud : il attend qu'une place se libère."
+  },
+  {
+   "id": "w1",
+   "kind": "layer",
+   "at": [
+    -5.5,
+    5.5,
+    0
+   ],
+   "size": [
+    4.6,
+    4.6,
+    0.5
+   ],
+   "tone": "n",
+   "title": "nœud",
+   "detail": "Un nœud de travail. Chacun garde **un tiers de sa place libre** : si l'un des trois tombe, ses pods trouvent de la place sur les deux autres. Sur le schéma, trois nœuds."
+  },
+  {
+   "id": "w2",
+   "kind": "layer",
+   "at": [
+    0.0,
+    0.0,
+    0
+   ],
+   "size": [
+    4.6,
+    4.6,
+    0.5
+   ],
+   "tone": "n"
+  },
+  {
+   "id": "w3",
+   "kind": "layer",
+   "at": [
+    5.5,
+    -5.5,
+    0
+   ],
+   "size": [
+    4.6,
+    4.6,
+    0.5
+   ],
+   "tone": "n"
+  },
+  {
+   "id": "qa",
+   "kind": "node",
+   "in": "w1",
+   "at": [
+    -1.15,
+    1.15,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b",
+   "title": "pod",
+   "detail": "Les pods de l'application : six, deux par nœud."
+  },
+  {
+   "id": "qb",
+   "kind": "node",
+   "in": "w1",
+   "at": [
+    0.0,
+    0.0,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "qc",
+   "kind": "node",
+   "in": "w2",
+   "at": [
+    -1.15,
+    1.15,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "qd",
+   "kind": "node",
+   "in": "w2",
+   "at": [
+    0.0,
+    0.0,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "qe",
+   "kind": "node",
+   "in": "w3",
+   "at": [
+    -1.15,
+    1.15,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "qf",
+   "kind": "node",
+   "in": "w3",
+   "at": [
+    0.0,
+    0.0,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "qe2",
+   "kind": "node",
+   "in": "w1",
+   "at": [
+    1.15,
+    -1.15,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  },
+  {
+   "id": "qf2",
+   "kind": "node",
+   "in": "w2",
+   "at": [
+    1.15,
+    -1.15,
+    0.5
+   ],
+   "size": [
+    1.15,
+    1.15,
+    0.7
+   ],
+   "tone": "b"
+  }
+ ],
+ "steps": [
+  {
+   "id": "allocatable",
+   "label": "Ce qui reste aux pods",
+   "title": "16 Go sur la fiche, 12 pour vos pods",
+   "body": [
+    "Un nœud de 16 Go. Avant vos applications, le système, le kubelet et les agents prennent leur part.",
+    "Les pods se partagent ce qui reste. Quand il n'y a plus de place à réserver, le suivant attend."
+   ],
+   "hud": [
+    {
+     "label": "nœud",
+     "value": "16 Go"
+    },
+    {
+     "label": "pour les pods",
+     "value": "16 Go"
+    },
+    {
+     "label": "réservé (pods)",
+     "value": "0 Go"
+    },
+    {
+     "label": "en attente",
+     "value": "0"
+    }
+   ],
+   "show": [
+    "n1",
+    "sched"
+   ],
+   "links": [
+    {
+     "from": "sched",
+     "to": "n1"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "show": [
+      "sys"
+     ],
+     "hud": [
+      {
+       "label": "pour les pods",
+       "value": "13,5 Go"
+      }
+     ],
+     "say": "Le système et le kubelet ont leur réserve : 2,5 Go."
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "scene",
+     "show": [
+      "ag"
+     ],
+     "hud": [
+      {
+       "label": "pour les pods",
+       "value": "12 Go",
+       "tone": "b"
+      }
+     ],
+     "say": "Les agents des DaemonSets tournent sur chaque nœud : 1,5 Go de plus."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "show": [
+      "p0",
+      "p1",
+      "p2"
+     ],
+     "hud": [
+      {
+       "label": "réservé (pods)",
+       "value": "6 sur 12 Go"
+      }
+     ],
+     "say": "L'ordonnanceur place trois pods. Chacun réserve 2 Go."
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "p3",
+      "p4",
+      "p5"
+     ],
+     "hud": [
+      {
+       "label": "réservé (pods)",
+       "value": "12 sur 12 Go",
+       "tone": "r"
+      }
+     ],
+     "say": "Puis trois autres : les 12 Go sont réservés."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "p6"
+     ],
+     "link": [
+      {
+       "from": "sched",
+       "to": "p6"
+      }
+     ],
+     "hud": [
+      {
+       "label": "en attente",
+       "value": "1",
+       "tone": "r"
+      }
+     ],
+     "say": "Un septième pod arrive. Il n'y a plus 2 Go à réserver : il reste en attente, Pending."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ],
+   "labels": "left"
+  },
+  {
+   "id": "requests",
+   "label": "Réserver juste",
+   "title": "L'ordonnanceur compte les réservations, pas la consommation",
+   "body": [
+    "Les six pods réservent 2 Go chacun, mais n'en utilisent qu'un peu moins d'un : le nœud est à moitié vide.",
+    "Le septième attend quand même. Réserver plus juste libère la place."
+   ],
+   "hud": [
+    {
+     "label": "réservé (pods)",
+     "value": "12 sur 12 Go",
+     "tone": "r"
+    },
+    {
+     "label": "utilisé",
+     "value": "5 Go"
+    },
+    {
+     "label": "en attente",
+     "value": "1",
+     "tone": "r"
+    }
+   ],
+   "show": [
+    "n1",
+    "sched",
+    "sys",
+    "ag",
+    "p0",
+    "p1",
+    "p2",
+    "p3",
+    "p4",
+    "p5",
+    "p6"
+   ],
+   "links": [
+    {
+     "from": "sched",
+     "to": "n1"
+    },
+    {
+     "from": "sched",
+     "to": "p6"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p0",
+       "sub": "réserve 2 Go, utilise 0,8"
+      }
+     ],
+     "hud": [
+      {
+       "label": "utilisé",
+       "value": "5 Go sur 12",
+       "tone": "g"
+      }
+     ],
+     "say": "Chaque pod n'utilise qu'environ 0,8 Go. Le nœud a 7 Go qui ne servent à rien."
+    },
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "en attente",
+       "value": "toujours 1",
+       "tone": "r"
+      }
+     ],
+     "say": "Le septième reste pourtant en attente : l'ordonnanceur ne regarde que les réservations."
+    },
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p0",
+       "sub": "réserve 1,5 Go"
+      }
+     ],
+     "hud": [
+      {
+       "label": "réservé (pods)",
+       "value": "9 sur 12 Go",
+       "tone": "b"
+      }
+     ],
+     "say": "On ajuste la réservation à ce que le pod utilise vraiment, avec une marge : 1,5 Go."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "p6",
+       "in": "n1",
+       "at": [
+        3.1,
+        -3.1,
+        0.5
+       ],
+       "tone": "b",
+       "title": null,
+       "sub": null,
+       "detail": null
+      }
+     ],
+     "unlink": [
+      {
+       "from": "sched",
+       "to": "p6"
+      }
+     ],
+     "hud": [
+      {
+       "label": "réservé (pods)",
+       "value": "10,5 sur 12 Go",
+       "tone": "b"
+      },
+      {
+       "label": "en attente",
+       "value": "0",
+       "tone": "g"
+      }
+     ],
+     "say": "Il y a de nouveau de la place : le septième pod est placé.",
+     "ms": 1000
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ],
+   "labels": "left"
+  },
+  {
+   "id": "node-loss",
+   "label": "La marge",
+   "title": "Garder la place d'un nœud",
+   "body": [
+    "Trois nœuds, deux pods sur chacun, et une place libre sur chacun.",
+    "Quand un nœud tombe, ses pods sont recréés dans les places libres des deux autres."
+   ],
+   "hud": [
+    {
+     "label": "nœuds",
+     "value": "3 sur 3"
+    },
+    {
+     "label": "pods",
+     "value": "6 sur 6"
+    },
+    {
+     "label": "place libre",
+     "value": "un tiers par nœud"
+    }
+   ],
+   "show": [
+    "w1",
+    "w2",
+    "w3",
+    "qa",
+    "qb",
+    "qc",
+    "qd",
+    "qe",
+    "qf"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "w3",
+       "tone": "r",
+       "sub": "en panne"
+      },
+      {
+       "id": "qe",
+       "tone": "r"
+      },
+      {
+       "id": "qf",
+       "tone": "r"
+      }
+     ],
+     "hud": [
+      {
+       "label": "nœuds",
+       "value": "2 sur 3",
+       "tone": "r"
+      },
+      {
+       "label": "pods",
+       "value": "4 sur 6",
+       "tone": "r"
+      }
+     ],
+     "say": "Le nœud 3 tombe, avec ses deux pods."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "qe",
+      "qf"
+     ],
+     "show": [
+      {
+       "id": "qe2",
+       "dim": true
+      },
+      {
+       "id": "qf2",
+       "dim": true
+      }
+     ],
+     "say": "Les pods perdus sont recréés dans les places libres des nœuds 1 et 2.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "qe2",
+       "dim": null
+      },
+      {
+       "id": "qf2",
+       "dim": null
+      }
+     ],
+     "hud": [
+      {
+       "label": "pods",
+       "value": "6 sur 6",
+       "tone": "g"
+      },
+      {
+       "label": "place libre",
+       "value": "plus aucune",
+       "tone": "r"
+      }
+     ],
+     "say": "Ils démarrent : six pods de nouveau, et les nœuds qui restent sont pleins."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ],
+   "labels": "left"
+  }
+ ]
+}

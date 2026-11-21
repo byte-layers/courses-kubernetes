@@ -1,1375 +1,1317 @@
 {
-  "format": "bl-scenes/0.2",
-  "id": "vm-to-kubernetes",
-  "title": "De la VM à Kubernetes",
-  "lang": "fr",
-  "kit": "block",
-  "legend": [
+ "format": "bl-scenes/0.2",
+ "id": "vm-to-kubernetes",
+ "title": "De la VM à Kubernetes",
+ "lang": "fr",
+ "kit": "feuillete",
+ "legend": [
+  {
+   "kind": "req",
+   "label": "requête"
+  },
+  {
+   "kind": "read",
+   "label": "téléchargement"
+  }
+ ],
+ "entities": [
+  {
+   "id": "users",
+   "kind": "actor",
+   "at": [
+    0.0,
+    8.0
+   ],
+   "label": "utilisateurs"
+  },
+  {
+   "id": "vote",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y",
+   "title": "vote",
+   "sub": "Python",
+   "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
+  },
+  {
+   "id": "vote-2",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y"
+  },
+  {
+   "id": "vote-3",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y"
+  },
+  {
+   "id": "redis",
+   "kind": "store",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    1.0
+   ],
+   "tone": "r",
+   "title": "redis",
+   "detail": "**redis** garde les votes en attente, en mémoire, le temps que le worker les traite."
+  },
+  {
+   "id": "worker",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "v",
+   "title": "worker",
+   "sub": ".NET",
+   "detail": "Le **worker**, écrit en .NET, prend les votes dans redis et les enregistre dans la base de données."
+  },
+  {
+   "id": "db",
+   "kind": "store",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    1.0
+   ],
+   "tone": "b",
+   "title": "db",
+   "sub": "PostgreSQL",
+   "detail": "**db** est la base de données PostgreSQL : elle garde les votes pour de bon."
+  },
+  {
+   "id": "result",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "g",
+   "title": "result",
+   "sub": "Node.js",
+   "detail": "**result** est la page des résultats, écrite en Node.js. Elle lit la base de données."
+  }
+ ],
+ "steps": [
+  {
+   "id": "single-vm",
+   "label": "Une VM",
+   "title": "Tout installer à la main sur une seule VM",
+   "body": [
+    "Les cinq pièces de l'application de vote tournent sur la même machine. Python, .NET, Node.js, PostgreSQL et Redis y sont installés et réglés à la main, en suivant un manuel de déploiement.",
+    "Grossir la machine est facile, jusqu'à une limite. La dupliquer est difficile. Et si elle tombe, tout tombe."
+   ],
+   "labels": "left",
+   "hud": [
     {
-      "kind": "req",
-      "label": "requête"
+     "label": "machines",
+     "value": 1
     },
     {
-      "kind": "read",
-      "label": "téléchargement"
+     "label": "déploiement",
+     "value": "à la main"
     }
-  ],
-  "entities": [
+   ],
+   "flows": [
     {
-      "id": "users",
-      "kind": "actor",
-      "at": [
-        -2.4,
-        7.0
-      ],
-      "label": "utilisateurs"
-    },
-    {
-      "id": "vote",
-      "kind": "node",
-      "at": [
-        0,
-        0
-      ],
-      "size": [
-        1.8,
-        1.8,
-        1.0
-      ],
-      "tone": "y",
-      "title": "vote",
-      "sub": "Python",
-      "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
-    },
-    {
-      "id": "vote-2",
-      "kind": "node",
-      "at": [
-        0,
-        0
-      ],
-      "size": [
-        1.8,
-        1.8,
-        1.0
-      ],
-      "tone": "y",
-      "title": "vote",
-      "sub": "copie 2",
-      "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
-    },
-    {
-      "id": "vote-3",
-      "kind": "node",
-      "at": [
-        0,
-        0
-      ],
-      "size": [
-        1.8,
-        1.8,
-        1.0
-      ],
-      "tone": "y",
-      "title": "vote",
-      "sub": "copie 3",
-      "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
-    },
-    {
-      "id": "redis",
-      "kind": "store",
-      "at": [
-        0,
-        0
-      ],
-      "size": [
-        1.8,
-        1.8,
-        1.1
-      ],
-      "tone": "r",
-      "title": "redis",
-      "detail": "**redis** garde les votes en attente, en mémoire, le temps que le worker les traite."
-    },
-    {
-      "id": "worker",
-      "kind": "node",
-      "at": [
-        0,
-        0
-      ],
-      "size": [
-        1.8,
-        1.8,
-        1.0
-      ],
-      "tone": "v",
-      "title": "worker",
-      "sub": ".NET",
-      "detail": "Le **worker**, écrit en .NET, prend les votes dans redis et les enregistre dans la base de données."
-    },
-    {
-      "id": "db",
-      "kind": "store",
-      "at": [
-        0,
-        0
-      ],
-      "size": [
-        1.8,
-        1.8,
-        1.1
-      ],
-      "tone": "b",
-      "title": "db",
-      "sub": "PostgreSQL",
-      "detail": "**db** est la base de données PostgreSQL : elle garde les votes pour de bon."
-    },
-    {
-      "id": "result",
-      "kind": "node",
-      "at": [
-        0,
-        0
-      ],
-      "size": [
-        1.8,
-        1.8,
-        1.0
-      ],
-      "tone": "g",
-      "title": "result",
-      "sub": "Node.js",
-      "detail": "**result** est la page des résultats, écrite en Node.js. Elle lit la base de données."
+     "path": [
+      "users",
+      "vote",
+      "redis"
+     ],
+     "label": "vote",
+     "explain": [
+      "Un utilisateur vote : sa requête arrive sur vote.",
+      "vote range le bulletin dans redis, sur la même machine."
+     ]
     }
-  ],
-  "steps": [
+   ],
+   "show": [
     {
-      "id": "single-vm",
-      "label": "Une VM",
-      "title": "Tout installer à la main sur une seule VM",
-      "body": [
-        "Les cinq pièces de l'application de vote tournent sur la même machine. Python, .NET, Node.js, PostgreSQL et Redis y sont installés et réglés à la main, en suivant un manuel de déploiement.",
-        "Grossir la machine est facile, jusqu'à une limite. La dupliquer est difficile. Et si elle tombe, tout tombe."
-      ],
-      "hud": [
-        {
-          "label": "machines",
-          "value": 1
-        },
-        {
-          "label": "déploiement",
-          "value": "à la main"
-        }
-      ],
-      "flows": [
-        {
-          "path": [
-            "users",
-            "vote",
-            "redis"
-          ],
-          "label": "vote",
-          "explain": [
-            "Un utilisateur vote : sa requête arrive sur vote.",
-            "vote range le bulletin dans redis, sur la même machine."
-          ]
-        }
-      ],
-      "show": [
-        {
-          "id": "vm",
-          "kind": "zone",
-          "at": [
-            0,
-            0
-          ],
-          "size": [
-            8.8,
-            6.8
-          ],
-          "tone": "v",
-          "label": "VM Linux · 8 vCPU, 16 Go"
-        },
-        {
-          "id": "os",
-          "kind": "layer",
-          "at": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            7.6,
-            5.6,
-            0.5
-          ],
-          "tone": "n",
-          "title": "Linux, tout installé à la main",
-          "detail": "Le **système** de la VM, avec tout ce que l'application demande : Python 3.11, .NET, Node 20, PostgreSQL 15, Redis, et les services qui démarrent le tout. Chaque logiciel est installé, réglé et mis à jour à la main."
-        },
-        {
-          "id": "vote",
-          "in": "os",
-          "at": [
-            -2.4,
-            1.4
-          ]
-        },
-        {
-          "id": "redis",
-          "in": "os",
-          "at": [
-            0,
-            1.4
-          ]
-        },
-        {
-          "id": "worker",
-          "in": "os",
-          "at": [
-            2.4,
-            1.4
-          ]
-        },
-        {
-          "id": "result",
-          "in": "os",
-          "at": [
-            -2.4,
-            -1.4
-          ]
-        },
-        {
-          "id": "db",
-          "in": "os",
-          "at": [
-            0,
-            -1.4
-          ]
-        },
-        {
-          "id": "manual",
-          "kind": "file",
-          "at": [
-            7.4,
-            1.6
-          ],
-          "tone": "n",
-          "title": "Manuel",
-          "size": [
-            2,
-            2,
-            0.5
-          ],
-          "detail": "Le **manuel de déploiement** : une quarantaine de pages et environ 150 commandes à suivre dans l'ordre pour installer l'application. Les chiffres sont inventés, pas l'ordre de grandeur.",
-          "note": "40 pages, 150 commandes"
-        },
-        "users"
-      ]
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      2.6,
+      18.6,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux",
+     "sub": "8 vCPU, 16 Go",
+     "detail": "La **VM**, avec tout ce que l'application demande : Python 3.11, .NET, Node 20, PostgreSQL 15, Redis, et les services qui démarrent le tout. Chaque logiciel est installé, réglé et mis à jour à la main."
     },
     {
-      "id": "two-vms",
-      "label": "Deux VM",
-      "title": "Plusieurs VM, plusieurs systèmes",
-      "body": [
-        "Imaginez un ancien worker écrit en .NET Framework : il impose un Windows Server, donc une seconde VM.",
-        "Il y a maintenant deux systèmes à tenir à jour, deux manuels, deux expertises, et des adresses IP écrites en dur d'une machine à l'autre."
-      ],
-      "hud": [
-        {
-          "label": "machines",
-          "value": 2
-        },
-        {
-          "label": "systèmes",
-          "value": 2
-        }
-      ],
-      "links": [
-        {
-          "from": "redis",
-          "to": "worker",
-          "label": "10.0.0.12:6379"
-        }
-      ],
-      "flows": [
-        {
-          "path": [
-            "users",
-            "vote",
-            "redis"
-          ],
-          "label": "vote",
-          "explain": [
-            "La requête arrive sur vote, dans la VM Linux.",
-            "vote range le bulletin dans redis ; le worker viendra le lire depuis l'autre VM."
-          ]
-        }
-      ],
-      "show": [
-        {
-          "id": "vm",
-          "kind": "zone",
-          "at": [
-            -4.6,
-            4.6
-          ],
-          "size": [
-            6.2,
-            6.2
-          ],
-          "tone": "v",
-          "label": "VM Linux"
-        },
-        {
-          "id": "os",
-          "kind": "layer",
-          "at": [
-            -4.6,
-            4.6,
-            0
-          ],
-          "size": [
-            5.4,
-            5.4,
-            0.5
-          ],
-          "tone": "n",
-          "title": "Linux",
-          "detail": "Le **système Linux** de la première VM, avec Python, Redis et leurs services, installés à la main."
-        },
-        {
-          "id": "vote",
-          "in": "os",
-          "at": [
-            0,
-            1.3
-          ]
-        },
-        {
-          "id": "redis",
-          "in": "os",
-          "at": [
-            0,
-            -1.3
-          ]
-        },
-        {
-          "id": "vm-win",
-          "kind": "zone",
-          "at": [
-            4.8,
-            -4.8
-          ],
-          "size": [
-            7.4,
-            7.4
-          ],
-          "tone": "b",
-          "label": "VM Windows Server"
-        },
-        {
-          "id": "os-win",
-          "kind": "layer",
-          "at": [
-            4.8,
-            -4.8,
-            0
-          ],
-          "size": [
-            6.6,
-            6.6,
-            0.5
-          ],
-          "tone": "b",
-          "title": "Windows Server",
-          "detail": "Le **système Windows Server** de la seconde VM, avec .NET Framework, PostgreSQL, Node.js et des services Windows. Un second système à tenir à jour, et une seconde expertise."
-        },
-        {
-          "id": "worker",
-          "in": "os-win",
-          "at": [
-            -1.5,
-            1.5
-          ],
-          "sub": ".NET Framework"
-        },
-        {
-          "id": "db",
-          "in": "os-win",
-          "at": [
-            1.5,
-            1.5
-          ]
-        },
-        {
-          "id": "result",
-          "in": "os-win",
-          "at": [
-            1.5,
-            -1.5
-          ]
-        },
-        {
-          "id": "manual",
-          "kind": "file",
-          "at": [
-            -4.6,
-            -0.4
-          ],
-          "tone": "n",
-          "title": "Manuel Linux",
-          "size": [
-            2,
-            2,
-            0.5
-          ],
-          "note": "25 pages"
-        },
-        {
-          "id": "manual-win",
-          "kind": "file",
-          "at": [
-            4.8,
-            1.0
-          ],
-          "tone": "b",
-          "title": "Manuel Windows",
-          "size": [
-            2,
-            2,
-            0.5
-          ],
-          "note": "35 pages"
-        },
-        {
-          "id": "users",
-          "at": [
-            -4.6,
-            9.2
-          ]
-        }
-      ]
+     "id": "vote",
+     "in": "vm",
+     "at": [
+      0.0,
+      7.2
+     ]
     },
     {
-      "id": "containers",
-      "label": "Conteneurs",
-      "title": "Conteneuriser : la même VM, un seul outil à installer",
-      "body": [
-        "Chaque pièce devient une image, rangée dans un registre. Sur la VM, on n'installe plus qu'un moteur de conteneurs, et `docker compose up` lance le tout.",
-        "On peut même lancer trois copies de vote derrière un reverse proxy. Mais il n'y a toujours qu'une machine : si elle tombe, tout tombe."
-      ],
-      "hud": [
-        {
-          "label": "machines",
-          "value": 1
-        },
-        {
-          "label": "déploiement",
-          "value": "compose up"
-        }
-      ],
-      "flows": [
-        {
-          "path": [
-            "registry",
-            "db"
-          ],
-          "label": "pull",
-          "kind": "read",
-          "explain": [
-            "Le moteur télécharge chaque image depuis le registre."
-          ]
-        },
-        {
-          "path": [
-            "users",
-            "proxy",
-            "vote-2"
-          ],
-          "label": "vote",
-          "delay": 1500,
-          "explain": [
-            "La requête arrive sur le reverse proxy, seul point d'entrée.",
-            "Le proxy la confie à l'une des trois copies de vote."
-          ]
-        }
-      ],
-      "show": [
-        {
-          "id": "registry",
-          "kind": "store",
-          "at": [
-            2.4,
-            -7.6
-          ],
-          "tone": "v",
-          "title": "Registre",
-          "size": [
-            1.8,
-            1.8,
-            1.1
-          ],
-          "sub": "les images",
-          "detail": "Le **registre d'images** garde les images de l'application. Chaque machine y télécharge ce qu'elle doit lancer."
-        },
-        {
-          "id": "vm",
-          "kind": "zone",
-          "at": [
-            0,
-            0
-          ],
-          "size": [
-            9,
-            9
-          ],
-          "tone": "v",
-          "label": "VM Linux"
-        },
-        {
-          "id": "os",
-          "kind": "layer",
-          "at": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            7.8,
-            7.8,
-            0.5
-          ],
-          "tone": "n",
-          "title": "Linux",
-          "detail": "Le **système Linux** de la VM. Il ne porte plus que le moteur de conteneurs."
-        },
-        {
-          "id": "rt",
-          "kind": "layer",
-          "at": [
-            0,
-            0
-          ],
-          "size": [
-            7.8,
-            7.8,
-            0.5
-          ],
-          "tone": "v",
-          "title": "Docker + Compose, seul outil installé",
-          "in": "os",
-          "detail": "Le **moteur de conteneurs** (*runtime*), ici Docker avec Compose : la seule chose à installer sur la machine. Les logiciels de l'application ne sont plus installés sur le système, ils viennent dans les images."
-        },
-        {
-          "id": "proxy",
-          "kind": "node",
-          "at": [
-            -2.4,
-            2.4
-          ],
-          "tone": "n",
-          "title": "proxy",
-          "size": [
-            1.8,
-            1.8,
-            1.0
-          ],
-          "sub": "reverse proxy",
-          "in": "rt",
-          "detail": "Le **reverse proxy** reçoit les requêtes et les répartit entre les copies de vote. Avec plusieurs copies sur une machine, ce routage est à mettre en place soi-même."
-        },
-        {
-          "id": "vote",
-          "in": "rt",
-          "at": [
-            0,
-            2.4
-          ],
-          "sub": "copie 1"
-        },
-        {
-          "id": "vote-2",
-          "in": "rt",
-          "at": [
-            -2.4,
-            0
-          ]
-        },
-        {
-          "id": "vote-3",
-          "in": "rt",
-          "at": [
-            0,
-            0
-          ]
-        },
-        {
-          "id": "redis",
-          "in": "rt",
-          "at": [
-            2.4,
-            2.4
-          ]
-        },
-        {
-          "id": "worker",
-          "in": "rt",
-          "at": [
-            2.4,
-            0
-          ]
-        },
-        {
-          "id": "db",
-          "in": "rt",
-          "at": [
-            2.4,
-            -2.4
-          ]
-        },
-        {
-          "id": "result",
-          "in": "rt",
-          "at": [
-            -2.4,
-            -2.4
-          ]
-        },
-        {
-          "id": "compose",
-          "kind": "file",
-          "at": [
-            7.6,
-            1.6
-          ],
-          "tone": "n",
-          "title": "compose.yml",
-          "size": [
-            2,
-            2,
-            0.5
-          ],
-          "detail": "Le fichier **compose.yml** décrit toute l'application. Le même paquet sert partout : un nouveau système, une VM de plus, un environnement de démonstration. On installe le moteur, et c'est tout.",
-          "note": "docker compose up"
-        },
-        {
-          "id": "users",
-          "at": [
-            -2.4,
-            7.6
-          ]
-        }
-      ]
+     "id": "redis",
+     "in": "vm",
+     "at": [
+      0.0,
+      3.6
+     ]
     },
     {
-      "id": "containers-two-hosts",
-      "label": "Deux hôtes",
-      "title": "Conteneuriser quand il y a deux systèmes",
-      "body": [
-        "Une fois en conteneurs, les pièces Linux se regroupent : db et result n'ont plus besoin de Windows.",
-        "Mais une image Windows ne tourne que sur un hôte Windows : la seconde VM reste, pour le worker. Deux machines, deux fichiers Compose, et le routage entre elles se règle toujours à la main."
-      ],
-      "hud": [
-        {
-          "label": "machines",
-          "value": 2
-        },
-        {
-          "label": "fichiers Compose",
-          "value": 2
-        }
-      ],
-      "links": [
-        {
-          "from": "redis",
-          "to": "worker",
-          "label": "réseau"
-        }
-      ],
-      "flows": [
-        {
-          "path": [
-            "registry",
-            "db"
-          ],
-          "label": "pull",
-          "kind": "read",
-          "explain": [
-            "La VM Linux télécharge ses quatre images Linux."
-          ]
-        },
-        {
-          "path": [
-            "registry",
-            "worker"
-          ],
-          "label": "pull",
-          "kind": "read",
-          "delay": 1200,
-          "explain": [
-            "La VM Windows télécharge l'image Windows du worker."
-          ]
-        }
-      ],
-      "show": [
-        {
-          "id": "registry",
-          "kind": "store",
-          "at": [
-            -0.2,
-            -5.0
-          ],
-          "tone": "v",
-          "title": "Registre",
-          "size": [
-            1.8,
-            1.8,
-            1.1
-          ],
-          "sub": "partagé",
-          "detail": "Le **registre d'images** garde les images de l'application. Chaque machine y télécharge ce qu'elle doit lancer."
-        },
-        {
-          "id": "vm",
-          "kind": "zone",
-          "at": [
-            -4.6,
-            4.6
-          ],
-          "size": [
-            6.8,
-            6.8
-          ],
-          "tone": "v",
-          "label": "VM Linux"
-        },
-        {
-          "id": "os",
-          "kind": "layer",
-          "at": [
-            -4.6,
-            4.6,
-            0
-          ],
-          "size": [
-            6,
-            6,
-            0.5
-          ],
-          "tone": "n",
-          "title": "Linux"
-        },
-        {
-          "id": "rt",
-          "kind": "layer",
-          "at": [
-            0,
-            0
-          ],
-          "size": [
-            6,
-            6,
-            0.5
-          ],
-          "tone": "v",
-          "title": "moteur de conteneurs + Compose",
-          "in": "os",
-          "detail": "Le **moteur de conteneurs** (*runtime*), ici Docker avec Compose : la seule chose à installer sur la machine. Les logiciels de l'application ne sont plus installés sur le système, ils viennent dans les images."
-        },
-        {
-          "id": "vote",
-          "in": "rt",
-          "at": [
-            -1.3,
-            1.3
-          ]
-        },
-        {
-          "id": "redis",
-          "in": "rt",
-          "at": [
-            1.3,
-            1.3
-          ]
-        },
-        {
-          "id": "db",
-          "in": "rt",
-          "at": [
-            1.3,
-            -1.3
-          ]
-        },
-        {
-          "id": "result",
-          "in": "rt",
-          "at": [
-            -1.3,
-            -1.3
-          ]
-        },
-        {
-          "id": "vm-win",
-          "kind": "zone",
-          "at": [
-            5.0,
-            -5.0
-          ],
-          "size": [
-            5.2,
-            5.2
-          ],
-          "tone": "b",
-          "label": "VM Windows Server"
-        },
-        {
-          "id": "os-win",
-          "kind": "layer",
-          "at": [
-            5.0,
-            -5.0,
-            0
-          ],
-          "size": [
-            4.4,
-            4.4,
-            0.5
-          ],
-          "tone": "b",
-          "title": "Windows Server"
-        },
-        {
-          "id": "rt-win",
-          "kind": "layer",
-          "at": [
-            0,
-            0
-          ],
-          "size": [
-            4.4,
-            4.4,
-            0.5
-          ],
-          "tone": "v",
-          "title": "conteneurs Windows",
-          "in": "os-win",
-          "detail": "Le **moteur de conteneurs Windows**. Une image Linux ne tourne que sur un hôte Linux, une image Windows que sur un hôte Windows : cette VM reste nécessaire tant que le worker n'est pas porté en .NET moderne."
-        },
-        {
-          "id": "worker",
-          "in": "rt-win",
-          "at": [
-            0,
-            0
-          ],
-          "sub": ".NET Framework"
-        }
-      ]
+     "id": "worker",
+     "in": "vm",
+     "at": [
+      0.0,
+      0.0
+     ]
     },
     {
-      "id": "single-node-trap",
-      "label": "Le piège",
-      "title": "Le piège : Kubernetes sur une seule machine",
-      "body": [
-        "Installer Kubernetes sur l'ancienne VM, « comme un Docker de plus », donne un cluster d'un seul nœud : Compose, avec d'autres commandes.",
-        "On y gagne la réparation automatique des pods, les mises à jour progressives, le retour arrière et les Services. On n'y gagne pas la haute disponibilité : il n'y a toujours qu'une machine."
-      ],
-      "hud": [
-        {
-          "label": "machines",
-          "value": 1
-        },
-        {
-          "label": "haute dispo",
-          "value": "non"
-        }
-      ],
-      "flows": [
-        {
-          "path": [
-            "users",
-            "vote"
-          ],
-          "label": "vote",
-          "explain": [
-            "La requête arrive sur un pod vote. Si la machine tombe, plus rien ne répond."
-          ]
-        }
-      ],
-      "script": [
-        {
-          "do": "wait",
-          "ms": 800
-        },
-        {
-          "do": "pulse",
-          "at": "cp:top"
-        },
-        {
-          "do": "wait",
-          "ms": 2600
-        }
-      ],
-      "show": [
-        {
-          "id": "vm",
-          "kind": "zone",
-          "at": [
-            0,
-            0
-          ],
-          "size": [
-            9,
-            9
-          ],
-          "tone": "v",
-          "label": "VM Linux = cluster d'un seul nœud"
-        },
-        {
-          "id": "os",
-          "kind": "layer",
-          "at": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            7.8,
-            7.8,
-            0.5
-          ],
-          "tone": "n",
-          "title": "Linux"
-        },
-        {
-          "id": "rt",
-          "kind": "layer",
-          "at": [
-            0,
-            0
-          ],
-          "size": [
-            7.8,
-            7.8,
-            0.5
-          ],
-          "tone": "v",
-          "title": "containerd",
-          "in": "os",
-          "detail": "**containerd**, le moteur de conteneurs que Kubernetes pilote sur chaque nœud."
-        },
-        {
-          "id": "cp",
-          "kind": "node",
-          "at": [
-            -2.4,
-            2.4
-          ],
-          "tone": "v",
-          "title": "contrôle",
-          "size": [
-            1.8,
-            1.8,
-            1.0
-          ],
-          "sub": "API, etcd…",
-          "in": "rt",
-          "detail": "Le **plan de contrôle** (*control plane*) : l'API, l'ordonnanceur, la base etcd. C'est lui qui compare l'état souhaité à ce qui tourne. Ici, il partage l'unique machine avec l'application."
-        },
-        {
-          "id": "vote",
-          "in": "rt",
-          "at": [
-            0,
-            2.4
-          ],
-          "sub": "pod 1"
-        },
-        {
-          "id": "vote-2",
-          "in": "rt",
-          "at": [
-            -2.4,
-            0
-          ],
-          "sub": "pod 2"
-        },
-        {
-          "id": "vote-3",
-          "in": "rt",
-          "at": [
-            0,
-            0
-          ],
-          "sub": "pod 3"
-        },
-        {
-          "id": "redis",
-          "in": "rt",
-          "at": [
-            2.4,
-            2.4
-          ]
-        },
-        {
-          "id": "worker",
-          "in": "rt",
-          "at": [
-            2.4,
-            0
-          ]
-        },
-        {
-          "id": "db",
-          "in": "rt",
-          "at": [
-            2.4,
-            -2.4
-          ]
-        },
-        {
-          "id": "result",
-          "in": "rt",
-          "at": [
-            -2.4,
-            -2.4
-          ]
-        },
-        {
-          "id": "users",
-          "at": [
-            0,
-            7.8
-          ]
-        }
-      ]
+     "id": "db",
+     "in": "vm",
+     "at": [
+      0.0,
+      -3.6
+     ]
     },
     {
-      "id": "real-cluster",
-      "label": "Un vrai cluster",
-      "title": "Passer à un vrai cluster : des décisions à prendre",
-      "body": [
-        "Un exemple sur ses propres machines, avec Rancher et la distribution RKE2 : trois nœuds pour le plan de contrôle, trois nœuds Linux où l'ordonnanceur répartit les pods, et un nœud Windows pour le worker.",
-        "Autour : une porte d'entrée, du stockage, des sauvegardes, un registre interne. Chaque pièce est une décision, et quelqu'un doit s'en occuper."
-      ],
-      "hud": [
-        {
-          "label": "machines",
-          "value": 7
-        },
-        {
-          "label": "haute dispo",
-          "value": "oui"
-        }
-      ],
-      "links": [
-        {
-          "from": "rancher",
-          "to": "cp-1",
-          "label": "gère",
-          "dashed": true
-        }
-      ],
-      "flows": [
-        {
-          "path": [
-            "users",
-            "ingress",
-            "vote"
-          ],
-          "label": "vote",
-          "explain": [
-            "La requête arrive sur l'Ingress, la porte d'entrée du cluster.",
-            "Elle est confiée à l'un des trois pods vote, chacun sur son nœud."
-          ]
-        }
-      ],
-      "show": [
-        {
-          "id": "cluster",
-          "kind": "zone",
-          "at": [
-            1.5,
-            0.7
-          ],
-          "size": [
-            12.6,
-            14.4
-          ],
-          "tone": "v",
-          "label": "cluster RKE2"
-        },
-        {
-          "id": "rancher",
-          "kind": "node",
-          "at": [
-            -7.4,
-            -2.6
-          ],
-          "tone": "n",
-          "title": "Rancher",
-          "size": [
-            1.8,
-            1.8,
-            1.0
-          ],
-          "sub": "gère le cluster",
-          "detail": "**Rancher** (open source, édité par SUSE) sert à créer et à gérer un ou plusieurs clusters. **RKE2** est la distribution de Kubernetes installée ici. D'autres chemins existent : un cloud managé, OpenShift, Talos."
-        },
-        {
-          "id": "cp-1",
-          "kind": "node",
-          "at": [
-            -3.0,
-            -5.0
-          ],
-          "tone": "v",
-          "title": "contrôle",
-          "size": [
-            1.8,
-            1.8,
-            1.0
-          ],
-          "sub": "nœud 1",
-          "detail": "Un des trois nœuds du **plan de contrôle**. À trois, le cluster continue de fonctionner si l'un d'eux tombe. Le plan de contrôle est toujours sous Linux."
-        },
-        {
-          "id": "cp-2",
-          "kind": "node",
-          "at": [
-            0,
-            -5.0
-          ],
-          "tone": "v",
-          "title": "contrôle",
-          "size": [
-            1.8,
-            1.8,
-            1.0
-          ],
-          "sub": "nœud 2",
-          "detail": "Un des trois nœuds du **plan de contrôle**. À trois, le cluster continue de fonctionner si l'un d'eux tombe. Le plan de contrôle est toujours sous Linux."
-        },
-        {
-          "id": "cp-3",
-          "kind": "node",
-          "at": [
-            3.0,
-            -5.0
-          ],
-          "tone": "v",
-          "title": "contrôle",
-          "size": [
-            1.8,
-            1.8,
-            1.0
-          ],
-          "sub": "nœud 3",
-          "detail": "Un des trois nœuds du **plan de contrôle**. À trois, le cluster continue de fonctionner si l'un d'eux tombe. Le plan de contrôle est toujours sous Linux."
-        },
-        {
-          "id": "n1",
-          "kind": "layer",
-          "at": [
-            -3.0,
-            0.75,
-            0
-          ],
-          "size": [
-            2.4,
-            4.8,
-            0.5
-          ],
-          "tone": "n",
-          "title": "Linux"
-        },
-        {
-          "id": "n2",
-          "kind": "layer",
-          "at": [
-            0,
-            0.75,
-            0
-          ],
-          "size": [
-            2.4,
-            4.8,
-            0.5
-          ],
-          "tone": "n",
-          "title": "Linux"
-        },
-        {
-          "id": "n3",
-          "kind": "layer",
-          "at": [
-            3.0,
-            0.75,
-            0
-          ],
-          "size": [
-            2.4,
-            4.8,
-            0.5
-          ],
-          "tone": "n",
-          "title": "Linux"
-        },
-        {
-          "id": "vote",
-          "in": "n1",
-          "at": [
-            0,
-            1.2
-          ],
-          "sub": "pod 1"
-        },
-        {
-          "id": "redis",
-          "in": "n1",
-          "at": [
-            0,
-            -1.2
-          ]
-        },
-        {
-          "id": "vote-2",
-          "in": "n2",
-          "at": [
-            0,
-            1.2
-          ],
-          "sub": "pod 2"
-        },
-        {
-          "id": "result",
-          "in": "n2",
-          "at": [
-            0,
-            -1.2
-          ]
-        },
-        {
-          "id": "vote-3",
-          "in": "n3",
-          "at": [
-            0,
-            1.2
-          ],
-          "sub": "pod 3"
-        },
-        {
-          "id": "db",
-          "in": "n3",
-          "at": [
-            0,
-            -1.2
-          ]
-        },
-        {
-          "id": "n-win",
-          "kind": "layer",
-          "at": [
-            6.0,
-            1.95,
-            0
-          ],
-          "size": [
-            2.4,
-            2.4,
-            0.5
-          ],
-          "tone": "b",
-          "title": "Windows",
-          "detail": "Le **nœud Windows** ne fait que du travail : il porte le worker, qu'on lui adresse par un `nodeSelector` (`kubernetes.io/os: windows`)."
-        },
-        {
-          "id": "worker",
-          "in": "n-win",
-          "at": [
-            0,
-            0
-          ],
-          "sub": ".NET Framework"
-        },
-        {
-          "id": "ingress",
-          "kind": "node",
-          "at": [
-            -3.0,
-            6.3
-          ],
-          "tone": "r",
-          "title": "Ingress + LB",
-          "size": [
-            1.8,
-            1.8,
-            1.0
-          ],
-          "sub": "l'entrée",
-          "detail": "La **porte d'entrée** : un Ingress, derrière un répartiteur de charge (*load balancer*), fait entrer les requêtes dans le cluster."
-        },
-        {
-          "id": "storage",
-          "kind": "store",
-          "at": [
-            0,
-            6.3
-          ],
-          "tone": "b",
-          "title": "Stockage",
-          "size": [
-            1.8,
-            1.8,
-            1.1
-          ],
-          "sub": "volumes",
-          "detail": "Le **stockage** : où vivent les volumes des données ? Dans le cluster, ou dans une base de données managée, en dehors ?"
-        },
-        {
-          "id": "backup",
-          "kind": "node",
-          "at": [
-            3.0,
-            6.3
-          ],
-          "tone": "g",
-          "title": "Velero",
-          "size": [
-            1.8,
-            1.8,
-            1.0
-          ],
-          "sub": "sauvegardes",
-          "detail": "Les **sauvegardes** du cluster, ici avec Velero. Une sauvegarde ne vaut que si l'on a déjà essayé de la restaurer."
-        },
-        {
-          "id": "harbor",
-          "kind": "store",
-          "at": [
-            6.0,
-            6.3
-          ],
-          "tone": "v",
-          "title": "Harbor",
-          "size": [
-            1.8,
-            1.8,
-            1.1
-          ],
-          "sub": "registre",
-          "detail": "Un **registre interne**, ici Harbor. Autour de lui s'ajoutent la supervision, la sécurité et les droits d'accès."
-        },
-        {
-          "id": "users",
-          "at": [
-            -3.0,
-            10.0
-          ]
-        }
-      ]
+     "id": "result",
+     "in": "vm",
+     "at": [
+      0.0,
+      -7.2
+     ]
+    },
+    {
+     "id": "manual",
+     "kind": "file",
+     "at": [
+      8,
+      -3
+     ],
+     "tone": "n",
+     "title": "Manuel",
+     "size": [
+      1.8,
+      1.8,
+      0.4
+     ],
+     "note": "40 pages, 150 commandes",
+     "detail": "Le **manuel de déploiement** : une quarantaine de pages et environ 150 commandes à suivre dans l'ordre pour installer l'application. Les chiffres sont inventés, pas l'ordre de grandeur."
+    },
+    {
+     "id": "users",
+     "at": [
+      -3,
+      12
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "two-vms",
+   "label": "Deux VM",
+   "title": "Plusieurs VM, plusieurs systèmes",
+   "body": [
+    "Imaginez un ancien worker écrit en .NET Framework : il impose un Windows Server, donc une seconde VM.",
+    "Il y a maintenant deux systèmes à tenir à jour, deux manuels, deux expertises, et des adresses IP écrites en dur d'une machine à l'autre."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 2
+    },
+    {
+     "label": "systèmes",
+     "value": 2
+    }
+   ],
+   "links": [
+    {
+     "from": "redis",
+     "to": "worker",
+     "label": "10.0.0.12:6379"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "vote",
+      "redis"
+     ],
+     "label": "vote",
+     "explain": [
+      "La requête arrive sur vote, dans la VM Linux.",
+      "vote range le bulletin dans redis ; le worker viendra le lire depuis l'autre VM."
+     ]
+    }
+   ],
+   "show": [
+    {
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      -4.5,
+      1.8,
+      0
+     ],
+     "size": [
+      2.6,
+      7.8,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux",
+     "detail": "La **VM Linux**, avec Python, Redis et leurs services, installés à la main."
+    },
+    {
+     "id": "vote",
+     "in": "vm",
+     "at": [
+      0.0,
+      1.8
+     ]
+    },
+    {
+     "id": "redis",
+     "in": "vm",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "vm-win",
+     "kind": "layer",
+     "at": [
+      4.5,
+      0,
+      0
+     ],
+     "size": [
+      2.6,
+      11.4,
+      0.5
+     ],
+     "tone": "b",
+     "title": "VM Windows Server",
+     "detail": "La **VM Windows Server**, avec .NET Framework, PostgreSQL, Node.js et des services Windows. Un second système à tenir à jour, et une seconde expertise."
+    },
+    {
+     "id": "worker",
+     "in": "vm-win",
+     "at": [
+      0.0,
+      3.6
+     ],
+     "sub": ".NET Framework"
+    },
+    {
+     "id": "db",
+     "in": "vm-win",
+     "at": [
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "result",
+     "in": "vm-win",
+     "at": [
+      0.0,
+      -3.6
+     ]
+    },
+    {
+     "id": "manual",
+     "kind": "file",
+     "at": [
+      -11,
+      -2
+     ],
+     "tone": "n",
+     "title": "Manuel Linux",
+     "size": [
+      1.8,
+      1.8,
+      0.4
+     ],
+     "note": "25 pages"
+    },
+    {
+     "id": "manual-win",
+     "kind": "file",
+     "at": [
+      11,
+      -2
+     ],
+     "tone": "b",
+     "title": "Manuel Windows",
+     "size": [
+      1.8,
+      1.8,
+      0.4
+     ],
+     "note": "35 pages"
+    },
+    {
+     "id": "users",
+     "at": [
+      -7.5,
+      9
+     ]
+    }
+   ]
+  },
+  {
+   "id": "containers",
+   "label": "Conteneurs",
+   "title": "Conteneuriser : la même VM, un seul outil à installer",
+   "body": [
+    "Chaque pièce devient une image, rangée dans un registre. Sur la VM, on n'installe plus qu'un moteur de conteneurs, et `docker compose up` lance le tout.",
+    "On peut même lancer trois copies de vote derrière un reverse proxy. Mais il n'y a toujours qu'une machine : si elle tombe, tout tombe."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 1
+    },
+    {
+     "label": "déploiement",
+     "value": "compose up"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "registry",
+      "db"
+     ],
+     "label": "pull",
+     "kind": "read",
+     "explain": [
+      "Le moteur télécharge chaque image depuis le registre."
+     ]
+    },
+    {
+     "path": [
+      "users",
+      "proxy",
+      "vote-2"
+     ],
+     "label": "vote",
+     "delay": 1500,
+     "explain": [
+      "La requête arrive sur le reverse proxy, seul point d'entrée.",
+      "Le proxy la confie à l'une des trois copies de vote."
+     ]
+    }
+   ],
+   "show": [
+    {
+     "id": "registry",
+     "kind": "store",
+     "at": [
+      9,
+      -8
+     ],
+     "tone": "v",
+     "title": "Registre",
+     "size": [
+      1.5,
+      1.5,
+      1.0
+     ],
+     "sub": "les images",
+     "detail": "Le **registre d'images** garde les images de l'application. Chaque machine y télécharge ce qu'elle doit lancer."
+    },
+    {
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      4.6,
+      22.2,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux",
+     "detail": "La **VM Linux**. Elle ne porte plus que le moteur de conteneurs."
+    },
+    {
+     "id": "rt",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      4.6,
+      22.2,
+      0.5
+     ],
+     "tone": "v",
+     "title": "Docker + Compose",
+     "sub": "seul outil installé",
+     "detail": "Le **moteur de conteneurs** (*runtime*), ici Docker avec Compose : la seule chose à installer sur la machine. Les logiciels de l'application ne sont plus installés sur le système, ils viennent dans les images.",
+     "in": "vm"
+    },
+    {
+     "id": "proxy",
+     "kind": "node",
+     "tone": "n",
+     "title": "proxy",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "reverse proxy",
+     "detail": "Le **reverse proxy** reçoit les requêtes et les répartit entre les copies de vote. Avec plusieurs copies sur une machine, ce routage est à mettre en place soi-même.",
+     "in": "rt",
+     "at": [
+      -1.0,
+      9.0
+     ]
+    },
+    {
+     "id": "vote",
+     "in": "rt",
+     "at": [
+      -1.0,
+      5.4
+     ],
+     "sub": "3 copies",
+     "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis. Ici, trois copies tournent côte à côte."
+    },
+    {
+     "id": "redis",
+     "in": "rt",
+     "at": [
+      -1.0,
+      1.8
+     ]
+    },
+    {
+     "id": "worker",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "db",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -5.4
+     ]
+    },
+    {
+     "id": "result",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -9.0
+     ]
+    },
+    {
+     "id": "vote-2",
+     "in": "rt",
+     "at": [
+      1.2,
+      6.4
+     ]
+    },
+    {
+     "id": "vote-3",
+     "in": "rt",
+     "at": [
+      1.2,
+      4.4
+     ]
+    },
+    {
+     "id": "compose",
+     "kind": "file",
+     "at": [
+      9,
+      3
+     ],
+     "tone": "n",
+     "title": "compose.yml",
+     "size": [
+      1.8,
+      1.8,
+      0.4
+     ],
+     "note": "docker compose up",
+     "detail": "Le fichier **compose.yml** décrit toute l'application. Le même paquet sert partout : un nouveau système, une VM de plus, un environnement de démonstration. On installe le moteur, et c'est tout."
+    },
+    {
+     "id": "users",
+     "at": [
+      -4,
+      14
+     ]
+    }
+   ]
+  },
+  {
+   "id": "containers-two-hosts",
+   "label": "Deux hôtes",
+   "title": "Conteneuriser quand il y a deux systèmes",
+   "body": [
+    "Une fois en conteneurs, les pièces Linux se regroupent : db et result n'ont plus besoin de Windows.",
+    "Mais une image Windows ne tourne que sur un hôte Windows : la seconde VM reste, pour le worker. Deux machines, deux fichiers Compose, et le routage entre elles se règle toujours à la main."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 2
+    },
+    {
+     "label": "fichiers Compose",
+     "value": 2
+    }
+   ],
+   "links": [
+    {
+     "from": "redis",
+     "to": "worker",
+     "label": "réseau"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "registry",
+      "db"
+     ],
+     "label": "pull",
+     "kind": "read",
+     "explain": [
+      "La VM Linux télécharge ses quatre images Linux."
+     ]
+    },
+    {
+     "path": [
+      "registry",
+      "worker"
+     ],
+     "label": "pull",
+     "kind": "read",
+     "delay": 1200,
+     "explain": [
+      "La VM Windows télécharge l'image Windows du worker."
+     ]
+    }
+   ],
+   "show": [
+    {
+     "id": "registry",
+     "kind": "store",
+     "at": [
+      2,
+      -12
+     ],
+     "tone": "v",
+     "title": "Registre",
+     "size": [
+      1.5,
+      1.5,
+      1.0
+     ],
+     "sub": "partagé",
+     "detail": "Le **registre d'images** garde les images de l'application. Chaque machine y télécharge ce qu'elle doit lancer."
+    },
+    {
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      -4.5,
+      0,
+      0
+     ],
+     "size": [
+      2.8,
+      15.0,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux"
+    },
+    {
+     "id": "rt",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      2.8,
+      15.0,
+      0.5
+     ],
+     "tone": "v",
+     "title": "Docker + Compose",
+     "detail": "Le **moteur de conteneurs** (*runtime*), ici Docker avec Compose : la seule chose à installer sur la machine. Les logiciels de l'application ne sont plus installés sur le système, ils viennent dans les images.",
+     "in": "vm"
+    },
+    {
+     "id": "vote",
+     "in": "rt",
+     "at": [
+      0.0,
+      5.4
+     ]
+    },
+    {
+     "id": "redis",
+     "in": "rt",
+     "at": [
+      0.0,
+      1.8
+     ]
+    },
+    {
+     "id": "db",
+     "in": "rt",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "result",
+     "in": "rt",
+     "at": [
+      0.0,
+      -5.4
+     ]
+    },
+    {
+     "id": "vm-win",
+     "kind": "layer",
+     "at": [
+      5.5,
+      0,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "b",
+     "title": "VM Windows Server"
+    },
+    {
+     "id": "rt-win",
+     "kind": "layer",
+     "in": "vm-win",
+     "at": [
+      0,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "v",
+     "title": "conteneurs Windows",
+     "detail": "Le **moteur de conteneurs Windows**. Une image Linux ne tourne que sur un hôte Linux, une image Windows que sur un hôte Windows : cette VM reste nécessaire tant que le worker n'est pas porté en .NET moderne."
+    },
+    {
+     "id": "worker",
+     "in": "rt-win",
+     "at": [
+      0,
+      0
+     ],
+     "sub": ".NET Framework"
+    }
+   ]
+  },
+  {
+   "id": "single-node-trap",
+   "label": "Le piège",
+   "title": "Le piège : Kubernetes sur une seule machine",
+   "body": [
+    "Installer Kubernetes sur l'ancienne VM, « comme un Docker de plus », donne un cluster d'un seul nœud : Compose, avec d'autres commandes.",
+    "On y gagne la réparation automatique des pods, les mises à jour progressives, le retour arrière et les Services. On n'y gagne pas la haute disponibilité : il n'y a toujours qu'une machine."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 1
+    },
+    {
+     "label": "haute dispo",
+     "value": "non"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "vote"
+     ],
+     "label": "vote",
+     "explain": [
+      "La requête arrive sur un pod vote. Si la machine tombe, plus rien ne répond."
+     ]
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "pulse",
+     "at": "cp:top"
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    }
+   ],
+   "show": [
+    {
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      4.6,
+      22.2,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux",
+     "sub": "un cluster d'un seul nœud",
+     "detail": "L'ancienne VM, devenue un **cluster d'un seul nœud** : le plan de contrôle et l'application partagent la même machine."
+    },
+    {
+     "id": "rt",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      4.6,
+      22.2,
+      0.5
+     ],
+     "tone": "v",
+     "title": "containerd",
+     "in": "vm",
+     "detail": "**containerd**, le moteur de conteneurs que Kubernetes pilote sur chaque nœud."
+    },
+    {
+     "id": "cp",
+     "kind": "node",
+     "tone": "v",
+     "title": "contrôle",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "API, etcd…",
+     "detail": "Le **plan de contrôle** (*control plane*) : l'API, l'ordonnanceur, la base etcd. C'est lui qui compare l'état souhaité à ce qui tourne. Ici, il partage l'unique machine avec l'application.",
+     "in": "rt",
+     "at": [
+      -1.0,
+      5.4
+     ]
+    },
+    {
+     "id": "vote",
+     "in": "rt",
+     "at": [
+      -1.0,
+      9.0
+     ],
+     "sub": "3 pods",
+     "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis. Ici, trois pods vote tournent sur le même nœud."
+    },
+    {
+     "id": "redis",
+     "in": "rt",
+     "at": [
+      -1.0,
+      1.8
+     ]
+    },
+    {
+     "id": "worker",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "db",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -5.4
+     ]
+    },
+    {
+     "id": "result",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -9.0
+     ]
+    },
+    {
+     "id": "vote-2",
+     "in": "rt",
+     "at": [
+      1.2,
+      10.0
+     ]
+    },
+    {
+     "id": "vote-3",
+     "in": "rt",
+     "at": [
+      1.2,
+      8.0
+     ]
+    },
+    {
+     "id": "users",
+     "at": [
+      -4,
+      14
+     ]
+    }
+   ]
+  },
+  {
+   "id": "real-cluster",
+   "label": "Un vrai cluster",
+   "title": "Passer à un vrai cluster : des décisions à prendre",
+   "body": [
+    "Un exemple sur ses propres machines, avec Rancher et la distribution RKE2 : trois nœuds pour le plan de contrôle, trois nœuds Linux où l'ordonnanceur répartit les pods, et un nœud Windows pour le worker.",
+    "Autour : une porte d'entrée, du stockage, des sauvegardes, un registre interne. Chaque pièce est une décision, et quelqu'un doit s'en occuper."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 7
+    },
+    {
+     "label": "haute dispo",
+     "value": "oui"
+    }
+   ],
+   "links": [
+    {
+     "from": "rancher",
+     "to": "cp-1",
+     "label": "gère",
+     "dashed": true
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "ingress",
+      "vote"
+     ],
+     "label": "vote",
+     "explain": [
+      "La requête arrive sur l'Ingress, la porte d'entrée du cluster.",
+      "Elle est confiée à l'un des trois pods vote, chacun sur son nœud."
+     ]
+    }
+   ],
+   "show": [
+    {
+     "id": "rancher",
+     "kind": "node",
+     "at": [
+      -15.5,
+      2.5
+     ],
+     "tone": "n",
+     "title": "Rancher",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "gère le cluster",
+     "detail": "**Rancher** (open source, édité par SUSE) sert à créer et à gérer un ou plusieurs clusters. **RKE2** est la distribution de Kubernetes installée ici. D'autres chemins existent : un cloud managé, OpenShift, Talos."
+    },
+    {
+     "id": "cpn-1",
+     "kind": "layer",
+     "at": [
+      -11.0,
+      -2.0,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "v"
+    },
+    {
+     "id": "cp-1",
+     "kind": "node",
+     "in": "cpn-1",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "tone": "v",
+     "size": [
+      1.3,
+      1.3,
+      0.8
+     ],
+     "title": "API, etcd…"
+    },
+    {
+     "id": "cpn-2",
+     "kind": "layer",
+     "at": [
+      -6.5,
+      -6.5,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "v"
+    },
+    {
+     "id": "cp-2",
+     "kind": "node",
+     "in": "cpn-2",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "tone": "v",
+     "size": [
+      1.3,
+      1.3,
+      0.8
+     ]
+    },
+    {
+     "id": "cpn-3",
+     "kind": "layer",
+     "at": [
+      -2.0,
+      -11.0,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "v",
+     "title": "control plane",
+     "sub": "3 nœuds",
+     "detail": "Les trois nœuds du **plan de contrôle** : l'API, l'ordonnanceur, la base etcd. À trois, le cluster continue de fonctionner si l'un d'eux tombe. Le plan de contrôle est toujours sous Linux."
+    },
+    {
+     "id": "cp-3",
+     "kind": "node",
+     "in": "cpn-3",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "tone": "v",
+     "size": [
+      1.3,
+      1.3,
+      0.8
+     ]
+    },
+    {
+     "id": "n1",
+     "kind": "layer",
+     "at": [
+      -2.25,
+      2.25,
+      0
+     ],
+     "size": [
+      2.6,
+      7.8,
+      0.5
+     ],
+     "tone": "n"
+    },
+    {
+     "id": "vote",
+     "in": "n1",
+     "at": [
+      0.0,
+      1.8
+     ],
+     "sub": "3 pods"
+    },
+    {
+     "id": "redis",
+     "in": "n1",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "n2",
+     "kind": "layer",
+     "at": [
+      2.25,
+      -2.25,
+      0
+     ],
+     "size": [
+      2.6,
+      7.8,
+      0.5
+     ],
+     "tone": "n"
+    },
+    {
+     "id": "vote-2",
+     "in": "n2",
+     "at": [
+      0.0,
+      1.8
+     ]
+    },
+    {
+     "id": "result",
+     "in": "n2",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "n3",
+     "kind": "layer",
+     "at": [
+      6.75,
+      -6.75,
+      0
+     ],
+     "size": [
+      2.6,
+      7.8,
+      0.5
+     ],
+     "tone": "n",
+     "title": "nœud Linux",
+     "sub": "3 nœuds",
+     "detail": "Trois **nœuds Linux** : l'ordonnanceur y répartit les pods. Les trois pods vote sont sur trois nœuds différents : si l'un tombe, les deux autres répondent."
+    },
+    {
+     "id": "vote-3",
+     "in": "n3",
+     "at": [
+      0.0,
+      1.8
+     ]
+    },
+    {
+     "id": "db",
+     "in": "n3",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "n-win",
+     "kind": "layer",
+     "at": [
+      -8.25,
+      8.25,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "b",
+     "title": "nœud Windows",
+     "detail": "Le **nœud Windows** ne fait que du travail : il porte le worker, qu'on lui adresse par un `nodeSelector` (`kubernetes.io/os: windows`)."
+    },
+    {
+     "id": "worker",
+     "in": "n-win",
+     "at": [
+      0,
+      0
+     ],
+     "sub": ".NET Framework"
+    },
+    {
+     "id": "ingress",
+     "kind": "node",
+     "at": [
+      -1.25,
+      12.25
+     ],
+     "tone": "r",
+     "title": "Ingress + LB",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "l'entrée",
+     "detail": "La **porte d'entrée** : un Ingress, derrière un répartiteur de charge (*load balancer*), fait entrer les requêtes dans le cluster."
+    },
+    {
+     "id": "storage",
+     "kind": "store",
+     "at": [
+      3.25,
+      7.75
+     ],
+     "tone": "b",
+     "title": "Stockage",
+     "size": [
+      1.5,
+      1.5,
+      1.0
+     ],
+     "sub": "volumes",
+     "detail": "Le **stockage** : où vivent les volumes des données ? Dans le cluster, ou dans une base de données managée, en dehors ?"
+    },
+    {
+     "id": "backup",
+     "kind": "node",
+     "at": [
+      7.75,
+      3.25
+     ],
+     "tone": "g",
+     "title": "Velero",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "sauvegardes",
+     "detail": "Les **sauvegardes** du cluster, ici avec Velero. Une sauvegarde ne vaut que si l'on a déjà essayé de la restaurer."
+    },
+    {
+     "id": "harbor",
+     "kind": "store",
+     "at": [
+      12.25,
+      -1.25
+     ],
+     "tone": "v",
+     "title": "Harbor",
+     "size": [
+      1.5,
+      1.5,
+      1.0
+     ],
+     "sub": "registre",
+     "detail": "Un **registre interne**, ici Harbor. Autour de lui s'ajoutent la supervision, la sécurité et les droits d'accès."
+    },
+    {
+     "id": "users",
+     "at": [
+      -4.5,
+      15.5
+     ]
+    }
+   ]
+  }
+ ]
 }

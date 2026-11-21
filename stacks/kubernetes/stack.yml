@@ -65,4 +65,5 @@ layers:
       - { slug: vm-to-kubernetes }
       - { slug: k8s-when-to-use }
       - { slug: k8s-cluster-topology }
+      - { slug: k8s-cluster-sizing }
       - { slug: k8s-reference-cluster }

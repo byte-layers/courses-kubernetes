@@ -7,7 +7,7 @@ tags:
   - containers
 difficulty: beginner
 duration: 15
-requires: "0.5.0"
+requires: "0.6.0"
 ---
 
 Quand on change la façon d'héberger une application, l'application reste la même : seule l'infrastructure change. Cette page suit une même application, l'application de vote, exploitée de six façons, de la plus simple à la plus outillée. Chaque marche règle un problème de la précédente, et en apporte un nouveau. Vous saurez ce que les conteneurs changent par rapport à une machine virtuelle, ce que Kubernetes ajoute aux conteneurs, et pourquoi l'installer sur une seule machine ne donne pas ce qu'on en attend.
