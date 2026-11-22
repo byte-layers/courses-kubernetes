@@ -18,7 +18,7 @@ Vous allez déployer la première brique d'une application sur Kubernetes, puis 
 
 **Niveau** : débutant. Aucune connaissance en programmation n'est nécessaire. Vous savez ouvrir un terminal et y lancer une commande ; chaque commande Kubernetes est expliquée quand elle arrive.
 
-**Prérequis** : un cluster Kubernetes qui répond à `kubectl get nodes`, ce que fait le lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), et savoir ce que sont une image et un conteneur, ce que rappelle le lab [Échauffement : la voting app en conteneurs](https://byte-layers.com/fr/labs/voting-app-containers-warmup).
+**Prérequis** : un cluster Kubernetes qui répond à `kubectl get nodes`, ce que fait le lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), et savoir ce que sont une image et un conteneur, ce que rappelle le lab [Échauffement : la voting app en conteneurs](https://byte-layers.com/fr/labs/voting-app-containers-warmup).
 
 **Ce qu'il faut** : un éditeur de texte, un navigateur, `curl` pour interroger une page web depuis le terminal, et le port **28610** de votre machine libre.
 

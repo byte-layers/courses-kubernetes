@@ -5,12 +5,16 @@ tags: [kubernetes]
 prerequisites: "Savoir utiliser un terminal, et avoir Docker installé. Savoir ce qu'est un conteneur aide, et l'échauffement du premier layer le rappelle."
 layers:
   - title: "Installer"
-    summary: "L'application en conteneurs, puis un cluster prêt sur votre poste"
+    summary: "Pourquoi Kubernetes, ce qu'il demande, comment l'installer, puis un cluster prêt sur votre poste"
     contents:
       - { slug: voting-app-containers-warmup }
-      - { slug: orchestrator-why, role: read-first }
+      - { slug: vm-to-orchestrator, role: read-first }
+      - { slug: why-kubernetes }
+      - { slug: k8s-benefits }
+      - { slug: k8s-when-to-use }
       - { slug: k8s-overview }
-      - { slug: k8s-install }
+      - { slug: k8s-distribution-choice }
+      - { slug: k8s-minikube-install }
       - { slug: k8s-cluster-anatomy }
       - { slug: k8s-install-challenge, role: proof }
   - title: "Déployer"
@@ -56,14 +60,13 @@ layers:
       - { slug: k8s-failure-catalog }
       - { slug: k8s-update-challenge, role: proof }
   - title: "Livrer"
-    summary: "Une mise en production, une chasse aux pannes, et la suite"
+    summary: "Une mise en production, une chasse aux pannes, puis vers la prod : topologie, dimensionnement, on-prem ou cloud, et au-delà du cluster"
     contents:
       - { slug: k8s-voting-app-production }
       - { slug: k8s-troubleshooting-challenge, role: proof }
       - { slug: deployment-strategies }
       - { slug: k8s-rollout-mechanics }
-      - { slug: vm-to-kubernetes }
-      - { slug: k8s-when-to-use }
       - { slug: k8s-cluster-topology }
       - { slug: k8s-cluster-sizing }
+      - { slug: k8s-on-prem-vs-cloud }
       - { slug: k8s-reference-cluster }

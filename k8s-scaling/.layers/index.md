@@ -18,7 +18,7 @@ Jusqu'ici, Kubernetes maintenait **un** exemplaire de `vote` en vie. Vous allez 
 
 **Niveau** : débutant. Vous savez écrire et appliquer le fichier d'un Deployment, et vous connaissez les notions de pod, de Deployment et de réconciliation : c'est le cours [Déployer une application avec un Deployment](https://byte-layers.com/fr/skills/k8s-deployment). Chaque nouvelle commande est expliquée quand elle arrive.
 
-**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), un éditeur de texte, `curl`, et le port **28620** de votre machine libre.
+**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), un éditeur de texte, `curl`, et le port **28620** de votre machine libre.
 
 **Vos fichiers** vivent dans `~/byte-layers/kubernetes/l2`. Rien n'est supprimé à la fin : le Deployment `vote` reste dans le cluster avec **3 réplicas**, et son fichier `vote.deploy.yml` reste dans ce dossier, car les cours suivants s'en servent. Le fichier final se trouve aussi dans [`solution/vote.deploy.yml`](../solution/vote.deploy.yml).
 

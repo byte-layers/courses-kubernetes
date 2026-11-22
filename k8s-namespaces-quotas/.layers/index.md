@@ -18,7 +18,7 @@ Votre application de vote tourne, et ses cinq morceaux se trouvent grâce aux Se
 
 **Niveau** : débutant. Vous avez déjà déployé l'application de vote et ses cinq morceaux, ce que fait le lab [Déployer la voting app complète](https://byte-layers.com/fr/labs/k8s-voting-app), vous lui avez ouvert une porte d'entrée avec [Ouvrir une porte d'entrée avec un Ingress](https://byte-layers.com/fr/skills/k8s-ingress), et vous savez changer le nombre de réplicas, ce qu'enseigne [Passer à l'échelle avec les réplicas](https://byte-layers.com/fr/skills/k8s-scaling). Les namespaces et les quotas sont expliqués ici, à partir de zéro.
 
-**Ce qu'il faut** : un cluster `layers-k8s` auquel `kubectl` répond, celui du lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), un navigateur, et le port **28640** de votre machine libre.
+**Ce qu'il faut** : un cluster `layers-k8s` auquel `kubectl` répond, celui du lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), un navigateur, et le port **28640** de votre machine libre.
 
 **Où vivent les fichiers** : dans `~/byte-layers/kubernetes/l4/app/`. Rien n'est supprimé à la fin : le cours suivant s'en sert.
 

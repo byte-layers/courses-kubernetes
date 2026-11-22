@@ -335,7 +335,7 @@ Le tableau dit quoi faire selon ce que vous lisez :
 | Ce que vous lisez | Ce que cela veut dire |
 |---|---|
 | un pod `calico-node-…` `Running` | votre cluster est prêt |
-| `No resources found`, sur votre poste | le cluster a été démarré sans Calico : les règles seraient acceptées, mais **sans aucun effet, et sans message d'erreur**. Recréez le cluster comme dans le lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), puis reprenez cette étape |
+| `No resources found`, sur votre poste | le cluster a été démarré sans Calico : les règles seraient acceptées, mais **sans aucun effet, et sans message d'erreur**. Recréez le cluster comme dans le lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), puis reprenez cette étape |
 | `No resources found`, sur un poste hébergé (un VS Code dans le navigateur, fourni par un formateur) | c'est normal : le cluster y applique les règles réseau avec son propre composant, sans Calico |
 
 ## Tester le réseau depuis un pod étranger à l'application

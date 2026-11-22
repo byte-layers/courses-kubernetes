@@ -1,0 +1,897 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "k8s-managed-cluster",
+ "title": "Un cluster de production : soi-même ou chez un fournisseur",
+ "lang": "fr",
+ "kit": "plan",
+ "legend": [
+  {
+   "tone": "g",
+   "label": "à vous"
+  },
+  {
+   "tone": "y",
+   "label": "géré (fournisseur)"
+  },
+  {
+   "tone": "n",
+   "label": "machine louée"
+  }
+ ],
+ "entities": [
+  {
+   "id": "you",
+   "kind": "actor",
+   "at": [
+    -16,
+    -6.5
+   ],
+   "label": "vous"
+  },
+  {
+   "id": "lbapi",
+   "kind": "node",
+   "at": [
+    -10,
+    -6.5
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    1.7,
+    1
+   ],
+   "title": "load balancer",
+   "sub": "accès à l'API",
+   "detail": "Un **load balancer** devant les trois control planes : `kubectl` et les nœuds passent par lui, même si une machine tombe."
+  },
+  {
+   "id": "cp",
+   "kind": "layer",
+   "at": [
+    5.5,
+    -6.5
+   ],
+   "tone": "g",
+   "size": [
+    23.0,
+    4.2,
+    1
+   ],
+   "title": "control plane",
+   "sub": "3 machines"
+  },
+  {
+   "id": "users",
+   "kind": "actor",
+   "at": [
+    -16,
+    3.0
+   ],
+   "label": "utilisateurs"
+  },
+  {
+   "id": "lbin",
+   "kind": "node",
+   "at": [
+    -10,
+    3.0
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    1.7,
+    1
+   ],
+   "title": "load balancer",
+   "sub": "trafic entrant"
+  },
+  {
+   "id": "pool",
+   "kind": "layer",
+   "at": [
+    5.5,
+    3.0
+   ],
+   "tone": "g",
+   "size": [
+    23.0,
+    7.0,
+    1
+   ],
+   "title": "nœuds",
+   "sub": "un groupe qui grandit"
+  },
+  {
+   "id": "vol1",
+   "kind": "store",
+   "at": [
+    21.5,
+    0.8
+   ],
+   "tone": "g",
+   "size": [
+    4.0,
+    2.0,
+    1
+   ],
+   "title": "volume",
+   "sub": "vos données"
+  },
+  {
+   "id": "vol2",
+   "kind": "store",
+   "at": [
+    21.5,
+    4.6
+   ],
+   "tone": "g",
+   "size": [
+    4.0,
+    2.0,
+    1
+   ],
+   "title": "volume",
+   "sub": "vos données"
+  },
+  {
+   "id": "reg",
+   "kind": "store",
+   "at": [
+    21.5,
+    -6.5
+   ],
+   "tone": "g",
+   "size": [
+    4.0,
+    2.0,
+    1
+   ],
+   "title": "registre",
+   "sub": "vos images",
+   "detail": "Le **registre** garde vos images de conteneurs ; les nœuds y tirent celles qu'ils lancent."
+  },
+  {
+   "id": "cp0",
+   "kind": "node",
+   "at": [
+    -5.6,
+    0.7
+   ],
+   "tone": "g",
+   "size": [
+    4.8,
+    1.9,
+    1
+   ],
+   "in": "cp",
+   "title": "control plane",
+   "sub": "+ etcd",
+   "detail": "API server, ordonnanceur, contrôleurs et **etcd** sur la même machine. Trois pour survivre à une panne."
+  },
+  {
+   "id": "cp1",
+   "kind": "node",
+   "at": [
+    0,
+    0.7
+   ],
+   "tone": "g",
+   "size": [
+    4.8,
+    1.9,
+    1
+   ],
+   "in": "cp",
+   "title": "control plane",
+   "sub": "+ etcd"
+  },
+  {
+   "id": "cp2",
+   "kind": "node",
+   "at": [
+    5.6,
+    0.7
+   ],
+   "tone": "g",
+   "size": [
+    4.8,
+    1.9,
+    1
+   ],
+   "in": "cp",
+   "title": "control plane",
+   "sub": "+ etcd"
+  },
+  {
+   "id": "w0",
+   "kind": "layer",
+   "at": [
+    -8.25,
+    0.8
+   ],
+   "tone": "g",
+   "size": [
+    5.0,
+    4.6,
+    1
+   ],
+   "in": "pool",
+   "title": "nœud"
+  },
+  {
+   "id": "w0a",
+   "kind": "node",
+   "at": [
+    -1.2,
+    -0.1
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.1,
+    1
+   ],
+   "in": "w0",
+   "title": "pod"
+  },
+  {
+   "id": "w0b",
+   "kind": "node",
+   "at": [
+    1.2,
+    -0.1
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.1,
+    1
+   ],
+   "in": "w0",
+   "title": "pod"
+  },
+  {
+   "id": "w0s",
+   "kind": "program",
+   "at": [
+    0,
+    1.4
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    0.9,
+    1
+   ],
+   "in": "w0",
+   "title": "système",
+   "detail": "Les applications système de chaque nœud : réseau, DNS, pilote de stockage, agents."
+  },
+  {
+   "id": "w1",
+   "kind": "layer",
+   "at": [
+    -2.75,
+    0.8
+   ],
+   "tone": "g",
+   "size": [
+    5.0,
+    4.6,
+    1
+   ],
+   "in": "pool",
+   "title": "nœud"
+  },
+  {
+   "id": "w1a",
+   "kind": "node",
+   "at": [
+    -1.2,
+    -0.1
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.1,
+    1
+   ],
+   "in": "w1",
+   "title": "pod"
+  },
+  {
+   "id": "w1b",
+   "kind": "node",
+   "at": [
+    1.2,
+    -0.1
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.1,
+    1
+   ],
+   "in": "w1",
+   "title": "pod"
+  },
+  {
+   "id": "w1s",
+   "kind": "program",
+   "at": [
+    0,
+    1.4
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    0.9,
+    1
+   ],
+   "in": "w1",
+   "title": "système"
+  },
+  {
+   "id": "w2",
+   "kind": "layer",
+   "at": [
+    2.75,
+    0.8
+   ],
+   "tone": "g",
+   "size": [
+    5.0,
+    4.6,
+    1
+   ],
+   "in": "pool",
+   "title": "nœud"
+  },
+  {
+   "id": "w2a",
+   "kind": "node",
+   "at": [
+    -1.2,
+    -0.1
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.1,
+    1
+   ],
+   "in": "w2",
+   "title": "pod"
+  },
+  {
+   "id": "w2b",
+   "kind": "node",
+   "at": [
+    1.2,
+    -0.1
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.1,
+    1
+   ],
+   "in": "w2",
+   "title": "pod"
+  },
+  {
+   "id": "w2s",
+   "kind": "program",
+   "at": [
+    0,
+    1.4
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    0.9,
+    1
+   ],
+   "in": "w2",
+   "title": "système"
+  },
+  {
+   "id": "w3",
+   "kind": "layer",
+   "at": [
+    8.25,
+    0.8
+   ],
+   "tone": "g",
+   "size": [
+    5.0,
+    4.6,
+    1
+   ],
+   "in": "pool",
+   "title": "nœud"
+  },
+  {
+   "id": "w3a",
+   "kind": "node",
+   "at": [
+    -1.2,
+    -0.1
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.1,
+    1
+   ],
+   "in": "w3",
+   "title": "pod"
+  },
+  {
+   "id": "w3b",
+   "kind": "node",
+   "at": [
+    1.2,
+    -0.1
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.1,
+    1
+   ],
+   "in": "w3",
+   "title": "pod"
+  },
+  {
+   "id": "w3s",
+   "kind": "program",
+   "at": [
+    0,
+    1.4
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    0.9,
+    1
+   ],
+   "in": "w3",
+   "title": "système"
+  }
+ ],
+ "steps": [
+  {
+   "id": "self",
+   "label": "Installé soi-même",
+   "title": "Un cluster de production, installé soi-même",
+   "body": [
+    "Trois **control planes** derrière un load balancer, un groupe de **nœuds** qui grandit, des **volumes** pour les données.",
+    "Tout est vert : chaque machine, chaque brique, chaque mise à jour est à vous."
+   ],
+   "hud": [
+    {
+     "label": "control plane",
+     "value": "à vous",
+     "tone": "g"
+    },
+    {
+     "label": "nœuds",
+     "value": "à vous",
+     "tone": "g"
+    },
+    {
+     "label": "stockage",
+     "value": "à vous",
+     "tone": "g"
+    }
+   ],
+   "show": [
+    "you",
+    "users",
+    "cp",
+    "pool"
+   ],
+   "links": [],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "show": [
+      "cp0",
+      "cp1",
+      "cp2"
+     ],
+     "say": "Trois machines pour le control plane, chacune avec etcd : une peut tomber, le cluster tient."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "lbapi"
+     ],
+     "link": [
+      {
+       "from": "you",
+       "to": "lbapi"
+      },
+      {
+       "from": "lbapi",
+       "to": "cp"
+      }
+     ],
+     "say": "Un load balancer devant l'API : `kubectl` et les nœuds ne visent qu'une adresse."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "w0",
+      "w1",
+      "w2",
+      "w0a",
+      "w0b",
+      "w0s",
+      "w1a",
+      "w1b",
+      "w1s",
+      "w2a",
+      "w2b",
+      "w2s"
+     ],
+     "link": [
+      {
+       "from": "pool",
+       "to": "cp"
+      }
+     ],
+     "say": "Les nœuds rejoignent le cluster, avec leurs applications système."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "w3",
+       "dim": true
+      },
+      {
+       "id": "w3a",
+       "dim": true
+      },
+      {
+       "id": "w3b",
+       "dim": true
+      },
+      {
+       "id": "w3s",
+       "dim": true
+      }
+     ],
+     "say": "La charge monte ? Ajouter une machine, l'installer, la faire rejoindre : c'est à vous."
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "w3",
+       "dim": null
+      },
+      {
+       "id": "w3a",
+       "dim": null
+      },
+      {
+       "id": "w3b",
+       "dim": null
+      },
+      {
+       "id": "w3s",
+       "dim": null
+      }
+     ],
+     "ms": 500
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "scene",
+     "show": [
+      "vol1",
+      "vol2",
+      "lbin"
+     ],
+     "link": [
+      {
+       "from": "pool",
+       "to": "vol1"
+      },
+      {
+       "from": "pool",
+       "to": "vol2"
+      },
+      {
+       "from": "users",
+       "to": "lbin"
+      },
+      {
+       "from": "lbin",
+       "to": "pool"
+      }
+     ],
+     "say": "Les données vivent sur des volumes, hors des nœuds, et le trafic entre par un second load balancer."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "managed",
+   "label": "Chez un fournisseur",
+   "title": "Le même cluster, chez un fournisseur",
+   "body": [
+    "Le fournisseur **gère** le control plane, les applications système, le load balancer et les services de stockage.",
+    "Les nœuds sont des **machines louées** : vous choisissez leur type et leur nombre. Vos applications et vos données restent à vous."
+   ],
+   "hud": [
+    {
+     "label": "control plane",
+     "value": "à vous",
+     "tone": "g"
+    },
+    {
+     "label": "nœuds",
+     "value": "à vous",
+     "tone": "g"
+    },
+    {
+     "label": "vos données",
+     "value": "à vous",
+     "tone": "g"
+    }
+   ],
+   "show": [
+    "you",
+    "users",
+    "lbapi",
+    "cp",
+    "pool",
+    "lbin",
+    "vol1",
+    "vol2",
+    "cp0",
+    "cp1",
+    "cp2",
+    "w0",
+    "w1",
+    "w2",
+    "w3",
+    "w0a",
+    "w0b",
+    "w1a",
+    "w1b",
+    "w2a",
+    "w2b",
+    "w3a",
+    "w3b",
+    "w0s",
+    "w1s",
+    "w2s",
+    "w3s"
+   ],
+   "links": [
+    {
+     "from": "you",
+     "to": "lbapi"
+    },
+    {
+     "from": "lbapi",
+     "to": "cp"
+    },
+    {
+     "from": "pool",
+     "to": "cp"
+    },
+    {
+     "from": "pool",
+     "to": "vol1"
+    },
+    {
+     "from": "pool",
+     "to": "vol2"
+    },
+    {
+     "from": "users",
+     "to": "lbin"
+    },
+    {
+     "from": "lbin",
+     "to": "pool"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hide": [
+      "cp1",
+      "cp2",
+      "lbapi"
+     ],
+     "set": [
+      {
+       "id": "cp",
+       "tone": "y",
+       "sub": "géré par le fournisseur"
+      },
+      {
+       "id": "cp0",
+       "tone": "y",
+       "at": [
+        0,
+        0.7
+       ],
+       "size": [
+        9,
+        1.9,
+        1
+       ],
+       "title": "control plane géré",
+       "sub": "une adresse d'API"
+      }
+     ],
+     "link": [
+      {
+       "from": "you",
+       "to": "cp"
+      }
+     ],
+     "hud": [
+      {
+       "label": "control plane",
+       "value": "au fournisseur",
+       "tone": "y"
+      }
+     ],
+     "say": "Le control plane passe au fournisseur : ses machines, etcd, ses sauvegardes. Il vous en reste une adresse.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "w0s",
+       "tone": "y"
+      },
+      {
+       "id": "w1s",
+       "tone": "y"
+      },
+      {
+       "id": "w2s",
+       "tone": "y"
+      },
+      {
+       "id": "w3s",
+       "tone": "y"
+      }
+     ],
+     "say": "Les applications système de chaque nœud aussi : réseau, DNS, stockage."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "w0",
+       "tone": "n",
+       "sub": "machine louée"
+      },
+      {
+       "id": "w1",
+       "tone": "n",
+       "sub": "machine louée"
+      },
+      {
+       "id": "w2",
+       "tone": "n",
+       "sub": "machine louée"
+      },
+      {
+       "id": "w3",
+       "tone": "n",
+       "sub": "machine louée"
+      },
+      {
+       "id": "pool",
+       "tone": "n",
+       "sub": "grandit et se répare seul"
+      }
+     ],
+     "hud": [
+      {
+       "label": "nœuds",
+       "value": "machines louées",
+       "tone": "n"
+      }
+     ],
+     "say": "Les nœuds sont des machines louées : il les crée, les répare, en ajoute quand la charge monte."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "lbin",
+       "tone": "y",
+       "sub": "un service loué"
+      }
+     ],
+     "show": [
+      "reg"
+     ],
+     "link": [
+      {
+       "from": "reg",
+       "to": "pool"
+      }
+     ],
+     "say": "Le load balancer devient un service loué ; le registre garde vos images."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "vos données",
+       "value": "toujours à vous",
+       "tone": "g"
+      }
+     ],
+     "say": "Restent à vous : vos applications, vos données, vos images."
+    },
+    {
+     "do": "wait",
+     "ms": 3000
+    }
+   ]
+  }
+ ]
+}

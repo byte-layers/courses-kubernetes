@@ -20,7 +20,7 @@ NAME         STATUS   ROLES           AGE   VERSION
 layers-k8s   Ready    control-plane   12m   v1.34.0
 ```
 
-Si la commande échoue avec `connection refused`, le cluster est arrêté : le lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install) dit comment le relancer.
+Si la commande échoue avec `connection refused`, le cluster est arrêté : le lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install) dit comment le relancer.
 
 Créez ensuite le dossier de ce cours. `mkdir -p` crée aussi les dossiers parents qui manquent, et ne dit rien si le dossier existe déjà :
 

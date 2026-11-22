@@ -1,0 +1,1344 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "k8s-distribution-choice",
+ "title": "Choisir une distribution Kubernetes",
+ "lang": "fr",
+ "kit": "plan",
+ "legend": [
+  {
+   "tone": "g",
+   "label": "à vous"
+  },
+  {
+   "tone": "y",
+   "label": "au fournisseur"
+  },
+  {
+   "tone": "b",
+   "label": "vos applications"
+  },
+  {
+   "tone": "r",
+   "label": "outils ajoutés"
+  }
+ ],
+ "entities": [
+  {
+   "id": "k8s",
+   "kind": "node",
+   "at": [
+    0.0,
+    0
+   ],
+   "tone": "i",
+   "size": [
+    5.0,
+    2.4,
+    1
+   ],
+   "title": "Kubernetes",
+   "sub": "le projet",
+   "detail": "Le projet **Kubernetes**, porté par la CNCF, publie une version environ tous les quatre mois : c'est la distribution officielle."
+  },
+  {
+   "id": "off",
+   "kind": "node",
+   "at": [
+    8.4,
+    -3.2
+   ],
+   "tone": "n",
+   "size": [
+    7.4,
+    2.4,
+    1
+   ],
+   "title": "distribution officielle",
+   "sub": "celle du projet",
+   "detail": "Le Kubernetes tel que le projet le publie. Ce qui change d'une façon à l'autre : **qui l'installe** et qui s'en occupe ensuite."
+  },
+  {
+   "id": "spec",
+   "kind": "node",
+   "at": [
+    8.4,
+    3.2
+   ],
+   "tone": "n",
+   "size": [
+    7.4,
+    2.4,
+    1
+   ],
+   "title": "distributions spécifiques",
+   "sub": "reprises par des éditeurs",
+   "detail": "Des éditeurs reprennent Kubernetes et y ajoutent leurs choix : des outils, un système, ou au contraire moins de pièces."
+  },
+  {
+   "id": "self",
+   "kind": "node",
+   "at": [
+    18.6,
+    -4.8
+   ],
+   "tone": "n",
+   "size": [
+    8.6,
+    2.4,
+    1
+   ],
+   "title": "installée par vous",
+   "sub": "kubeadm, kubespray, kops",
+   "detail": "`kubeadm` monte le cluster sur des machines qui existent ; `kubespray` fait de même avec Ansible ; `kops` crée aussi les machines dans le cloud."
+  },
+  {
+   "id": "kaas",
+   "kind": "node",
+   "at": [
+    18.6,
+    -1.6
+   ],
+   "tone": "n",
+   "size": [
+    8.6,
+    2.4,
+    1
+   ],
+   "title": "clé en main (KaaS)",
+   "sub": "EKS, GKE, AKS, Kapsule…",
+   "detail": "Un service géré, ou **KaaS** (*Kubernetes as a Service*) : EKS chez AWS, GKE chez Google, AKS chez Microsoft, Scaleway Kapsule, OVHcloud…"
+  },
+  {
+   "id": "ent",
+   "kind": "node",
+   "at": [
+    18.6,
+    1.6
+   ],
+   "tone": "n",
+   "size": [
+    8.6,
+    2.4,
+    1
+   ],
+   "title": "outillées entreprise",
+   "sub": "OpenShift, OKD, Rancher…",
+   "detail": "OpenShift (Red Hat) et sa version communautaire OKD, Rancher (SUSE), Talos Linux : des **outils** ou un **système** pensés pour l'entreprise."
+  },
+  {
+   "id": "light",
+   "kind": "node",
+   "at": [
+    18.6,
+    4.8
+   ],
+   "tone": "n",
+   "size": [
+    8.6,
+    2.4,
+    1
+   ],
+   "title": "légères",
+   "sub": "minikube, kind, k3s…",
+   "detail": "minikube, kind et k3d émulent un cluster sur un poste ; k3s et MicroK8s, légers, tournent aussi en production sur de petites machines."
+  },
+  {
+   "id": "sbox",
+   "kind": "layer",
+   "at": [
+    33.0,
+    -2.6
+   ],
+   "tone": "n",
+   "size": [
+    15.6,
+    6.4,
+    1
+   ]
+  },
+  {
+   "id": "scp",
+   "kind": "layer",
+   "at": [
+    0,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    4.8,
+    1
+   ],
+   "in": "sbox"
+  },
+  {
+   "id": "sapi",
+   "kind": "node",
+   "at": [
+    0,
+    -0.75
+   ],
+   "tone": "v",
+   "size": [
+    3.6,
+    1.2,
+    1
+   ],
+   "in": "scp",
+   "title": "control plane",
+   "detail": "Le **control plane** : l'API server, l'ordonnanceur et les contrôleurs. Il décide où tourne chaque pod."
+  },
+  {
+   "id": "setcd",
+   "kind": "store",
+   "at": [
+    0,
+    1.3
+   ],
+   "tone": "v",
+   "size": [
+    2.8,
+    1.3,
+    1
+   ],
+   "in": "scp",
+   "title": "etcd",
+   "detail": "**etcd**, la base où le cluster range son état. La sauvegarder revient à qui s'occupe du control plane."
+  },
+  {
+   "id": "sw1",
+   "kind": "layer",
+   "at": [
+    -5.4,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    3.8,
+    4.8,
+    1
+   ],
+   "in": "sbox",
+   "title": "nœud",
+   "detail": "Un nœud de travail : une machine qui fait tourner les pods. Sur le schéma, deux : un de chaque côté du control plane."
+  },
+  {
+   "id": "sp1",
+   "kind": "node",
+   "at": [
+    0,
+    0.35
+   ],
+   "tone": "b",
+   "size": [
+    3.0,
+    1.2,
+    1
+   ],
+   "in": "sw1",
+   "title": "pods",
+   "detail": "Les pods de vos applications. Quelle que soit la distribution, ils restent les vôtres."
+  },
+  {
+   "id": "sw2",
+   "kind": "layer",
+   "at": [
+    5.4,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    3.8,
+    4.8,
+    1
+   ],
+   "in": "sbox"
+  },
+  {
+   "id": "sp2",
+   "kind": "node",
+   "at": [
+    0,
+    0.35
+   ],
+   "tone": "b",
+   "size": [
+    3.0,
+    1.2,
+    1
+   ],
+   "in": "sw2"
+  },
+  {
+   "id": "kbox",
+   "kind": "layer",
+   "at": [
+    33.0,
+    -1.6
+   ],
+   "tone": "n",
+   "size": [
+    15.6,
+    6.4,
+    1
+   ]
+  },
+  {
+   "id": "kcp",
+   "kind": "layer",
+   "at": [
+    0,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    4.8,
+    1
+   ],
+   "in": "kbox"
+  },
+  {
+   "id": "kapi",
+   "kind": "node",
+   "at": [
+    0,
+    -0.75
+   ],
+   "tone": "v",
+   "size": [
+    3.6,
+    1.2,
+    1
+   ],
+   "in": "kcp",
+   "title": "control plane"
+  },
+  {
+   "id": "ketcd",
+   "kind": "store",
+   "at": [
+    0,
+    1.3
+   ],
+   "tone": "v",
+   "size": [
+    2.8,
+    1.3,
+    1
+   ],
+   "in": "kcp",
+   "title": "etcd"
+  },
+  {
+   "id": "kw1",
+   "kind": "layer",
+   "at": [
+    -5.4,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    3.8,
+    4.8,
+    1
+   ],
+   "in": "kbox",
+   "title": "nœud"
+  },
+  {
+   "id": "kp1",
+   "kind": "node",
+   "at": [
+    0,
+    0.35
+   ],
+   "tone": "b",
+   "size": [
+    3.0,
+    1.2,
+    1
+   ],
+   "in": "kw1",
+   "title": "pods"
+  },
+  {
+   "id": "kw2",
+   "kind": "layer",
+   "at": [
+    5.4,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    3.8,
+    4.8,
+    1
+   ],
+   "in": "kbox"
+  },
+  {
+   "id": "kp2",
+   "kind": "node",
+   "at": [
+    0,
+    0.35
+   ],
+   "tone": "b",
+   "size": [
+    3.0,
+    1.2,
+    1
+   ],
+   "in": "kw2"
+  },
+  {
+   "id": "ebox",
+   "kind": "layer",
+   "at": [
+    33.0,
+    1.6
+   ],
+   "tone": "n",
+   "size": [
+    15.6,
+    6.4,
+    1
+   ]
+  },
+  {
+   "id": "ecp",
+   "kind": "layer",
+   "at": [
+    0,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    4.2,
+    4.8,
+    1
+   ],
+   "in": "ebox"
+  },
+  {
+   "id": "eapi",
+   "kind": "node",
+   "at": [
+    0,
+    -0.75
+   ],
+   "tone": "v",
+   "size": [
+    3.6,
+    1.2,
+    1
+   ],
+   "in": "ecp",
+   "title": "control plane"
+  },
+  {
+   "id": "eetcd",
+   "kind": "store",
+   "at": [
+    0,
+    1.3
+   ],
+   "tone": "v",
+   "size": [
+    2.8,
+    1.3,
+    1
+   ],
+   "in": "ecp",
+   "title": "etcd"
+  },
+  {
+   "id": "ew1",
+   "kind": "layer",
+   "at": [
+    -5.4,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    3.8,
+    4.8,
+    1
+   ],
+   "in": "ebox",
+   "title": "nœud"
+  },
+  {
+   "id": "ep1",
+   "kind": "node",
+   "at": [
+    0,
+    -0.75
+   ],
+   "tone": "b",
+   "size": [
+    3.0,
+    1.2,
+    1
+   ],
+   "in": "ew1",
+   "title": "pods"
+  },
+  {
+   "id": "ew2",
+   "kind": "layer",
+   "at": [
+    5.4,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    3.8,
+    4.8,
+    1
+   ],
+   "in": "ebox"
+  },
+  {
+   "id": "ep2",
+   "kind": "node",
+   "at": [
+    0,
+    -0.75
+   ],
+   "tone": "b",
+   "size": [
+    3.0,
+    1.2,
+    1
+   ],
+   "in": "ew2"
+  },
+  {
+   "id": "et1",
+   "kind": "program",
+   "at": [
+    0,
+    1.3
+   ],
+   "tone": "r",
+   "size": [
+    3.0,
+    1.1,
+    1
+   ],
+   "in": "ew1",
+   "title": "console",
+   "detail": "Les outils qu'ajoute une distribution d'entreprise : une **console web**, un **registre d'images**. Ils tournent dans le cluster, comme des applications."
+  },
+  {
+   "id": "et2",
+   "kind": "program",
+   "at": [
+    0,
+    1.3
+   ],
+   "tone": "r",
+   "size": [
+    3.0,
+    1.1,
+    1
+   ],
+   "in": "ew2",
+   "title": "registre"
+  },
+  {
+   "id": "lbox",
+   "kind": "layer",
+   "at": [
+    30.8,
+    2.6
+   ],
+   "tone": "n",
+   "size": [
+    11.2,
+    6.4,
+    1
+   ]
+  },
+  {
+   "id": "lap",
+   "kind": "layer",
+   "at": [
+    0,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    9.6,
+    4.8,
+    1
+   ],
+   "in": "lbox",
+   "title": "votre poste",
+   "sub": "un seul nœud",
+   "detail": "Votre poste : un seul nœud porte à la fois le control plane et vos pods. `minikube` le fait tourner dans un conteneur Docker ou une machine virtuelle."
+  },
+  {
+   "id": "lcp",
+   "kind": "node",
+   "at": [
+    -2.2,
+    0.6
+   ],
+   "tone": "v",
+   "size": [
+    3.8,
+    1.2,
+    1
+   ],
+   "in": "lap",
+   "title": "control plane",
+   "sub": "+ etcd"
+  },
+  {
+   "id": "lpods",
+   "kind": "node",
+   "at": [
+    2.4,
+    0.6
+   ],
+   "tone": "b",
+   "size": [
+    3.0,
+    1.2,
+    1
+   ],
+   "in": "lap",
+   "title": "pods"
+  }
+ ],
+ "steps": [
+  {
+   "id": "map",
+   "label": "Deux familles",
+   "title": "Deux familles : la distribution officielle et les distributions spécifiques",
+   "body": [
+    "Le projet publie la **distribution officielle** : vous l'installez, ou un fournisseur l'installe pour vous.",
+    "Des éditeurs en tirent des **distributions spécifiques** : outillées pour l'entreprise, ou légères."
+   ],
+   "show": [
+    "k8s"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "off"
+     ],
+     "link": [
+      {
+       "from": "k8s",
+       "to": "off"
+      }
+     ],
+     "say": "Le projet Kubernetes publie chaque version : c'est la distribution officielle."
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "self"
+     ],
+     "link": [
+      {
+       "from": "off",
+       "to": "self"
+      }
+     ],
+     "say": "Vous pouvez l'installer vous-même, sur vos machines…"
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "kaas"
+     ],
+     "link": [
+      {
+       "from": "off",
+       "to": "kaas"
+      }
+     ],
+     "say": "… ou la prendre clé en main chez un fournisseur de cloud : un service géré."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "spec"
+     ],
+     "link": [
+      {
+       "from": "k8s",
+       "to": "spec"
+      }
+     ],
+     "say": "D'autres éditeurs en tirent des distributions spécifiques : le même Kubernetes, avec leurs choix."
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "ent"
+     ],
+     "link": [
+      {
+       "from": "spec",
+       "to": "ent"
+      }
+     ],
+     "say": "Les unes ajoutent des outils pour l'entreprise…"
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "light"
+     ],
+     "link": [
+      {
+       "from": "spec",
+       "to": "light"
+      }
+     ],
+     "say": "… les autres allègent, jusqu'à tenir sur votre poste."
+    },
+    {
+     "do": "wait",
+     "ms": 3000
+    }
+   ]
+  },
+  {
+   "id": "self",
+   "label": "Par vous",
+   "title": "La distribution officielle, installée par vous",
+   "body": [
+    "Vous fournissez les machines, `kubeadm` installe le control plane, chaque nœud rejoint le cluster.",
+    "Tout est **à vous** : les machines, le control plane, etcd, les nœuds, chaque mise à jour."
+   ],
+   "hud": [
+    {
+     "label": "control plane",
+     "value": "à installer"
+    },
+    {
+     "label": "nœuds",
+     "value": "à installer"
+    },
+    {
+     "label": "mises à jour",
+     "value": "à prévoir"
+    }
+   ],
+   "show": [
+    "k8s",
+    "off",
+    {
+     "id": "spec",
+     "dim": true
+    },
+    "self",
+    {
+     "id": "kaas",
+     "dim": true
+    },
+    {
+     "id": "ent",
+     "dim": true
+    },
+    {
+     "id": "light",
+     "dim": true
+    },
+    "sbox"
+   ],
+   "links": [
+    {
+     "from": "k8s",
+     "to": "off"
+    },
+    {
+     "from": "k8s",
+     "to": "spec"
+    },
+    {
+     "from": "off",
+     "to": "self"
+    },
+    {
+     "from": "off",
+     "to": "kaas"
+    },
+    {
+     "from": "spec",
+     "to": "ent"
+    },
+    {
+     "from": "spec",
+     "to": "light"
+    },
+    {
+     "from": "self",
+     "to": "sbox"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "show": [
+      "scp",
+      "sw1",
+      "sw2"
+     ],
+     "say": "Vous fournissez les machines : une pour le control plane, d'autres pour vos applications."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "sapi",
+      "setcd"
+     ],
+     "hud": [
+      {
+       "label": "control plane",
+       "value": "installé par vous",
+       "tone": "g"
+      }
+     ],
+     "say": "`kubeadm init` installe le control plane et etcd."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "link": [
+      {
+       "from": "sw1",
+       "to": "scp"
+      },
+      {
+       "from": "sw2",
+       "to": "scp"
+      }
+     ],
+     "hud": [
+      {
+       "label": "nœuds",
+       "value": "installés par vous",
+       "tone": "g"
+      }
+     ],
+     "say": "`kubeadm join` : chaque nœud rejoint le cluster."
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "scene",
+     "show": [
+      "sp1",
+      "sp2"
+     ],
+     "say": "Vos applications peuvent arriver."
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "mises à jour",
+       "value": "toutes à vous",
+       "tone": "g"
+      }
+     ],
+     "say": "Ensuite, tout reste à vous : sauvegarder etcd, mettre à jour chaque pièce, remplacer une machine."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "managed",
+   "label": "Clé en main",
+   "title": "La distribution officielle, clé en main chez un fournisseur",
+   "body": [
+    "Le **control plane** passe au fournisseur : vous n'en voyez qu'une adresse d'API.",
+    "Vos **nœuds** restent à vous : leur nombre, leur taille, leurs montées de version à déclencher."
+   ],
+   "hud": [
+    {
+     "label": "control plane",
+     "value": "à vous",
+     "tone": "g"
+    },
+    {
+     "label": "etcd",
+     "value": "à vous",
+     "tone": "g"
+    },
+    {
+     "label": "nœuds",
+     "value": "à vous",
+     "tone": "g"
+    }
+   ],
+   "show": [
+    "k8s",
+    "off",
+    {
+     "id": "spec",
+     "dim": true
+    },
+    {
+     "id": "self",
+     "dim": true
+    },
+    "kaas",
+    {
+     "id": "ent",
+     "dim": true
+    },
+    {
+     "id": "light",
+     "dim": true
+    },
+    "kbox",
+    "kcp",
+    "kw1",
+    "kw2",
+    "kapi",
+    "ketcd",
+    "kp1",
+    "kp2"
+   ],
+   "links": [
+    {
+     "from": "k8s",
+     "to": "off"
+    },
+    {
+     "from": "k8s",
+     "to": "spec"
+    },
+    {
+     "from": "off",
+     "to": "self"
+    },
+    {
+     "from": "off",
+     "to": "kaas"
+    },
+    {
+     "from": "spec",
+     "to": "ent"
+    },
+    {
+     "from": "spec",
+     "to": "light"
+    },
+    {
+     "from": "kaas",
+     "to": "kbox"
+    },
+    {
+     "from": "kw1",
+     "to": "kcp"
+    },
+    {
+     "from": "kw2",
+     "to": "kcp"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "kcp",
+       "tone": "y"
+      }
+     ],
+     "hide": [
+      "ketcd"
+     ],
+     "hud": [
+      {
+       "label": "control plane",
+       "value": "au fournisseur",
+       "tone": "y"
+      },
+      {
+       "label": "etcd",
+       "value": "au fournisseur",
+       "tone": "y"
+      }
+     ],
+     "say": "Le même cluster, mais le control plane passe au fournisseur : sa machine, etcd, les sauvegardes.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "kapi",
+       "at": [
+        0,
+        0.35
+       ],
+       "sub": "son adresse"
+      }
+     ],
+     "say": "Il vous en reste une adresse : celle de l'API, où `kubectl` envoie vos commandes."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "nœuds",
+       "value": "à vous, en groupes",
+       "tone": "g"
+      }
+     ],
+     "say": "Les nœuds restent à vous : vous choisissez leur nombre et leur taille, le fournisseur crée les machines."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "platform",
+   "label": "Outillée",
+   "title": "Les distributions outillées pour l'entreprise",
+   "body": [
+    "Le même cluster, avec des **outils** autour : une console, un registre d'images, testés ensemble.",
+    "Les fichiers et `kubectl` restent ceux de Kubernetes."
+   ],
+   "hud": [
+    {
+     "label": "Kubernetes",
+     "value": "le même"
+    },
+    {
+     "label": "outils",
+     "value": "aucun"
+    },
+    {
+     "label": "support",
+     "value": "la communauté"
+    }
+   ],
+   "show": [
+    "k8s",
+    {
+     "id": "off",
+     "dim": true
+    },
+    "spec",
+    {
+     "id": "self",
+     "dim": true
+    },
+    {
+     "id": "kaas",
+     "dim": true
+    },
+    "ent",
+    {
+     "id": "light",
+     "dim": true
+    },
+    "ebox",
+    "ecp",
+    "ew1",
+    "ew2",
+    "eapi",
+    "eetcd",
+    "ep1",
+    "ep2"
+   ],
+   "links": [
+    {
+     "from": "k8s",
+     "to": "off"
+    },
+    {
+     "from": "k8s",
+     "to": "spec"
+    },
+    {
+     "from": "off",
+     "to": "self"
+    },
+    {
+     "from": "off",
+     "to": "kaas"
+    },
+    {
+     "from": "spec",
+     "to": "ent"
+    },
+    {
+     "from": "spec",
+     "to": "light"
+    },
+    {
+     "from": "ent",
+     "to": "ebox"
+    },
+    {
+     "from": "ew1",
+     "to": "ecp"
+    },
+    {
+     "from": "ew2",
+     "to": "ecp"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "scene",
+     "show": [
+      "et1",
+      "et2"
+     ],
+     "hud": [
+      {
+       "label": "outils",
+       "value": "fournis, testés",
+       "tone": "r"
+      }
+     ],
+     "say": "La distribution ajoute ses outils : une console web, un registre d'images. Ils tournent dans le cluster."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "support",
+       "value": "un éditeur, payant"
+      }
+     ],
+     "say": "Pour OpenShift, Red Hat vend aussi le support ; OKD, sa version communautaire, est gratuite."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "light",
+   "label": "Légère",
+   "title": "Les distributions légères : un cluster sur votre poste",
+   "body": [
+    "minikube, kind ou k3d font tourner un cluster sur **une seule machine** : la vôtre.",
+    "Un seul nœud porte le control plane et vos pods : parfait pour apprendre, pas pour la production."
+   ],
+   "hud": [
+    {
+     "label": "machines",
+     "value": "1, votre poste",
+     "tone": "g"
+    },
+    {
+     "label": "cluster",
+     "value": "arrêté"
+    },
+    {
+     "label": "pour",
+     "value": "apprendre"
+    }
+   ],
+   "show": [
+    "k8s",
+    {
+     "id": "off",
+     "dim": true
+    },
+    "spec",
+    {
+     "id": "self",
+     "dim": true
+    },
+    {
+     "id": "kaas",
+     "dim": true
+    },
+    {
+     "id": "ent",
+     "dim": true
+    },
+    "light",
+    "lbox",
+    "lap"
+   ],
+   "links": [
+    {
+     "from": "k8s",
+     "to": "off"
+    },
+    {
+     "from": "k8s",
+     "to": "spec"
+    },
+    {
+     "from": "off",
+     "to": "self"
+    },
+    {
+     "from": "off",
+     "to": "kaas"
+    },
+    {
+     "from": "spec",
+     "to": "ent"
+    },
+    {
+     "from": "spec",
+     "to": "light"
+    },
+    {
+     "from": "light",
+     "to": "lbox"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "show": [
+      "lcp"
+     ],
+     "hud": [
+      {
+       "label": "cluster",
+       "value": "démarré"
+      }
+     ],
+     "say": "`minikube start` : le control plane démarre sur votre poste."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "lpods"
+     ],
+     "say": "Vos pods tournent sur le même nœud, à côté de lui."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "pour",
+       "value": "apprendre, pas la prod"
+      }
+     ],
+     "say": "Une seule machine : si elle s'arrête, tout s'arrête. Rien à craindre pour apprendre, tout pour la production."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "lcp",
+       "dim": true
+      },
+      {
+       "id": "lpods",
+       "dim": true
+      }
+     ],
+     "hud": [
+      {
+       "label": "cluster",
+       "value": "arrêté, conservé"
+      }
+     ],
+     "say": "`minikube stop` arrête le cluster sans rien perdre ; `minikube start` le relancera."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  }
+ ]
+}

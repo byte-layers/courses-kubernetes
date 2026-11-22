@@ -1,6 +1,6 @@
 ---
-title: "La topologie d'un cluster Kubernetes : un ou trois control planes"
-description: "Combien de control planes pour un cluster Kubernetes, et ce qui se passe quand l'un tombe : un seul, puis trois derrière un répartiteur, et la majorité dont etcd a besoin. Pourquoi trois et pas deux, etcd sur les control planes ou à part, et ce que change un service géré."
+title: "Vers la prod : la topologie d'un cluster Kubernetes, un ou trois control planes"
+description: "Combien de control planes pour un cluster Kubernetes, et ce qui se passe quand l'un tombe : un seul, puis trois derrière un répartiteur, et la majorité dont etcd a besoin. Pourquoi trois et pas deux, et etcd sur les control planes ou à part."
 tags:
   - bit
   - kubernetes
@@ -10,13 +10,13 @@ duration: 10
 requires: "0.6.0"
 ---
 
-Un cluster Kubernetes, ce sont des machines. Les **nœuds de travail** font tourner les applications, dans des pods. Le **control plane** les commande : il reçoit vos commandes, range l'état du cluster dans sa base, **etcd**, place les pods et recrée ceux qui disparaissent. Avant d'installer un cluster, une question se pose : combien de control planes, et que se passe-t-il quand l'un tombe ? C'est la **topologie** du cluster.
+Vous avez tout pratiqué sur un cluster d'un seul nœud, minikube, où une seule machine fait tout. En production, un cluster s'étale sur plusieurs machines. Un cluster Kubernetes, ce sont des machines. Les **nœuds de travail** font tourner les applications, dans des pods. Le **control plane** les commande : il reçoit vos commandes, range l'état du cluster dans sa base, **etcd**, place les pods et recrée ceux qui disparaissent. Avant d'installer un cluster, une question se pose : combien de control planes, et que se passe-t-il quand l'un tombe ? C'est la **topologie** du cluster.
 
 **Pour qui ?** Pour tout le monde, que vous ayez déjà installé un cluster ou non. Rien à installer, rien à lancer.
 
 **Ce qui est supposé** : savoir ce que sont un pod et un nœud. [Ce qu'il y a dans un cluster Kubernetes](https://byte-layers.com/fr/bits/k8s-cluster-anatomy) présente toutes les pièces.
 
-# La topologie d'un cluster Kubernetes
+# Vers la prod : la topologie d'un cluster Kubernetes
 
 ## Un seul control plane
 
@@ -89,7 +89,7 @@ Les deux pannes sont maintenant **séparées** : un control plane perdu n'emport
 
 ## Et avec un service géré ?
 
-Chez un fournisseur de cloud (EKS, GKE, AKS…), le **control plane est à lui** : vous ne voyez ni ses machines ni etcd, seulement une adresse d'API. Selon l'offre, il est réparti sur plusieurs zones ou non : c'est écrit dans l'engagement de service du fournisseur, à lire avant de choisir. La question des nœuds de travail, elle, reste la vôtre : assez de nœuds pour que la perte d'un seul ne fasse pas tomber les applications.
+Chez un fournisseur, le control plane et etcd sont à lui : vous n'en voyez qu'une adresse d'API. Ce partage, et ce qu'il change pour vous, est dans [Vers la prod : installer Kubernetes sur vos machines ou chez un fournisseur](https://byte-layers.com/fr/bits/k8s-on-prem-vs-cloud).
 
 > 📖 [Les deux topologies avec kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/) · [Créer un cluster à plusieurs control planes](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/) · [La taille d'un cluster etcd](https://etcd.io/docs/v3.6/faq/#why-an-odd-number-of-cluster-members) · [Ce qui se passe quand un nœud tombe](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/#taint-based-evictions)
 

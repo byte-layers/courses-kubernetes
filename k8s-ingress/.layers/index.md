@@ -18,7 +18,7 @@ Votre application tourne dans le cluster, mais rien n'y entre depuis l'extérieu
 
 **Niveau** : débutant. Vous savez déployer une application avec un Deployment et régler son nombre de réplicas : ce sont les cours [Déployer une application avec un Deployment](https://byte-layers.com/fr/skills/k8s-deployment) et [Passer à l'échelle avec les réplicas](https://byte-layers.com/fr/skills/k8s-scaling). Le Service, sur lequel l'Ingress s'appuie, est rappelé en quelques lignes là où il sert.
 
-**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), un éditeur de texte, un navigateur, `curl`, et le port **28632** de votre machine libre.
+**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), un éditeur de texte, un navigateur, `curl`, et le port **28632** de votre machine libre.
 
 **Vos fichiers** vivent dans `~/byte-layers/kubernetes/l3`. À la fin, vous retirez l'Ingress : le Deployment `vote`, son Service, le contrôleur d'Ingress et vos fichiers restent en place.
 

@@ -20,7 +20,7 @@ Ce lab ne vous donne pas tous les fichiers complets. Les Deployments sont fourni
 
 **Niveau** : débutant. Vous savez déployer une application avec un Deployment, lire `kubectl get pods` et réserver des ressources : ce sont les cours [Déployer une application avec un Deployment](https://byte-layers.com/fr/skills/k8s-deployment) et [Réserver des ressources et comprendre un pod Pending](https://byte-layers.com/fr/skills/k8s-requests-pending). Le lab n'en suppose rien d'autre : chaque champ d'un Service est expliqué quand il arrive.
 
-**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), un éditeur de texte, un navigateur, `curl`, et les ports **28630** et **28631** de votre machine libres.
+**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), un éditeur de texte, un navigateur, `curl`, et les ports **28630** et **28631** de votre machine libres.
 
 **Vos fichiers** vivent dans `~/byte-layers/kubernetes/l3`. Rien n'est supprimé à la fin : l'application complète reste en place avec ses fichiers, car les cours suivants s'en servent.
 

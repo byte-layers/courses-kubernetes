@@ -18,7 +18,7 @@ Vos 3 réplicas de `vote` tournent, mais personne ne sait vraiment comment les j
 
 **Niveau** : débutant. Vous savez déployer une application avec un Deployment et changer son nombre de réplicas : ce sont les cours [Déployer une application avec un Deployment](https://byte-layers.com/fr/skills/k8s-deployment) et [Passer à l'échelle avec les réplicas](https://byte-layers.com/fr/skills/k8s-scaling). Chaque champ d'un Service est expliqué quand il arrive.
 
-**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), et un éditeur de texte. Aucun port de votre machine n'est utilisé.
+**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), et un éditeur de texte. Aucun port de votre machine n'est utilisé.
 
 **Vos fichiers** vivent dans `~/byte-layers/kubernetes/l3`. Rien n'est supprimé à la fin : le Deployment `vote`, son Service et vos fichiers restent en place, car les cours suivants s'en servent.
 

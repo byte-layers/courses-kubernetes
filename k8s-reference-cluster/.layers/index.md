@@ -1,6 +1,6 @@
 ---
-title: "Un cluster de référence, pièce par pièce"
-description: "Le schéma d'un cluster Kubernetes outillé pour la production, construit en huit questions : qui fait tourner les conteneurs, qui déploie, qui fait entrer le trafic, où sont les secrets, qui applique les règles, qui adapte la capacité, qui sauvegarde, qui observe. État des lieux de novembre 2026."
+title: "Au-delà du cluster : pratiques, contraintes, outillage"
+description: "Ce qui entoure un cluster Kubernetes de production : l'outillage, posé sur un schéma en huit questions (qui fait tourner les conteneurs, qui déploie, qui fait entrer le trafic, où sont les secrets, qui applique les règles, qui adapte la capacité, qui sauvegarde, qui observe), puis les pratiques des équipes et les contraintes qui pèsent sur les choix. État des lieux de novembre 2026."
 tags:
   - bit
   - kubernetes
@@ -10,7 +10,7 @@ duration: 20
 requires: "0.6.0"
 ---
 
-Le cluster sur lequel vous avez travaillé tient sur votre machine : un nœud, l'application de vote, et `kubectl` entre vos mains. Un cluster de production est entouré d'outils, et leurs noms reviennent dans toutes les conversations : Argo CD, Cilium, Vault, Grafana… Cette page les pose un à un sur un même schéma, en répondant chaque fois à une question simple. Vous saurez à quoi sert chaque pièce, et ce qu'elle remplace ou complète dans ce que vous connaissez déjà.
+Vous avez tout pratiqué sur un cluster d'un seul nœud, sur votre machine : l'application de vote, et `kubectl` entre vos mains. En production, le cluster n'est qu'une partie du travail. Il est entouré d'outils, et leurs noms reviennent dans toutes les conversations : Argo CD, Cilium, Vault, Grafana… Cette page les pose un à un sur un même schéma, en répondant chaque fois à une question simple. Vous saurez à quoi sert chaque pièce, et ce qu'elle remplace ou complète dans ce que vous connaissez déjà. Viennent ensuite les façons de travailler qui vont avec ces outils, et les contraintes de l'entreprise qui pèsent sur leur choix.
 
 **Pour qui ?** Pour vous, que vous soyez technique ou non : il s'agit de lire une carte, pas d'installer quoi que ce soit. Rien à lancer, ni cluster ni terminal, et aucun fichier n'est créé sur votre machine.
 
@@ -18,9 +18,9 @@ Le cluster sur lequel vous avez travaillé tient sur votre machine : un nœud, l
 
 > ⚠️ **Ce schéma porte une date : novembre 2026.** Le choix des outils suit les tendances du moment. D'autres outils remplissent les mêmes rôles, et cette page sera revue. Retenez d'abord les questions : elles, elles ne changent pas.
 
-# Un cluster de référence, pièce par pièce
+# Au-delà du cluster : pratiques, contraintes, outillage
 
-Le schéma se construit en huit questions, puis une vue d'ensemble. Chaque section a sa scène : le bouton **Jouer** l'ouvre en grand, chaque section nomme ses pièces nouvelles, celles des sections précédentes restent à leur place, et la pastille rose d'une carte ouvre le détail de la pièce. Personne n'installe tout cela d'un coup : c'est une cible, vers laquelle une équipe avance pièce par pièce.
+Le schéma se construit en huit questions, puis une vue d'ensemble ; les pratiques et les contraintes viennent après. Chaque section a sa scène : le bouton **Jouer** l'ouvre en grand, chaque section nomme ses pièces nouvelles, celles des sections précédentes restent à leur place, et la pastille rose d'une carte ouvre le détail de la pièce. Personne n'installe tout cela d'un coup : c'est une cible, vers laquelle une équipe avance pièce par pièce.
 
 ## Qui fait tourner les conteneurs ?
 
@@ -79,7 +79,7 @@ Deux pièces se partagent ce travail.
 
 ## Où sont les secrets ?
 
-Dans un coffre, hors du cluster et hors de Git. Vous avez vu qu'[un Secret est encodé, pas chiffré](https://byte-layers.com/fr/bits/k8s-secret-is-encoded) : le garder dans un dépôt revient à y écrire le mot de passe.
+Dans un coffre, hors du cluster et hors de Git. [Un Secret est encodé, pas chiffré](https://byte-layers.com/fr/bits/k8s-secret-is-encoded) : le garder dans un dépôt revient à y écrire le mot de passe.
 
 ```scene
 lesson: assets/reference-cluster.scene.json
@@ -110,7 +110,7 @@ Aucun des trois ne remplace les deux autres.
 | **Trivy Operator** | une fois l'objet déployé | cherche les failles connues dans les images et les erreurs de configuration, et range ses rapports dans le cluster |
 | **Falco** | pendant l'exécution | observe ce que font réellement les applications sur chaque nœud, et alerte quand un comportement est suspect |
 
-Ces outils complètent ce que Kubernetes fournit déjà : les NetworkPolicies, que vous avez écrites, et les droits d'accès à l'API, le RBAC, que ce parcours n'a pas abordés.
+Ces outils complètent ce que Kubernetes fournit déjà : les NetworkPolicies, et les droits d'accès à l'API, le RBAC.
 
 ## Qui adapte la capacité ?
 
@@ -161,7 +161,7 @@ Chaque forme de télémétrie a son rangement, et un seul écran les réunit.
 | **Collector OpenTelemetry** | le point d'entrée du cluster d'observabilité : il reçoit la télémétrie en OTLP, le protocole d'OpenTelemetry, le standard ouvert de la télémétrie, et la répartit | un collecteur par outil |
 | **Mimir** | garde les métriques, des chiffres relevés dans le temps | rien que vous ayez utilisé : il donne un stockage de longue durée aux métriques |
 | **Loki** | garde les journaux | `kubectl logs`, pod par pod |
-| **Tempo** | garde les traces : le parcours d'une requête d'un service à l'autre | rien que vous ayez utilisé jusqu'ici |
+| **Tempo** | garde les traces : le parcours d'une requête d'un service à l'autre | un outil de plus à installer |
 | **Grafana** | l'écran unique : on y interroge et on y affiche les trois, et on y règle les alertes | un écran par outil |
 
 Les trois rangements déposent leurs données de longue durée dans le même stockage d'objets que les sauvegardes.
@@ -177,9 +177,33 @@ step: overview
 
 Un détail compte : les pièces roses, les services de la plateforme, sont elles-mêmes déployées par Argo CD depuis Git, comme les applications. La plateforme se décrit et se livre de la même façon que ce qu'elle porte.
 
+## Les pratiques : comment l'équipe travaille
+
+Les outils servent des façons de travailler. Quatre reviennent dans la plupart des équipes qui exploitent Kubernetes.
+
+| Pratique | Ce qu'elle veut dire | Dans ce schéma |
+|---|---|---|
+| **GitOps** | Git décrit tout ce qui tourne ; un outil applique cette description au cluster | Argo CD |
+| **Infrastructure as code** | les machines, les réseaux et le cluster lui-même sont décrits dans des fichiers versionnés, et créés par un outil (Terraform, OpenTofu, Ansible) | en dehors : c'est ce qui crée le cluster |
+| **Règles écrites comme du code** (*policy as code*) | les règles de sécurité et d'usage sont des fichiers, relus et testés comme le code | Kyverno |
+| **Observabilité et démarche SRE** | on mesure ce que vivent les utilisateurs, on fixe des objectifs de service (les SLO) et on décide à partir de ces chiffres ; le SRE (*Site Reliability Engineering*) est la démarche née chez Google qui en a fait un métier | Alloy, Grafana et le cluster d'observabilité |
+
+Le point commun : ce qui était un geste à la main devient un fichier qu'on relit, qu'on versionne et qu'on rejoue.
+
+## Les contraintes : ce qui décide avant vous
+
+Une équipe ne choisit pas ses outils dans le vide. Quatre contraintes de l'entreprise reviennent souvent, et elles pèsent plus sur les choix que la mode du moment.
+
+| Contrainte | Ce qu'elle peut imposer |
+|---|---|
+| **Conformité** | les règles d'un secteur ou d'une loi (le RGPD pour les données personnelles, l'hébergement de données de santé…) : tracer les accès, chiffrer, fournir des preuves lors d'un audit |
+| **Souveraineté des données** | où vivent les données et quel droit s'y applique : un hébergeur précis, ou vos propres machines, ce que compare [Vers la prod : installer Kubernetes sur vos machines ou chez un fournisseur](https://byte-layers.com/fr/bits/k8s-on-prem-vs-cloud) |
+| **Réseau de l'entreprise** | un pare-feu et un proxy, pas d'accès direct à Internet : les images et les paquets passent par des miroirs internes, les adresses et les certificats suivent les règles de la maison |
+| **Plusieurs environnements** | développement, recette, production : un cluster ou un namespace pour chacun, la même description dans Git adaptée à chacun (Kustomize, Helm), et une version qui passe de l'un à l'autre |
+
 ## Une carte pour la suite
 
-Ce parcours vous a appris à vous servir d'un cluster. Chaque famille de pièces de ce schéma est un sujet à part entière, avec ses gestes et ses pièges, et ces sujets feront l'objet d'un prochain parcours :
+Chaque famille de pièces de ce schéma est un sujet à part entière, avec ses gestes et ses pièges :
 
 - les paquets, avec Helm et Kustomize ;
 - la livraison par Git, le GitOps ;
@@ -206,10 +230,12 @@ D'ici là, ce schéma vous sert de carte : quand un outil est cité en réunion,
 
 - Un cluster de production répond à huit questions : qui fait tourner les conteneurs, qui déploie, qui fait entrer le trafic, où sont les secrets, qui applique les règles, qui adapte la capacité, qui sauvegarde, qui observe.
 - Trois trajets le traversent : le déploiement depuis Git, le trafic des utilisateurs, et la télémétrie vers un cluster à part.
+- Autour des outils, des pratiques : le GitOps, l'infrastructure as code, les règles écrites comme du code, l'observabilité et la démarche SRE.
+- Des contraintes décident souvent avant vous : la conformité, la souveraineté des données, le réseau de l'entreprise, plusieurs environnements.
 - Les outils de ce schéma sont ceux de novembre 2026. Ils changeront ; les questions resteront.
 
 ```quiz
-title: "Un cluster de référence"
+title: "Au-delà du cluster"
 tracksProgress: false
 showNotice: false
 questions:

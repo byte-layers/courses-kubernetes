@@ -1,0 +1,2036 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "why-kubernetes",
+ "title": "Pourquoi Kubernetes",
+ "lang": "fr",
+ "kit": "plan",
+ "legend": [
+  {
+   "tone": "i",
+   "label": "Kubernetes"
+  },
+  {
+   "tone": "b",
+   "label": "Docker Swarm"
+  },
+  {
+   "tone": "g",
+   "label": "Nomad"
+  },
+  {
+   "tone": "v",
+   "label": "Mesos"
+  },
+  {
+   "tone": "y",
+   "label": "Amazon ECS"
+  }
+ ],
+ "entities": [
+  {
+   "id": "c-need",
+   "kind": "layer",
+   "at": [
+    0,
+    -6.4
+   ],
+   "tone": "n",
+   "size": [
+    30,
+    4.4,
+    1
+   ],
+   "title": "le besoin",
+   "sub": "l'application de vote, sur plusieurs machines",
+   "detail": "Ce qu'on attend d'un **orchestrateur** : décrire l'application une fois, poser ses copies sur les machines, relancer ailleurs ce qui tombe."
+  },
+  {
+   "id": "c-desc",
+   "kind": "node",
+   "at": [
+    -9.5,
+    0.7
+   ],
+   "tone": "n",
+   "size": [
+    8.4,
+    1.6,
+    1
+   ],
+   "in": "c-need",
+   "title": "décrire"
+  },
+  {
+   "id": "c-place",
+   "kind": "node",
+   "at": [
+    0,
+    0.7
+   ],
+   "tone": "n",
+   "size": [
+    8.4,
+    1.6,
+    1
+   ],
+   "in": "c-need",
+   "title": "poser les copies"
+  },
+  {
+   "id": "c-heal",
+   "kind": "node",
+   "at": [
+    9.5,
+    0.7
+   ],
+   "tone": "n",
+   "size": [
+    8.4,
+    1.6,
+    1
+   ],
+   "in": "c-need",
+   "title": "relancer"
+  },
+  {
+   "id": "c-mesos",
+   "kind": "layer",
+   "at": [
+    -18.0,
+    3.4
+   ],
+   "tone": "v",
+   "size": [
+    8.0,
+    5.4,
+    1
+   ],
+   "title": "Mesos + Marathon",
+   "sub": "2009 · Berkeley, Twitter",
+   "detail": "**Apache Mesos** est né en 2009 à l'université de Berkeley, puis a tourné chez Twitter. Il partage les machines entre des *frameworks* ; pour les conteneurs, le plus connu était **Marathon**, de Mesosphere (DC/OS)."
+  },
+  {
+   "id": "c-mesos-f",
+   "kind": "file",
+   "at": [
+    0,
+    1.0
+   ],
+   "tone": "v",
+   "size": [
+    6.6,
+    2.0,
+    1
+   ],
+   "in": "c-mesos",
+   "title": "app Marathon",
+   "note": "JSON"
+  },
+  {
+   "id": "c-k8s",
+   "kind": "layer",
+   "at": [
+    -9.0,
+    3.4
+   ],
+   "tone": "i",
+   "size": [
+    8.0,
+    5.4,
+    1
+   ],
+   "title": "Kubernetes",
+   "sub": "2014 · Google",
+   "detail": "**Kubernetes** a été ouvert par Google en 2014, inspiré de ses systèmes internes (Borg), puis confié à la CNCF en 2015. On lui décrit l'application dans des fichiers YAML, les manifestes."
+  },
+  {
+   "id": "c-k8s-f",
+   "kind": "file",
+   "at": [
+    0,
+    1.0
+   ],
+   "tone": "i",
+   "size": [
+    6.6,
+    2.0,
+    1
+   ],
+   "in": "c-k8s",
+   "title": "manifeste",
+   "note": "YAML"
+  },
+  {
+   "id": "c-ecs",
+   "kind": "layer",
+   "at": [
+    0.0,
+    3.4
+   ],
+   "tone": "y",
+   "size": [
+    8.0,
+    5.4,
+    1
+   ],
+   "title": "Amazon ECS",
+   "sub": "2014 · AWS seulement",
+   "detail": "**Amazon ECS** (*Elastic Container Service*), annoncé fin 2014, est le service de conteneurs d'AWS : rien à installer, mais il ne tourne que chez AWS."
+  },
+  {
+   "id": "c-ecs-f",
+   "kind": "file",
+   "at": [
+    0,
+    1.0
+   ],
+   "tone": "y",
+   "size": [
+    6.6,
+    2.0,
+    1
+   ],
+   "in": "c-ecs",
+   "title": "task definition",
+   "note": "JSON"
+  },
+  {
+   "id": "c-nomad",
+   "kind": "layer",
+   "at": [
+    9.0,
+    3.4
+   ],
+   "tone": "g",
+   "size": [
+    8.0,
+    5.4,
+    1
+   ],
+   "title": "Nomad",
+   "sub": "2015 · HashiCorp",
+   "detail": "**Nomad**, de HashiCorp (2015), est un seul binaire : il place des conteneurs, mais aussi des programmes ordinaires ou des applications Java. On lui décrit un *job* en HCL."
+  },
+  {
+   "id": "c-nomad-f",
+   "kind": "file",
+   "at": [
+    0,
+    1.0
+   ],
+   "tone": "g",
+   "size": [
+    6.6,
+    2.0,
+    1
+   ],
+   "in": "c-nomad",
+   "title": "job",
+   "note": "HCL"
+  },
+  {
+   "id": "c-swarm",
+   "kind": "layer",
+   "at": [
+    18.0,
+    3.4
+   ],
+   "tone": "b",
+   "size": [
+    8.0,
+    5.4,
+    1
+   ],
+   "title": "Docker Swarm",
+   "sub": "2016 · dans Docker",
+   "detail": "**Docker Swarm** : depuis Docker 1.12 (2016), le *mode swarm* est intégré au moteur Docker. On déploie avec `docker stack deploy` et un fichier au format Compose."
+  },
+  {
+   "id": "c-swarm-f",
+   "kind": "file",
+   "at": [
+    0,
+    1.0
+   ],
+   "tone": "b",
+   "size": [
+    6.6,
+    2.0,
+    1
+   ],
+   "in": "c-swarm",
+   "title": "compose.yml",
+   "note": "YAML"
+  },
+  {
+   "id": "v-k8s",
+   "kind": "layer",
+   "at": [
+    0,
+    3.4
+   ],
+   "tone": "i",
+   "size": [
+    11,
+    4.6,
+    1
+   ],
+   "title": "Kubernetes",
+   "sub": "CNCF",
+   "detail": "**Kubernetes** a été ouvert par Google en 2014, inspiré de ses systèmes internes (Borg), puis confié à la CNCF en 2015. On lui décrit l'application dans des fichiers YAML, les manifestes."
+  },
+  {
+   "id": "v-k8s-f",
+   "kind": "file",
+   "at": [
+    0,
+    0.8
+   ],
+   "tone": "i",
+   "size": [
+    7.4,
+    1.8,
+    1
+   ],
+   "in": "v-k8s",
+   "title": "manifeste",
+   "note": "YAML"
+  },
+  {
+   "id": "v-mesos",
+   "kind": "node",
+   "at": [
+    -18,
+    0.4
+   ],
+   "tone": "v",
+   "size": [
+    9.0,
+    3.6,
+    1
+   ],
+   "title": "Mesos + Marathon",
+   "sub": "Mesosphere, DC/OS",
+   "detail": "**Apache Mesos** est né en 2009 à l'université de Berkeley, puis a tourné chez Twitter. Il partage les machines entre des *frameworks* ; pour les conteneurs, le plus connu était **Marathon**, de Mesosphere (DC/OS)."
+  },
+  {
+   "id": "v-swarm",
+   "kind": "node",
+   "at": [
+    -18,
+    6.6
+   ],
+   "tone": "b",
+   "size": [
+    9.0,
+    3.6,
+    1
+   ],
+   "title": "Docker Swarm",
+   "sub": "Docker",
+   "detail": "**Docker Swarm** : depuis Docker 1.12 (2016), le *mode swarm* est intégré au moteur Docker. On déploie avec `docker stack deploy` et un fichier au format Compose."
+  },
+  {
+   "id": "v-nomad",
+   "kind": "node",
+   "at": [
+    18,
+    0.4
+   ],
+   "tone": "g",
+   "size": [
+    9.0,
+    3.6,
+    1
+   ],
+   "title": "Nomad",
+   "sub": "HashiCorp",
+   "detail": "**Nomad**, de HashiCorp (2015), est un seul binaire : il place des conteneurs, mais aussi des programmes ordinaires ou des applications Java. On lui décrit un *job* en HCL."
+  },
+  {
+   "id": "v-ecs",
+   "kind": "node",
+   "at": [
+    18,
+    6.6
+   ],
+   "tone": "y",
+   "size": [
+    9.0,
+    3.6,
+    1
+   ],
+   "title": "Amazon ECS",
+   "sub": "AWS",
+   "detail": "**Amazon ECS** (*Elastic Container Service*), annoncé fin 2014, est le service de conteneurs d'AWS : rien à installer, mais il ne tourne que chez AWS."
+  },
+  {
+   "id": "v-gke",
+   "kind": "node",
+   "at": [
+    -10,
+    -6.0
+   ],
+   "tone": "n",
+   "size": [
+    8.4,
+    2.4,
+    1
+   ],
+   "title": "Google GKE",
+   "sub": "2015",
+   "detail": "**GKE**, le Kubernetes géré de Google Cloud, ouvert en 2015."
+  },
+  {
+   "id": "v-aks",
+   "kind": "node",
+   "at": [
+    0,
+    -6.0
+   ],
+   "tone": "n",
+   "size": [
+    8.4,
+    2.4,
+    1
+   ],
+   "title": "Azure AKS",
+   "sub": "2018",
+   "detail": "**AKS**, le Kubernetes géré de Microsoft Azure, ouvert à tous en 2018."
+  },
+  {
+   "id": "v-eks",
+   "kind": "node",
+   "at": [
+    10,
+    -6.0
+   ],
+   "tone": "n",
+   "size": [
+    8.4,
+    2.4,
+    1
+   ],
+   "title": "Amazon EKS",
+   "sub": "2018",
+   "detail": "**EKS**, le Kubernetes géré d'AWS, ouvert à tous en 2018, à côté d'ECS."
+  },
+  {
+   "id": "x-you",
+   "kind": "actor",
+   "at": [
+    -25,
+    0
+   ],
+   "tone": "n",
+   "label": "vous"
+  },
+  {
+   "id": "x-file",
+   "kind": "file",
+   "at": [
+    -16,
+    0
+   ],
+   "tone": "i",
+   "size": [
+    7.4,
+    2.4,
+    1
+   ],
+   "title": "manifeste",
+   "note": "kind: Deployment"
+  },
+  {
+   "id": "x-api",
+   "kind": "node",
+   "at": [
+    -3.0,
+    0
+   ],
+   "tone": "i",
+   "size": [
+    8.6,
+    2.6,
+    1
+   ],
+   "title": "API Kubernetes",
+   "sub": "un seul point d'entrée",
+   "detail": "L'**API Kubernetes** est le seul point d'entrée du cluster : `kubectl`, Argo CD ou une console passent tous par elle. Elle range chaque objet décrit, et des contrôleurs le réalisent."
+  },
+  {
+   "id": "x-types",
+   "kind": "layer",
+   "at": [
+    11.5,
+    0.2
+   ],
+   "tone": "n",
+   "size": [
+    14,
+    11,
+    1
+   ],
+   "title": "types d'objets",
+   "sub": "connus de l'API",
+   "detail": "Les **types d'objets** que l'API connaît. Certains sont fournis de base (Deployment, Service…) ; un outil peut en ajouter, avec une *CustomResourceDefinition* (CRD), et un contrôleur qui réalise ce type."
+  },
+  {
+   "id": "x-dep",
+   "kind": "node",
+   "at": [
+    0,
+    -2.9
+   ],
+   "tone": "n",
+   "size": [
+    12,
+    1.4,
+    1
+   ],
+   "in": "x-types",
+   "title": "Deployment",
+   "sub": "fourni de base"
+  },
+  {
+   "id": "x-svc",
+   "kind": "node",
+   "at": [
+    0,
+    -1.2
+   ],
+   "tone": "n",
+   "size": [
+    12,
+    1.4,
+    1
+   ],
+   "in": "x-types",
+   "title": "Service",
+   "sub": "fourni de base"
+  },
+  {
+   "id": "x-cert",
+   "kind": "node",
+   "at": [
+    0,
+    0.5
+   ],
+   "tone": "i",
+   "size": [
+    12,
+    1.4,
+    1
+   ],
+   "in": "x-types",
+   "title": "Certificate",
+   "sub": "ajouté par cert-manager"
+  },
+  {
+   "id": "x-app",
+   "kind": "node",
+   "at": [
+    0,
+    2.2
+   ],
+   "tone": "i",
+   "size": [
+    12,
+    1.4,
+    1
+   ],
+   "in": "x-types",
+   "title": "Application",
+   "sub": "ajouté par Argo CD"
+  },
+  {
+   "id": "x-pg",
+   "kind": "node",
+   "at": [
+    0,
+    3.9
+   ],
+   "tone": "i",
+   "size": [
+    12,
+    1.4,
+    1
+   ],
+   "in": "x-types",
+   "title": "Cluster PostgreSQL",
+   "sub": "ajouté par CloudNativePG"
+  },
+  {
+   "id": "t-mesos",
+   "kind": "layer",
+   "at": [
+    -18.0,
+    0
+   ],
+   "tone": "v",
+   "size": [
+    8.0,
+    6.6,
+    1
+   ],
+   "title": "Mesos + Marathon",
+   "sub": "Fondation Apache"
+  },
+  {
+   "id": "t-mesos-0",
+   "kind": "node",
+   "at": [
+    0,
+    -0.2
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-mesos",
+   "title": "archivé",
+   "sub": "Apache Attic, 2025"
+  },
+  {
+   "id": "t-mesos-1",
+   "kind": "node",
+   "at": [
+    0,
+    2.0
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-mesos",
+   "title": "DC/OS",
+   "sub": "fin : octobre 2021"
+  },
+  {
+   "id": "t-k8s",
+   "kind": "layer",
+   "at": [
+    -9.0,
+    0
+   ],
+   "tone": "i",
+   "size": [
+    8.0,
+    6.6,
+    1
+   ],
+   "title": "Kubernetes",
+   "sub": "CNCF"
+  },
+  {
+   "id": "t-k8s-0",
+   "kind": "node",
+   "at": [
+    0,
+    -0.2
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-k8s",
+   "title": "projet diplômé",
+   "sub": "CNCF, 2018"
+  },
+  {
+   "id": "t-k8s-1",
+   "kind": "node",
+   "at": [
+    0,
+    2.0
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-k8s",
+   "title": "service géré",
+   "sub": "chez les grands clouds"
+  },
+  {
+   "id": "t-ecs",
+   "kind": "layer",
+   "at": [
+    0.0,
+    0
+   ],
+   "tone": "y",
+   "size": [
+    8.0,
+    6.6,
+    1
+   ],
+   "title": "Amazon ECS",
+   "sub": "Amazon Web Services"
+  },
+  {
+   "id": "t-ecs-0",
+   "kind": "node",
+   "at": [
+    0,
+    -0.2
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-ecs",
+   "title": "actif",
+   "sub": "service AWS"
+  },
+  {
+   "id": "t-ecs-1",
+   "kind": "node",
+   "at": [
+    0,
+    2.0
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-ecs",
+   "title": "propriétaire",
+   "sub": "AWS seulement"
+  },
+  {
+   "id": "t-nomad",
+   "kind": "layer",
+   "at": [
+    9.0,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    8.0,
+    6.6,
+    1
+   ],
+   "title": "Nomad",
+   "sub": "HashiCorp, IBM"
+  },
+  {
+   "id": "t-nomad-0",
+   "kind": "node",
+   "at": [
+    0,
+    -0.2
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-nomad",
+   "title": "maintenu",
+   "sub": "IBM depuis 2025"
+  },
+  {
+   "id": "t-nomad-1",
+   "kind": "node",
+   "at": [
+    0,
+    2.0
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-nomad",
+   "title": "licence BSL",
+   "sub": "depuis 2023"
+  },
+  {
+   "id": "t-swarm",
+   "kind": "layer",
+   "at": [
+    18.0,
+    0
+   ],
+   "tone": "b",
+   "size": [
+    8.0,
+    6.6,
+    1
+   ],
+   "title": "Docker Swarm",
+   "sub": "Docker, Mirantis"
+  },
+  {
+   "id": "t-swarm-0",
+   "kind": "node",
+   "at": [
+    0,
+    -0.2
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-swarm",
+   "title": "maintenu",
+   "sub": "dans Docker Engine"
+  },
+  {
+   "id": "t-swarm-1",
+   "kind": "node",
+   "at": [
+    0,
+    2.0
+   ],
+   "tone": "n",
+   "size": [
+    7.0,
+    1.9,
+    1
+   ],
+   "in": "t-swarm",
+   "title": "support Mirantis",
+   "sub": "5 ans de plus, annoncé en 2025"
+  },
+  {
+   "id": "s-swarm",
+   "kind": "layer",
+   "at": [
+    -14.0,
+    0
+   ],
+   "tone": "b",
+   "size": [
+    12.0,
+    12.0,
+    1
+   ],
+   "title": "Docker Swarm",
+   "sub": "à faire tourner",
+   "detail": "**Docker Swarm** : depuis Docker 1.12 (2016), le *mode swarm* est intégré au moteur Docker. On déploie avec `docker stack deploy` et un fichier au format Compose."
+  },
+  {
+   "id": "s-nomad",
+   "kind": "layer",
+   "at": [
+    0.0,
+    0
+   ],
+   "tone": "g",
+   "size": [
+    12.0,
+    12.0,
+    1
+   ],
+   "title": "Nomad",
+   "sub": "à faire tourner",
+   "detail": "**Nomad**, de HashiCorp (2015), est un seul binaire : il place des conteneurs, mais aussi des programmes ordinaires ou des applications Java. On lui décrit un *job* en HCL."
+  },
+  {
+   "id": "s-k8s",
+   "kind": "layer",
+   "at": [
+    14.0,
+    0
+   ],
+   "tone": "i",
+   "size": [
+    12.0,
+    12.0,
+    1
+   ],
+   "title": "Kubernetes",
+   "sub": "à faire tourner",
+   "detail": "**Kubernetes** a été ouvert par Google en 2014, inspiré de ses systèmes internes (Borg), puis confié à la CNCF en 2015. On lui décrit l'application dans des fichiers YAML, les manifestes."
+  },
+  {
+   "id": "s-sw-m",
+   "kind": "layer",
+   "at": [
+    0,
+    3.0
+   ],
+   "tone": "n",
+   "size": [
+    10.4,
+    4.2,
+    1
+   ],
+   "in": "s-swarm",
+   "title": "chaque machine"
+  },
+  {
+   "id": "s-sw-eng",
+   "kind": "node",
+   "at": [
+    0,
+    0.8
+   ],
+   "tone": "b",
+   "size": [
+    9.0,
+    1.5,
+    1
+   ],
+   "in": "s-sw-m",
+   "title": "Docker Engine",
+   "sub": "mode swarm intégré"
+  },
+  {
+   "id": "s-sw-cp",
+   "kind": "node",
+   "at": [
+    0,
+    -1.8
+   ],
+   "tone": "n",
+   "size": [
+    10.4,
+    2.6,
+    1
+   ],
+   "in": "s-swarm",
+   "title": "pas de control plane à part",
+   "sub": "les managers sont dans le moteur"
+  },
+  {
+   "id": "s-no-m",
+   "kind": "layer",
+   "at": [
+    0,
+    3.0
+   ],
+   "tone": "n",
+   "size": [
+    10.4,
+    4.2,
+    1
+   ],
+   "in": "s-nomad",
+   "title": "chaque machine"
+  },
+  {
+   "id": "s-no-bin",
+   "kind": "node",
+   "at": [
+    0,
+    0.1
+   ],
+   "tone": "g",
+   "size": [
+    9.0,
+    1.2,
+    1
+   ],
+   "in": "s-no-m",
+   "title": "nomad",
+   "sub": "serveur ou client"
+  },
+  {
+   "id": "s-no-eng",
+   "kind": "node",
+   "at": [
+    0,
+    1.5
+   ],
+   "tone": "n",
+   "size": [
+    9.0,
+    1.2,
+    1
+   ],
+   "in": "s-no-m",
+   "title": "Docker ou Podman",
+   "sub": "pour les conteneurs"
+  },
+  {
+   "id": "s-no-cp",
+   "kind": "node",
+   "at": [
+    0,
+    -1.8
+   ],
+   "tone": "n",
+   "size": [
+    10.4,
+    2.6,
+    1
+   ],
+   "in": "s-nomad",
+   "title": "pas de control plane à part",
+   "sub": "les serveurs : le même binaire"
+  },
+  {
+   "id": "s-k8-cp",
+   "kind": "layer",
+   "at": [
+    0,
+    -1.8
+   ],
+   "tone": "n",
+   "size": [
+    10.4,
+    4.2,
+    1
+   ],
+   "in": "s-k8s",
+   "title": "control plane",
+   "detail": "Le **control plane** de Kubernetes : l'API server, etcd (la base qui garde l'état), le scheduler (qui place les pods) et les contrôleurs. En production, on le double ou le triple, et on le sauvegarde."
+  },
+  {
+   "id": "s-k8-api",
+   "kind": "node",
+   "at": [
+    -2.55,
+    0.1
+   ],
+   "tone": "i",
+   "size": [
+    4.7,
+    1.2,
+    1
+   ],
+   "in": "s-k8-cp",
+   "title": "API server"
+  },
+  {
+   "id": "s-k8-etcd",
+   "kind": "store",
+   "at": [
+    2.55,
+    0.1
+   ],
+   "tone": "i",
+   "size": [
+    4.7,
+    1.2,
+    1
+   ],
+   "in": "s-k8-cp",
+   "title": "etcd"
+  },
+  {
+   "id": "s-k8-sch",
+   "kind": "node",
+   "at": [
+    -2.55,
+    1.5
+   ],
+   "tone": "i",
+   "size": [
+    4.7,
+    1.2,
+    1
+   ],
+   "in": "s-k8-cp",
+   "title": "scheduler"
+  },
+  {
+   "id": "s-k8-ctl",
+   "kind": "node",
+   "at": [
+    2.55,
+    1.5
+   ],
+   "tone": "i",
+   "size": [
+    4.7,
+    1.2,
+    1
+   ],
+   "in": "s-k8-cp",
+   "title": "contrôleurs"
+  },
+  {
+   "id": "s-k8-n",
+   "kind": "layer",
+   "at": [
+    0,
+    3.0
+   ],
+   "tone": "n",
+   "size": [
+    10.4,
+    4.2,
+    1
+   ],
+   "in": "s-k8s",
+   "title": "chaque nœud",
+   "detail": "Sur **chaque nœud** : le kubelet (qui lance les pods), un moteur comme containerd, kube-proxy (les adresses des Services) et un plugin réseau (CNI) à choisir."
+  },
+  {
+   "id": "s-k8-kl",
+   "kind": "node",
+   "at": [
+    -2.55,
+    0.1
+   ],
+   "tone": "i",
+   "size": [
+    4.7,
+    1.2,
+    1
+   ],
+   "in": "s-k8-n",
+   "title": "kubelet"
+  },
+  {
+   "id": "s-k8-ctr",
+   "kind": "node",
+   "at": [
+    2.55,
+    0.1
+   ],
+   "tone": "n",
+   "size": [
+    4.7,
+    1.2,
+    1
+   ],
+   "in": "s-k8-n",
+   "title": "containerd"
+  },
+  {
+   "id": "s-k8-kp",
+   "kind": "node",
+   "at": [
+    -2.55,
+    1.5
+   ],
+   "tone": "i",
+   "size": [
+    4.7,
+    1.2,
+    1
+   ],
+   "in": "s-k8-n",
+   "title": "kube-proxy"
+  },
+  {
+   "id": "s-k8-cni",
+   "kind": "node",
+   "at": [
+    2.55,
+    1.5
+   ],
+   "tone": "n",
+   "size": [
+    4.7,
+    1.2,
+    1
+   ],
+   "in": "s-k8-n",
+   "title": "réseau (CNI)"
+  },
+  {
+   "id": "s-sw-f",
+   "kind": "file",
+   "at": [
+    -14.0,
+    8.2
+   ],
+   "tone": "b",
+   "size": [
+    8.0,
+    2.0,
+    1
+   ],
+   "title": "compose.yml",
+   "note": "le fichier de Compose"
+  },
+  {
+   "id": "s-no-f",
+   "kind": "file",
+   "at": [
+    0.0,
+    8.2
+   ],
+   "tone": "g",
+   "size": [
+    8.0,
+    2.0,
+    1
+   ],
+   "title": "job",
+   "note": "HCL"
+  },
+  {
+   "id": "s-k8-f",
+   "kind": "file",
+   "at": [
+    14.0,
+    8.2
+   ],
+   "tone": "i",
+   "size": [
+    8.0,
+    2.0,
+    1
+   ],
+   "title": "manifestes",
+   "note": "YAML, plusieurs objets"
+  }
+ ],
+ "steps": [
+  {
+   "id": "contenders",
+   "label": "Cinq candidats",
+   "title": "Cinq orchestrateurs pour un même rôle",
+   "body": [
+    "Entre 2009 et 2016, plusieurs outils tiennent le même rôle : **décrire, poser, relancer**.",
+    "Chacun a son origine et son format de description."
+   ],
+   "hud": [
+    {
+     "label": "candidats",
+     "value": 0
+    },
+    {
+     "label": "période",
+     "value": "2009-2016"
+    }
+   ],
+   "show": [
+    "c-need",
+    "c-desc",
+    "c-place",
+    "c-heal"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "show": [
+      "c-mesos",
+      "c-mesos-f"
+     ],
+     "link": [
+      {
+       "from": "c-need",
+       "to": "c-mesos"
+      }
+     ],
+     "hud": [
+      {
+       "label": "candidats",
+       "value": 1
+      }
+     ],
+     "say": "**Mesos** naît en 2009 à Berkeley ; avec **Marathon**, il fait tourner des conteneurs, chez Twitter notamment.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "c-k8s",
+      "c-k8s-f"
+     ],
+     "link": [
+      {
+       "from": "c-need",
+       "to": "c-k8s"
+      }
+     ],
+     "hud": [
+      {
+       "label": "candidats",
+       "value": 2
+      }
+     ],
+     "say": "En 2014, Google ouvre **Kubernetes** : on lui décrit l'application en YAML.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "c-ecs",
+      "c-ecs-f"
+     ],
+     "link": [
+      {
+       "from": "c-need",
+       "to": "c-ecs"
+      }
+     ],
+     "hud": [
+      {
+       "label": "candidats",
+       "value": 3
+      }
+     ],
+     "say": "AWS annonce **ECS**, un service tout prêt, mais qui ne tourne que chez AWS.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "c-nomad",
+      "c-nomad-f"
+     ],
+     "link": [
+      {
+       "from": "c-need",
+       "to": "c-nomad"
+      }
+     ],
+     "hud": [
+      {
+       "label": "candidats",
+       "value": 4
+      }
+     ],
+     "say": "En 2015, HashiCorp lance **Nomad** : un seul binaire, des jobs décrits en HCL.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "c-swarm",
+      "c-swarm-f"
+     ],
+     "link": [
+      {
+       "from": "c-need",
+       "to": "c-swarm"
+      }
+     ],
+     "hud": [
+      {
+       "label": "candidats",
+       "value": 5
+      }
+     ],
+     "say": "En 2016, Docker intègre le **mode swarm** à son moteur : le fichier Compose suffit.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "question",
+       "value": "lequel ?"
+      }
+     ],
+     "say": "Cinq outils, **un même rôle**. Lequel choisir ? C'est la question de ces années-là."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "convergence",
+   "label": "Tout le monde l'adopte",
+   "title": "2017-2018 : les rivaux adoptent Kubernetes",
+   "body": [
+    "Les clouds le proposent en **service géré** ; Mesosphere et Docker l'ajoutent à leurs produits.",
+    "Kubernetes devient le **terrain commun** des éditeurs."
+   ],
+   "hud": [
+    {
+     "label": "clouds",
+     "value": 0
+    },
+    {
+     "label": "rivaux",
+     "value": "chacun le sien"
+    }
+   ],
+   "show": [
+    "v-k8s",
+    "v-k8s-f",
+    "v-mesos",
+    "v-swarm",
+    "v-nomad",
+    "v-ecs"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "show": [
+      "v-gke"
+     ],
+     "link": [
+      {
+       "from": "v-gke",
+       "to": "v-k8s",
+       "label": "service géré"
+      }
+     ],
+     "hud": [
+      {
+       "label": "clouds",
+       "value": 1
+      }
+     ],
+     "say": "Dès 2015, Google propose Kubernetes en **service géré** : GKE. Plus de control plane à installer.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "link": [
+      {
+       "from": "v-mesos",
+       "to": "v-k8s",
+       "label": "l'intègre"
+      }
+     ],
+     "set": [
+      {
+       "id": "v-mesos",
+       "sub": "DC/OS + Kubernetes"
+      }
+     ],
+     "hud": [
+      {
+       "label": "rivaux",
+       "value": "1 l'intègre"
+      }
+     ],
+     "say": "En 2017, **Mesosphere** ajoute Kubernetes à DC/OS, à côté de Marathon.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "link": [
+      {
+       "from": "v-swarm",
+       "to": "v-k8s",
+       "label": "l'intègre"
+      }
+     ],
+     "set": [
+      {
+       "id": "v-swarm",
+       "sub": "Swarm + Kubernetes"
+      }
+     ],
+     "hud": [
+      {
+       "label": "rivaux",
+       "value": "2 l'intègrent"
+      }
+     ],
+     "say": "La même année, **Docker** annonce Kubernetes à côté de Swarm, dans ses produits.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "v-aks",
+      "v-eks"
+     ],
+     "link": [
+      {
+       "from": "v-aks",
+       "to": "v-k8s"
+      },
+      {
+       "from": "v-eks",
+       "to": "v-k8s"
+      }
+     ],
+     "set": [
+      {
+       "id": "v-ecs",
+       "sub": "AWS, à côté d'EKS"
+      }
+     ],
+     "hud": [
+      {
+       "label": "clouds",
+       "value": 3
+      }
+     ],
+     "say": "En 2018, Azure et AWS ouvrent leur Kubernetes géré, **AKS** et **EKS**. AWS garde ECS à côté.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v-nomad",
+       "sub": "HashiCorp, reste à part"
+      }
+     ],
+     "hud": [
+      {
+       "label": "standard",
+       "value": "Kubernetes"
+      }
+     ],
+     "say": "Nomad reste à part. Kubernetes, lui, est devenu le **terrain commun** : celui que tous savent faire tourner."
+    },
+    {
+     "do": "wait",
+     "ms": 3000
+    }
+   ]
+  },
+  {
+   "id": "extensible",
+   "label": "Une API qu'on étend",
+   "title": "Une API qu'on étend : de nouveaux types d'objets",
+   "body": [
+    "Un outil peut **ajouter un type d'objet** à l'API, avec un contrôleur qui le réalise.",
+    "Même fichier, même commande, mêmes droits : c'est pourquoi les éditeurs bâtissent sur Kubernetes."
+   ],
+   "hud": [
+    {
+     "label": "types d'objets",
+     "value": "de base"
+    },
+    {
+     "label": "commande",
+     "value": "kubectl apply"
+    }
+   ],
+   "show": [
+    "x-you",
+    "x-file",
+    "x-api",
+    "x-types",
+    "x-dep",
+    "x-svc"
+   ],
+   "links": [
+    {
+     "from": "x-you",
+     "to": "x-file"
+    },
+    {
+     "from": "x-file",
+     "to": "x-api"
+    },
+    {
+     "from": "x-api",
+     "to": "x-types"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "send",
+     "path": [
+      "x-you",
+      "x-file",
+      "x-api"
+     ],
+     "label": "kubectl apply",
+     "explain": [
+      "Vous décrivez une application dans un **manifeste** : un `Deployment`.",
+      "`kubectl apply` l'envoie à l'**API**, qui connaît ce type d'objet de base."
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "x-cert",
+       "dim": true
+      }
+     ],
+     "hud": [
+      {
+       "label": "types d'objets",
+       "value": "+1"
+      }
+     ],
+     "say": "On installe **cert-manager** : l'API connaît un **nouveau type**, `Certificate`, et son contrôleur.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "x-cert",
+       "dim": null
+      },
+      {
+       "id": "x-file",
+       "note": "kind: Certificate"
+      }
+     ],
+     "ms": 500
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "send",
+     "path": [
+      "x-you",
+      "x-file",
+      "x-api"
+     ],
+     "label": "kubectl apply",
+     "explain": [
+      "Le manifeste décrit maintenant un `Certificate`.",
+      "**Même commande, même API** : cert-manager obtient le certificat et le renouvelle."
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 1000
+    },
+    {
+     "do": "scene",
+     "show": [
+      "x-app",
+      "x-pg"
+     ],
+     "hud": [
+      {
+       "label": "types d'objets",
+       "value": "+3"
+      }
+     ],
+     "say": "Argo CD ajoute `Application`, CloudNativePG un `Cluster` PostgreSQL : chaque outil **étend** l'API.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "mécanisme",
+       "value": "CRD + contrôleur"
+      }
+     ],
+     "say": "Ces types ajoutés s'appellent des **CRD**. Swarm et Nomad n'ont pas d'équivalent : on ne bâtit pas dessus de la même façon."
+    },
+    {
+     "do": "wait",
+     "ms": 3000
+    }
+   ]
+  },
+  {
+   "id": "today",
+   "label": "Novembre 2026",
+   "title": "L'état des lieux, novembre 2026",
+   "body": [
+    "Mesos est **archivé** ; Swarm, Nomad et ECS sont **maintenus** ; Kubernetes est le plus répandu.",
+    "Un état des lieux daté : il bougera."
+   ],
+   "hud": [
+    {
+     "label": "date",
+     "value": "novembre 2026"
+    },
+    {
+     "label": "maintenus",
+     "value": "?"
+    }
+   ],
+   "show": [
+    "t-mesos",
+    "t-k8s",
+    "t-ecs",
+    "t-nomad",
+    "t-swarm"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "show": [
+      "t-mesos-0",
+      "t-mesos-1"
+     ],
+     "say": "**Mesos** : la fondation Apache l'a **archivé** en 2025, faute d'activité. DC/OS avait pris fin en 2021.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "t-mesos",
+       "dim": true
+      },
+      {
+       "id": "t-mesos-0",
+       "dim": true
+      },
+      {
+       "id": "t-mesos-1",
+       "dim": true
+      }
+     ],
+     "ms": 700
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "t-k8s-0",
+      "t-k8s-1"
+     ],
+     "say": "**Kubernetes** : projet diplômé de la CNCF depuis 2018, proposé en service géré par les grands clouds.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "t-ecs-0",
+      "t-ecs-1"
+     ],
+     "say": "**ECS** reste un service d'AWS : rien à installer, mais lié à un seul fournisseur.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "t-nomad-0",
+      "t-nomad-1"
+     ],
+     "say": "**Nomad** est maintenu par HashiCorp, racheté par IBM en 2025, sous licence BSL depuis 2023.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "t-swarm-0",
+      "t-swarm-1"
+     ],
+     "hud": [
+      {
+       "label": "maintenus",
+       "value": "4 sur 5"
+      }
+     ],
+     "say": "**Swarm** est maintenu, dans Docker Engine ; Mirantis a annoncé en 2025 cinq ans de support de plus.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "archivé",
+       "value": "Mesos"
+      }
+     ],
+     "say": "Swarm et Nomad ne sont pas morts : ils ont simplement **moins d'outils** autour d'eux."
+    },
+    {
+     "do": "wait",
+     "ms": 3000
+    }
+   ]
+  },
+  {
+   "id": "right-size",
+   "label": "Le bon choix",
+   "title": "Ce qu'il faut faire tourner : le plus simple a sa place",
+   "body": [
+    "Swarm tient dans le moteur Docker, Nomad dans un binaire ; Kubernetes demande **bien plus de pièces**.",
+    "Le bon outil est celui que l'équipe sait **exploiter**."
+   ],
+   "hud": [
+    {
+     "label": "Swarm",
+     "value": "—",
+     "tone": "b"
+    },
+    {
+     "label": "Nomad",
+     "value": "—",
+     "tone": "g"
+    },
+    {
+     "label": "Kubernetes",
+     "value": "—",
+     "tone": "i"
+    }
+   ],
+   "show": [
+    "s-swarm",
+    "s-nomad",
+    "s-k8s"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "show": [
+      "s-sw-cp",
+      "s-sw-m",
+      "s-sw-eng",
+      "s-sw-f"
+     ],
+     "link": [
+      {
+       "from": "s-sw-f",
+       "to": "s-swarm"
+      }
+     ],
+     "hud": [
+      {
+       "label": "Swarm",
+       "value": "1 pièce",
+       "tone": "b"
+      }
+     ],
+     "say": "**Swarm** : le moteur Docker, déjà là, et le même fichier Compose. Une commande : `docker swarm init`.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "s-no-cp",
+      "s-no-m",
+      "s-no-bin",
+      "s-no-eng",
+      "s-no-f"
+     ],
+     "link": [
+      {
+       "from": "s-no-f",
+       "to": "s-nomad"
+      }
+     ],
+     "hud": [
+      {
+       "label": "Nomad",
+       "value": "2 pièces",
+       "tone": "g"
+      }
+     ],
+     "say": "**Nomad** : un seul binaire, serveur ou client, et un moteur pour les conteneurs.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "s-k8-cp",
+      "s-k8-api",
+      "s-k8-etcd",
+      "s-k8-sch",
+      "s-k8-ctl"
+     ],
+     "hud": [
+      {
+       "label": "Kubernetes",
+       "value": "4 pièces",
+       "tone": "i"
+      }
+     ],
+     "say": "**Kubernetes** : un control plane de quatre pièces, à garder en service et à sauvegarder.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "show": [
+      "s-k8-n",
+      "s-k8-kl",
+      "s-k8-ctr",
+      "s-k8-kp",
+      "s-k8-cni",
+      "s-k8-f"
+     ],
+     "link": [
+      {
+       "from": "s-k8-f",
+       "to": "s-k8s"
+      }
+     ],
+     "hud": [
+      {
+       "label": "Kubernetes",
+       "value": "8 pièces",
+       "tone": "i"
+      }
+     ],
+     "say": "Puis, sur **chaque nœud**, quatre autres, dont un réseau à choisir. Et des manifestes à écrire.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "s-k8-cp",
+       "dim": true
+      },
+      {
+       "id": "s-k8-api",
+       "dim": true
+      },
+      {
+       "id": "s-k8-etcd",
+       "dim": true
+      },
+      {
+       "id": "s-k8-sch",
+       "dim": true
+      },
+      {
+       "id": "s-k8-ctl",
+       "dim": true
+      },
+      {
+       "id": "s-k8-cp",
+       "title": "control plane, géré"
+      }
+     ],
+     "hud": [
+      {
+       "label": "Kubernetes",
+       "value": "4 pièces, si géré",
+       "tone": "i"
+      }
+     ],
+     "say": "Chez un **fournisseur**, le control plane est à sa charge : il vous reste les nœuds et les choix.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "s-swarm",
+       "sub": "petite équipe, déjà sur Compose"
+      },
+      {
+       "id": "s-nomad",
+       "sub": "conteneurs et autres tâches"
+      },
+      {
+       "id": "s-k8s",
+       "sub": "écosystème, équipe outillée"
+      }
+     ],
+     "say": "Une petite équipe sur Compose ? **Swarm** suffit souvent. Des tâches variées ? **Nomad**. Un écosystème ? **Kubernetes**."
+    },
+    {
+     "do": "wait",
+     "ms": 3200
+    }
+   ]
+  }
+ ]
+}

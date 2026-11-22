@@ -12,7 +12,7 @@ requires: "0.4.0"
 
 Quand vous tapez `kubectl get nodes`, quelqu'un répond. Quand vous demandez un pod, quelqu'un choisit où le lancer, et quelqu'un d'autre le lance. Un cluster Kubernetes est fait de quelques composants qui se partagent ce travail : vous saurez nommer chacun, dire ce qu'il fait, et vous les aurez vus tourner dans votre propre cluster.
 
-**Prérequis** : un cluster qui répond à `kubectl get nodes` et y avoir lancé un pod, ce que fait le lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install).
+**Prérequis** : un cluster qui répond à `kubectl get nodes` et y avoir lancé un pod, ce que fait le lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install).
 
 # Ce qu'il y a dans un cluster Kubernetes
 

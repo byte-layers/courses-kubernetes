@@ -20,7 +20,7 @@ Si vous êtes bloqué, les **indices** se dévoilent un par un, et la **solution
 
 ## Avant de commencer
 
-- **Ce qu'il faut savoir** : ce qu'enseigne le lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install).
+- **Ce qu'il faut savoir** : ce qu'enseigne le lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install).
 - **Ce qu'il faut avoir** : `curl`, le port **28601** libre, et le cluster `layers-k8s` démarré, qui répond à `kubectl get nodes`.
 - **Un dossier de travail** : `~/byte-layers/kubernetes/l0`, où `~` désigne votre dossier personnel, est créé pour vous, et la dernière tâche le supprime. Vous y écrirez un petit fichier à la main, avec l'éditeur de votre choix. Dans le terminal, `nano ~/byte-layers/kubernetes/l0/audit.txt` l'ouvre ; `Ctrl-O` puis `Entrée` enregistre, et `Ctrl-X` quitte.
 - **Les noms comptent** : les vérifications cherchent les noms exacts. Le pod s'appelle `layers-l0-probe`, et rien d'autre n'est inspecté ni supprimé dans votre cluster.

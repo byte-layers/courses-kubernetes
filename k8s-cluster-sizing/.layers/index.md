@@ -1,5 +1,5 @@
 ---
-title: "Dimensionner les nœuds d'un cluster Kubernetes : la place réservable et la marge"
+title: "Vers la prod : dimensionner les nœuds d'un cluster Kubernetes, la place réservable et la marge"
 description: "Combien de pods tiennent sur un nœud Kubernetes : la part que prennent le système, le kubelet et les agents, l'ordonnanceur qui compte les réservations et non la consommation, et la place à garder pour survivre à la perte d'un nœud. Peu de gros nœuds ou beaucoup de petits."
 tags:
   - bit
@@ -10,13 +10,13 @@ duration: 10
 requires: "0.6.0"
 ---
 
-Un cluster se dimensionne nœud par nœud : combien de mémoire et de processeur sur chaque machine, et combien de machines. La fiche d'une machine donne sa capacité ; vos pods n'en verront qu'une partie. Et c'est la **réservation** de chaque pod, pas ce qu'il consomme, qui décide s'il trouve sa place.
+Vous avez tout pratiqué sur un cluster d'un seul nœud, minikube, sans compter la place. En production, il faut décider combien de machines acheter ou louer, et de quelle taille. Un cluster se dimensionne nœud par nœud : combien de mémoire et de processeur sur chaque machine, et combien de machines. La fiche d'une machine donne sa capacité ; vos pods n'en verront qu'une partie. Et c'est la **réservation** de chaque pod, pas ce qu'il consomme, qui décide s'il trouve sa place.
 
 **Pour qui ?** Pour qui prépare un cluster ou choisit la taille de ses nœuds. Rien à installer, rien à lancer.
 
 **Ce qui est supposé** : savoir ce que sont un pod et un nœud, et avoir vu [la topologie d'un cluster](https://byte-layers.com/fr/bits/k8s-cluster-topology). Réserver des ressources se pratique dans [Réserver des ressources et comprendre un pod Pending](https://byte-layers.com/fr/skills/k8s-requests-pending).
 
-# Dimensionner les nœuds d'un cluster
+# Vers la prod : dimensionner les nœuds d'un cluster
 
 ## Ce qu'un nœud offre vraiment aux pods
 

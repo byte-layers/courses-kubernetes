@@ -63,7 +63,7 @@ Attendez que les 3 pods soient prêts. `kubectl rollout status` suit le déploie
 kubectl rollout status deployment/vote --timeout=120s
 ```
 
-La dernière ligne doit être celle-ci. Si la commande échoue avec `connection refused`, votre cluster est arrêté : relancez-le comme dans le lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install).
+La dernière ligne doit être celle-ci. Si la commande échoue avec `connection refused`, votre cluster est arrêté : relancez-le comme dans le lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install).
 
 ```text
 deployment "vote" successfully rolled out

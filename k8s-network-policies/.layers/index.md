@@ -20,7 +20,7 @@ Ce cours ne vous donne pas le fichier complet. Deux règles sont fournies, vous 
 
 **Niveau** : débutant. Vous connaissez l'application de vote et ses cinq morceaux, ce que montre le lab [Déployer la voting app complète](https://byte-layers.com/fr/labs/k8s-voting-app), vous savez qu'un Service retrouve ses pods par leurs étiquettes, ce qu'enseigne [Donner une adresse stable avec un Service](https://byte-layers.com/fr/skills/k8s-services), et vous savez écrire un fichier YAML et l'appliquer, ce qu'enseigne [Déployer une application avec un Deployment](https://byte-layers.com/fr/skills/k8s-deployment). Chaque champ d'une NetworkPolicy est expliqué quand il arrive.
 
-**Ce qu'il faut** : un cluster `layers-k8s` auquel `kubectl` répond, démarré comme dans le lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), un éditeur de texte, un navigateur, `curl`, et le port **28641** de votre machine libre.
+**Ce qu'il faut** : un cluster `layers-k8s` auquel `kubectl` répond, démarré comme dans le lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), un éditeur de texte, un navigateur, `curl`, et le port **28641** de votre machine libre.
 
 **Où vivent les fichiers** : dans `~/byte-layers/kubernetes/l4/`. Les fichiers de l'application sont dans le sous-dossier `app/`, et vous écrivez les règles dans `vote-app.netpol.yml`. Rien n'est supprimé à la fin.
 

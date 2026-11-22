@@ -1,0 +1,691 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "vm-to-orchestrator-plan",
+ "title": "L'application de vote et l'orchestrateur",
+ "lang": "fr",
+ "kit": "plan",
+ "legend": [
+  {
+   "kind": "req",
+   "label": "requête"
+  }
+ ],
+ "entities": [
+  {
+   "id": "user",
+   "kind": "actor",
+   "at": [
+    0,
+    -7
+   ],
+   "label": "utilisateur"
+  },
+  {
+   "id": "a-vote",
+   "kind": "node",
+   "at": [
+    -9.0,
+    -1.5
+   ],
+   "tone": "y",
+   "size": [
+    5.6,
+    2.0,
+    1
+   ],
+   "title": "vote",
+   "sub": "Python · page de vote",
+   "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
+  },
+  {
+   "id": "a-redis",
+   "kind": "store",
+   "at": [
+    -9.0,
+    5.5
+   ],
+   "tone": "r",
+   "size": [
+    5.6,
+    2.0,
+    1
+   ],
+   "title": "redis",
+   "sub": "votes en attente",
+   "detail": "**redis** garde les votes en attente, en mémoire, le temps que le worker les traite."
+  },
+  {
+   "id": "a-worker",
+   "kind": "node",
+   "at": [
+    0,
+    5.5
+   ],
+   "tone": "v",
+   "size": [
+    5.6,
+    2.0,
+    1
+   ],
+   "title": "worker",
+   "sub": ".NET · enregistre",
+   "detail": "Le **worker**, écrit en .NET, prend les votes dans redis et les enregistre dans la base de données."
+  },
+  {
+   "id": "a-db",
+   "kind": "store",
+   "at": [
+    9.0,
+    5.5
+   ],
+   "tone": "b",
+   "size": [
+    5.6,
+    2.0,
+    1
+   ],
+   "title": "db",
+   "sub": "PostgreSQL · les votes",
+   "detail": "**db** est la base de données PostgreSQL : elle garde les votes pour de bon."
+  },
+  {
+   "id": "a-result",
+   "kind": "node",
+   "at": [
+    9.0,
+    -1.5
+   ],
+   "tone": "g",
+   "size": [
+    5.6,
+    2.0,
+    1
+   ],
+   "title": "result",
+   "sub": "Node.js · résultats",
+   "detail": "**result** est la page des résultats, écrite en Node.js. Elle lit la base de données."
+  },
+  {
+   "id": "desc",
+   "kind": "file",
+   "at": [
+    -19,
+    0
+   ],
+   "tone": "n",
+   "size": [
+    6.4,
+    2.4,
+    1
+   ],
+   "title": "description",
+   "note": "l'application, une fois",
+   "detail": "L'application est **décrite une fois**, dans des fichiers : ses pièces, le nombre de copies, leurs réseaux, leurs volumes. Avec Swarm, c'est le format de Compose ; avec Kubernetes, ses propres fichiers YAML."
+  },
+  {
+   "id": "orch",
+   "kind": "node",
+   "at": [
+    -9,
+    0
+   ],
+   "tone": "i",
+   "size": [
+    7.4,
+    2.6,
+    1
+   ],
+   "title": "orchestrateur",
+   "sub": "place, relance, relie",
+   "detail": "L'**orchestrateur** lit la description, choisit une machine pour chaque copie, et corrige l'écart quand la réalité change : une copie qui s'arrête, une machine qui tombe."
+  },
+  {
+   "id": "cl",
+   "kind": "layer",
+   "at": [
+    10.0,
+    0.0
+   ],
+   "tone": "n",
+   "size": [
+    28,
+    16.8,
+    1
+   ],
+   "title": "cluster",
+   "sub": "un groupe de machines",
+   "detail": "Le **cluster** : le groupe de machines que l'orchestrateur gère comme un seul ensemble, avec un réseau commun à toutes."
+  },
+  {
+   "id": "m1",
+   "kind": "layer",
+   "at": [
+    -6.8,
+    -3.2
+   ],
+   "tone": "n",
+   "size": [
+    12.6,
+    6.4,
+    1
+   ],
+   "in": "cl",
+   "title": "machine Linux",
+   "detail": "Sur le schéma, trois **machines Linux** et une **machine Windows**, pour le worker."
+  },
+  {
+   "id": "m2",
+   "kind": "layer",
+   "at": [
+    6.8,
+    -3.2
+   ],
+   "tone": "n",
+   "size": [
+    12.6,
+    6.4,
+    1
+   ],
+   "in": "cl",
+   "title": "machine Linux"
+  },
+  {
+   "id": "m3",
+   "kind": "layer",
+   "at": [
+    -6.8,
+    4.0
+   ],
+   "tone": "n",
+   "size": [
+    12.6,
+    6.4,
+    1
+   ],
+   "in": "cl",
+   "title": "machine Linux"
+  },
+  {
+   "id": "m4",
+   "kind": "layer",
+   "at": [
+    6.8,
+    4.0
+   ],
+   "tone": "b",
+   "size": [
+    12.6,
+    6.4,
+    1
+   ],
+   "in": "cl",
+   "title": "machine Windows"
+  },
+  {
+   "id": "o-vote",
+   "kind": "node",
+   "at": [
+    -3.4,
+    0.9
+   ],
+   "tone": "y",
+   "size": [
+    5.2,
+    1.8,
+    1
+   ],
+   "in": "m1",
+   "title": "vote",
+   "sub": "3 copies"
+  },
+  {
+   "id": "o-redis",
+   "kind": "store",
+   "at": [
+    3.4,
+    0.9
+   ],
+   "tone": "r",
+   "size": [
+    5.2,
+    1.8,
+    1
+   ],
+   "in": "m1",
+   "title": "redis"
+  },
+  {
+   "id": "o-vote2",
+   "kind": "node",
+   "at": [
+    -3.4,
+    0.9
+   ],
+   "tone": "y",
+   "size": [
+    5.2,
+    1.8,
+    1
+   ],
+   "in": "m2",
+   "title": "vote"
+  },
+  {
+   "id": "o-db",
+   "kind": "store",
+   "at": [
+    3.4,
+    0.9
+   ],
+   "tone": "b",
+   "size": [
+    5.2,
+    1.8,
+    1
+   ],
+   "in": "m2",
+   "title": "db"
+  },
+  {
+   "id": "o-vote3",
+   "kind": "node",
+   "at": [
+    -3.4,
+    0.9
+   ],
+   "tone": "y",
+   "size": [
+    5.2,
+    1.8,
+    1
+   ],
+   "in": "m3",
+   "title": "vote"
+  },
+  {
+   "id": "o-result",
+   "kind": "node",
+   "at": [
+    3.4,
+    0.9
+   ],
+   "tone": "g",
+   "size": [
+    5.2,
+    1.8,
+    1
+   ],
+   "in": "m3",
+   "title": "result"
+  },
+  {
+   "id": "o-worker",
+   "kind": "node",
+   "at": [
+    0,
+    0.9
+   ],
+   "tone": "v",
+   "size": [
+    5.2,
+    1.8,
+    1
+   ],
+   "in": "m4",
+   "title": "worker",
+   "sub": "image Windows"
+  }
+ ],
+ "steps": [
+  {
+   "id": "voting-app",
+   "label": "L'application",
+   "title": "L'application de vote : cinq pièces",
+   "body": [
+    "Deux pages web, une file d'attente, un programme de traitement et une base de données, écrits dans **trois langages**.",
+    "C'est cette application qu'il faut déployer, puis exploiter."
+   ],
+   "hud": [
+    {
+     "label": "pièces",
+     "value": 5
+    },
+    {
+     "label": "langages",
+     "value": 3
+    },
+    {
+     "label": "trajet",
+     "value": "un vote",
+     "tone": "y"
+    }
+   ],
+   "show": [
+    "user",
+    "a-vote",
+    "a-redis",
+    "a-worker",
+    "a-db",
+    "a-result"
+   ],
+   "links": [
+    {
+     "from": "user",
+     "to": "a-vote"
+    },
+    {
+     "from": "a-vote",
+     "to": "a-redis"
+    },
+    {
+     "from": "a-redis",
+     "to": "a-worker"
+    },
+    {
+     "from": "a-worker",
+     "to": "a-db"
+    },
+    {
+     "from": "user",
+     "to": "a-result"
+    },
+    {
+     "from": "a-result",
+     "to": "a-db"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2600
+    },
+    {
+     "do": "send",
+     "path": [
+      "user",
+      "a-vote",
+      "a-redis",
+      "a-worker",
+      "a-db"
+     ],
+     "label": "vote",
+     "tone": "y",
+     "explain": [
+      "On vote sur la page **vote**, écrite en Python.",
+      "Le vote attend dans **redis**, en mémoire.",
+      "Le **worker**, écrit en .NET, le prend.",
+      "Et l'enregistre dans **db**, la base PostgreSQL."
+     ]
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "trajet",
+       "value": "les résultats",
+       "tone": "g"
+      }
+     ],
+     "ms": 300
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "send",
+     "path": [
+      "user",
+      "a-result",
+      "a-db"
+     ],
+     "label": "lecture",
+     "reply": "résultats",
+     "tone": "g",
+     "explain": [
+      "On ouvre la page **result**, écrite en Node.js.",
+      "Elle lit les votes dans **db**.",
+      "Et affiche le décompte."
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 2400
+    }
+   ]
+  },
+  {
+   "id": "orchestrator",
+   "label": "Un orchestrateur",
+   "title": "Vers un orchestrateur : décrire une fois, poser sur plusieurs machines",
+   "body": [
+    "L'application est **décrite une fois** ; l'orchestrateur pose ses copies sur plusieurs machines et les relance ailleurs quand l'une tombe.",
+    "Plusieurs outils tiennent ce rôle : **Docker Swarm**, **Kubernetes** et ses distributions, **Nomad**."
+   ],
+   "hud": [
+    {
+     "label": "machines",
+     "value": 4
+    },
+    {
+     "label": "orchestrateur",
+     "value": "—"
+    }
+   ],
+   "show": [
+    "desc",
+    "cl",
+    "m1",
+    "m2",
+    "m3",
+    "m4"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "orch"
+     ],
+     "link": [
+      {
+       "from": "desc",
+       "to": "orch"
+      },
+      {
+       "from": "orch",
+       "to": "cl"
+      }
+     ],
+     "say": "L'orchestrateur lit la description, une seule pour toute l'application."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "o-vote",
+      "o-redis",
+      "o-vote2",
+      "o-db",
+      "o-vote3",
+      "o-result",
+      "o-worker"
+     ],
+     "say": "Il pose les copies sur les machines, et le worker sur la machine Windows.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "m3",
+       "dim": true,
+       "sub": "en panne"
+      },
+      {
+       "id": "o-vote3",
+       "in": "m1",
+       "at": [
+        0,
+        0.9
+       ],
+       "size": [
+        3.0,
+        1.8,
+        1
+       ],
+       "title": "vote"
+      },
+      {
+       "id": "o-vote",
+       "at": [
+        -4.4,
+        0.9
+       ],
+       "size": [
+        3.0,
+        1.8,
+        1
+       ]
+      },
+      {
+       "id": "o-redis",
+       "at": [
+        4.4,
+        0.9
+       ],
+       "size": [
+        3.0,
+        1.8,
+        1
+       ]
+      },
+      {
+       "id": "o-result",
+       "in": "m2",
+       "at": [
+        0,
+        0.9
+       ],
+       "size": [
+        3.0,
+        1.8,
+        1
+       ]
+      },
+      {
+       "id": "o-vote2",
+       "at": [
+        -4.4,
+        0.9
+       ],
+       "size": [
+        3.0,
+        1.8,
+        1
+       ]
+      },
+      {
+       "id": "o-db",
+       "at": [
+        4.4,
+        0.9
+       ],
+       "size": [
+        3.0,
+        1.8,
+        1
+       ]
+      }
+     ],
+     "hud": [
+      {
+       "label": "machines",
+       "value": "3 sur 4",
+       "tone": "r"
+      }
+     ],
+     "say": "Une machine tombe ? Il relance ses copies sur celles qui restent, tout seul.",
+     "ms": 1100
+    },
+    {
+     "do": "wait",
+     "ms": 1700
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "orch",
+       "title": "Docker Swarm",
+       "sub": "intégré à Docker"
+      }
+     ],
+     "hud": [
+      {
+       "label": "orchestrateur",
+       "value": "Swarm"
+      }
+     ],
+     "say": "**Docker Swarm** tient ce rôle : il est intégré à Docker et reprend le format de Compose."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "orch",
+       "title": "Kubernetes",
+       "sub": "et ses distributions"
+      }
+     ],
+     "hud": [
+      {
+       "label": "orchestrateur",
+       "value": "Kubernetes"
+      }
+     ],
+     "say": "**Kubernetes** aussi, avec ses distributions : k3s, RKE2, OpenShift, les offres des clouds."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "orch",
+       "title": "Nomad",
+       "sub": "HashiCorp"
+      }
+     ],
+     "hud": [
+      {
+       "label": "orchestrateur",
+       "value": "Nomad"
+      }
+     ],
+     "say": "**Nomad**, de HashiCorp, aussi. L'outil change, le rôle reste le même."
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    }
+   ]
+  }
+ ]
+}

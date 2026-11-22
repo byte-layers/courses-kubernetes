@@ -1,0 +1,2469 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "k8s-benefits",
+ "title": "Ce que Kubernetes apporte",
+ "lang": "fr",
+ "kit": "plan",
+ "legend": [
+  {
+   "tone": "y",
+   "label": "vote"
+  },
+  {
+   "tone": "r",
+   "label": "redis"
+  },
+  {
+   "tone": "v",
+   "label": "worker"
+  },
+  {
+   "tone": "b",
+   "label": "db"
+  },
+  {
+   "tone": "g",
+   "label": "result"
+  },
+  {
+   "tone": "i",
+   "label": "Kubernetes"
+  }
+ ],
+ "entities": [
+  {
+   "id": "cl",
+   "kind": "layer",
+   "at": [
+    6,
+    0
+   ],
+   "tone": "n",
+   "size": [
+    28.8,
+    10.4,
+    1
+   ],
+   "title": "cluster Kubernetes"
+  },
+  {
+   "id": "n0",
+   "kind": "layer",
+   "at": [
+    -9.200000000000001,
+    1.4
+   ],
+   "tone": "n",
+   "size": [
+    8.0,
+    5.2,
+    1
+   ],
+   "in": "cl",
+   "title": "nœud",
+   "detail": "Les **nœuds** : les machines du cluster. Kubernetes y répartit les copies des pièces."
+  },
+  {
+   "id": "n1",
+   "kind": "layer",
+   "at": [
+    -1.7763568394002505e-15,
+    1.4
+   ],
+   "tone": "n",
+   "size": [
+    8.0,
+    5.2,
+    1
+   ],
+   "in": "cl"
+  },
+  {
+   "id": "n2",
+   "kind": "layer",
+   "at": [
+    9.199999999999998,
+    1.4
+   ],
+   "tone": "n",
+   "size": [
+    8.0,
+    5.2,
+    1
+   ],
+   "in": "cl"
+  },
+  {
+   "id": "svc",
+   "kind": "node",
+   "at": [
+    0,
+    -2.9
+   ],
+   "tone": "n",
+   "size": [
+    9.0,
+    1.6,
+    1
+   ],
+   "in": "cl",
+   "title": "point d'entrée",
+   "sub": "vote",
+   "detail": "Le **point d'entrée** de vote (un *Service*, dans Kubernetes) : une adresse stable qui répartit les requêtes entre les copies qui répondent."
+  },
+  {
+   "id": "v0",
+   "kind": "node",
+   "at": [
+    0,
+    -0.5
+   ],
+   "tone": "y",
+   "size": [
+    6.4,
+    1.6,
+    1
+   ],
+   "in": "n0",
+   "title": "vote",
+   "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
+  },
+  {
+   "id": "v1",
+   "kind": "node",
+   "at": [
+    0,
+    -0.5
+   ],
+   "tone": "y",
+   "size": [
+    6.4,
+    1.6,
+    1
+   ],
+   "in": "n1",
+   "title": "vote"
+  },
+  {
+   "id": "v2",
+   "kind": "node",
+   "at": [
+    0,
+    -0.5
+   ],
+   "tone": "y",
+   "size": [
+    6.4,
+    1.6,
+    1
+   ],
+   "in": "n2",
+   "title": "vote"
+  },
+  {
+   "id": "redis",
+   "kind": "store",
+   "at": [
+    0,
+    1.5
+   ],
+   "tone": "r",
+   "size": [
+    6.4,
+    1.6,
+    1
+   ],
+   "in": "n0",
+   "title": "redis",
+   "detail": "**redis** garde les votes en attente, en mémoire, le temps que le worker les traite."
+  },
+  {
+   "id": "db",
+   "kind": "store",
+   "at": [
+    0,
+    1.5
+   ],
+   "tone": "b",
+   "size": [
+    6.4,
+    1.6,
+    1
+   ],
+   "in": "n1",
+   "title": "db",
+   "detail": "**db** est la base de données PostgreSQL : elle garde les votes pour de bon."
+  },
+  {
+   "id": "worker",
+   "kind": "node",
+   "at": [
+    -1.9,
+    1.5
+   ],
+   "tone": "v",
+   "size": [
+    3.4,
+    1.6,
+    1
+   ],
+   "in": "n2",
+   "title": "worker",
+   "detail": "Le **worker**, écrit en .NET, prend les votes dans redis et les enregistre dans la base de données."
+  },
+  {
+   "id": "result",
+   "kind": "node",
+   "at": [
+    1.9,
+    1.5
+   ],
+   "tone": "g",
+   "size": [
+    3.4,
+    1.6,
+    1
+   ],
+   "in": "n2",
+   "title": "result",
+   "detail": "**result** est la page des résultats, écrite en Node.js. Elle lit la base de données."
+  },
+  {
+   "id": "users",
+   "kind": "actor",
+   "at": [
+    -14,
+    -3.6
+   ],
+   "tone": "n",
+   "label": "utilisateurs"
+  },
+  {
+   "id": "k8s",
+   "kind": "node",
+   "at": [
+    -14,
+    2.4
+   ],
+   "tone": "i",
+   "size": [
+    7.4,
+    2.4,
+    1
+   ],
+   "title": "Kubernetes",
+   "sub": "relance ailleurs",
+   "detail": "Le **control plane** de Kubernetes : il compare l'état voulu à ce qui tourne, et corrige l'écart. Il place les copies sur les nœuds et les relance quand l'un tombe."
+  },
+  {
+   "id": "n3",
+   "kind": "layer",
+   "at": [
+    13.799999999999997,
+    1.4
+   ],
+   "tone": "n",
+   "size": [
+    8.0,
+    5.2,
+    1
+   ],
+   "in": "cl"
+  },
+  {
+   "id": "v3",
+   "kind": "node",
+   "at": [
+    1.9,
+    -0.5
+   ],
+   "tone": "y",
+   "size": [
+    3.4,
+    1.6,
+    1
+   ],
+   "in": "n0",
+   "title": "vote"
+  },
+  {
+   "id": "v4",
+   "kind": "node",
+   "at": [
+    1.9,
+    -0.5
+   ],
+   "tone": "y",
+   "size": [
+    3.4,
+    1.6,
+    1
+   ],
+   "in": "n1",
+   "title": "vote"
+  },
+  {
+   "id": "v5",
+   "kind": "node",
+   "at": [
+    1.9,
+    -0.5
+   ],
+   "tone": "y",
+   "size": [
+    3.4,
+    1.6,
+    1
+   ],
+   "in": "n2",
+   "title": "vote"
+  },
+  {
+   "id": "v6",
+   "kind": "node",
+   "at": [
+    -1.9,
+    -0.5
+   ],
+   "tone": "y",
+   "size": [
+    3.4,
+    1.6,
+    1
+   ],
+   "in": "n3",
+   "title": "vote"
+  },
+  {
+   "id": "v7",
+   "kind": "node",
+   "at": [
+    1.9,
+    -0.5
+   ],
+   "tone": "y",
+   "size": [
+    3.4,
+    1.6,
+    1
+   ],
+   "in": "n3",
+   "title": "vote"
+  },
+  {
+   "id": "st-app",
+   "kind": "layer",
+   "at": [
+    -10,
+    -7
+   ],
+   "tone": "n",
+   "size": [
+    25,
+    6,
+    1
+   ],
+   "title": "votre application",
+   "sub": "5 images, 1 description",
+   "detail": "L'application, telle qu'on la livre : **une image par pièce**, rangée dans un registre, et **une description** (des fichiers YAML) qui dit combien de copies lancer, comment les relier, où entrer."
+  },
+  {
+   "id": "st-i-vote",
+   "kind": "node",
+   "at": [
+    -9.6,
+    0.9
+   ],
+   "tone": "y",
+   "size": [
+    2.8,
+    1.6,
+    1
+   ],
+   "in": "st-app",
+   "title": "vote",
+   "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
+  },
+  {
+   "id": "st-i-redis",
+   "kind": "store",
+   "at": [
+    -6.6,
+    0.9
+   ],
+   "tone": "r",
+   "size": [
+    2.8,
+    1.6,
+    1
+   ],
+   "in": "st-app",
+   "title": "redis",
+   "detail": "**redis** garde les votes en attente, en mémoire, le temps que le worker les traite."
+  },
+  {
+   "id": "st-i-worker",
+   "kind": "node",
+   "at": [
+    -3.6,
+    0.9
+   ],
+   "tone": "v",
+   "size": [
+    2.8,
+    1.6,
+    1
+   ],
+   "in": "st-app",
+   "title": "worker",
+   "detail": "Le **worker**, écrit en .NET, prend les votes dans redis et les enregistre dans la base de données."
+  },
+  {
+   "id": "st-i-db",
+   "kind": "store",
+   "at": [
+    -0.6,
+    0.9
+   ],
+   "tone": "b",
+   "size": [
+    2.8,
+    1.6,
+    1
+   ],
+   "in": "st-app",
+   "title": "db",
+   "detail": "**db** est la base de données PostgreSQL : elle garde les votes pour de bon."
+  },
+  {
+   "id": "st-i-result",
+   "kind": "node",
+   "at": [
+    2.4,
+    0.9
+   ],
+   "tone": "g",
+   "size": [
+    2.8,
+    1.6,
+    1
+   ],
+   "in": "st-app",
+   "title": "result",
+   "detail": "**result** est la page des résultats, écrite en Node.js. Elle lit la base de données."
+  },
+  {
+   "id": "st-desc",
+   "kind": "file",
+   "at": [
+    8.2,
+    0.9
+   ],
+   "tone": "n",
+   "size": [
+    6.6,
+    2.2,
+    1
+   ],
+   "in": "st-app",
+   "title": "description",
+   "note": "fichiers YAML"
+  },
+  {
+   "id": "st-t0",
+   "kind": "layer",
+   "at": [
+    -16.0,
+    4
+   ],
+   "tone": "n",
+   "size": [
+    14,
+    5.4,
+    1
+   ],
+   "title": "cluster sur site",
+   "sub": "vos machines"
+  },
+  {
+   "id": "st-t0-vote",
+   "kind": "node",
+   "at": [
+    -4.8,
+    1.0
+   ],
+   "tone": "y",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t0"
+  },
+  {
+   "id": "st-t0-redis",
+   "kind": "store",
+   "at": [
+    -2.4,
+    1.0
+   ],
+   "tone": "r",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t0"
+  },
+  {
+   "id": "st-t0-worker",
+   "kind": "node",
+   "at": [
+    0,
+    1.0
+   ],
+   "tone": "v",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t0"
+  },
+  {
+   "id": "st-t0-db",
+   "kind": "store",
+   "at": [
+    2.4,
+    1.0
+   ],
+   "tone": "b",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t0"
+  },
+  {
+   "id": "st-t0-result",
+   "kind": "node",
+   "at": [
+    4.8,
+    1.0
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t0"
+  },
+  {
+   "id": "st-t1",
+   "kind": "layer",
+   "at": [
+    0.0,
+    4
+   ],
+   "tone": "n",
+   "size": [
+    14,
+    5.4,
+    1
+   ],
+   "title": "chez un fournisseur",
+   "sub": "un cluster loué"
+  },
+  {
+   "id": "st-t1-vote",
+   "kind": "node",
+   "at": [
+    -4.8,
+    1.0
+   ],
+   "tone": "y",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t1"
+  },
+  {
+   "id": "st-t1-redis",
+   "kind": "store",
+   "at": [
+    -2.4,
+    1.0
+   ],
+   "tone": "r",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t1"
+  },
+  {
+   "id": "st-t1-worker",
+   "kind": "node",
+   "at": [
+    0,
+    1.0
+   ],
+   "tone": "v",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t1"
+  },
+  {
+   "id": "st-t1-db",
+   "kind": "store",
+   "at": [
+    2.4,
+    1.0
+   ],
+   "tone": "b",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t1"
+  },
+  {
+   "id": "st-t1-result",
+   "kind": "node",
+   "at": [
+    4.8,
+    1.0
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t1"
+  },
+  {
+   "id": "st-t2",
+   "kind": "layer",
+   "at": [
+    16.0,
+    4
+   ],
+   "tone": "n",
+   "size": [
+    14,
+    5.4,
+    1
+   ],
+   "title": "votre poste",
+   "sub": "un cluster d'un nœud"
+  },
+  {
+   "id": "st-t2-vote",
+   "kind": "node",
+   "at": [
+    -4.8,
+    1.0
+   ],
+   "tone": "y",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t2"
+  },
+  {
+   "id": "st-t2-redis",
+   "kind": "store",
+   "at": [
+    -2.4,
+    1.0
+   ],
+   "tone": "r",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t2"
+  },
+  {
+   "id": "st-t2-worker",
+   "kind": "node",
+   "at": [
+    0,
+    1.0
+   ],
+   "tone": "v",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t2"
+  },
+  {
+   "id": "st-t2-db",
+   "kind": "store",
+   "at": [
+    2.4,
+    1.0
+   ],
+   "tone": "b",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t2"
+  },
+  {
+   "id": "st-t2-result",
+   "kind": "node",
+   "at": [
+    4.8,
+    1.0
+   ],
+   "tone": "g",
+   "size": [
+    2.0,
+    1.6,
+    1
+   ],
+   "in": "st-t2"
+  },
+  {
+   "id": "st-oci",
+   "kind": "layer",
+   "at": [
+    13.5,
+    -7
+   ],
+   "tone": "n",
+   "size": [
+    18,
+    6,
+    1
+   ],
+   "title": "standard OCI",
+   "sub": "sous la Linux Foundation",
+   "detail": "L'**OCI** (*Open Container Initiative*), lancée en 2015 sous l'égide de la Linux Foundation, publie trois spécifications : le format des images, leur exécution et leur distribution par un registre. Une image construite avec Docker ou Podman est lancée par containerd ou CRI-O."
+  },
+  {
+   "id": "st-oci-img",
+   "kind": "node",
+   "at": [
+    -5.6,
+    0.9
+   ],
+   "tone": "n",
+   "size": [
+    5.4,
+    1.6,
+    1
+   ],
+   "in": "st-oci",
+   "title": "image"
+  },
+  {
+   "id": "st-oci-dist",
+   "kind": "node",
+   "at": [
+    0,
+    0.9
+   ],
+   "tone": "n",
+   "size": [
+    5.4,
+    1.6,
+    1
+   ],
+   "in": "st-oci",
+   "title": "distribution"
+  },
+  {
+   "id": "st-oci-run",
+   "kind": "node",
+   "at": [
+    5.6,
+    0.9
+   ],
+   "tone": "n",
+   "size": [
+    5.4,
+    1.6,
+    1
+   ],
+   "in": "st-oci",
+   "title": "exécution"
+  },
+  {
+   "id": "go-you",
+   "kind": "actor",
+   "at": [
+    -23,
+    -4.6
+   ],
+   "tone": "n",
+   "label": "vous"
+  },
+  {
+   "id": "go-git",
+   "kind": "file",
+   "at": [
+    -14,
+    -4.6
+   ],
+   "tone": "n",
+   "size": [
+    7.4,
+    2.4,
+    1
+   ],
+   "title": "état voulu",
+   "note": "vote : 3 copies, v1",
+   "detail": "L'**état voulu** est décrit dans des fichiers rangés dans **Git** : combien de copies, quelle image, quelle version. Chaque changement y laisse une trace : qui, quand, pourquoi. Une commande (kubectl apply) ou un outil comme Argo CD ou Flux les applique au cluster."
+  },
+  {
+   "id": "go-sup",
+   "kind": "node",
+   "at": [
+    -14,
+    4.4
+   ],
+   "tone": "n",
+   "size": [
+    7.4,
+    2.4,
+    1
+   ],
+   "title": "supervision",
+   "sub": "observe chaque pièce",
+   "detail": "La **supervision** (Prometheus, par exemple) mesure chaque pièce : copies en service, temps de réponse, erreurs. On voit ce qui se passe, sans aller sur les machines."
+  },
+  {
+   "id": "sn-n",
+   "kind": "layer",
+   "at": [
+    0,
+    0
+   ],
+   "tone": "n",
+   "size": [
+    27.0,
+    9.4,
+    1
+   ],
+   "title": "nœud unique",
+   "sub": "toute l'application",
+   "detail": "Un **cluster d'un seul nœud** (minikube, k3s sur une VM…) : le control plane et toute l'application sont sur la même machine. Utile pour apprendre et pour tester, pas pour la production."
+  },
+  {
+   "id": "ec-cncf",
+   "kind": "layer",
+   "at": [
+    0,
+    -8.6
+   ],
+   "tone": "n",
+   "size": [
+    38,
+    4.8,
+    1
+   ],
+   "title": "CNCF",
+   "sub": "une fondation de la Linux Foundation",
+   "detail": "La **CNCF** (*Cloud Native Computing Foundation*), une fondation de la Linux Foundation créée en 2015, porte Kubernetes, que Google lui a confié, et plus d'une centaine d'autres projets : containerd, Prometheus, Helm…"
+  },
+  {
+   "id": "ec-kube",
+   "kind": "node",
+   "at": [
+    -15.2,
+    0.9
+   ],
+   "tone": "i",
+   "size": [
+    6.6,
+    1.8,
+    1
+   ],
+   "in": "ec-cncf",
+   "title": "Kubernetes",
+   "sub": "confié par Google"
+  },
+  {
+   "id": "ec-ctrd",
+   "kind": "node",
+   "at": [
+    -7.6,
+    0.9
+   ],
+   "tone": "n",
+   "size": [
+    6.6,
+    1.8,
+    1
+   ],
+   "in": "ec-cncf",
+   "title": "containerd",
+   "sub": "lance les conteneurs"
+  },
+  {
+   "id": "ec-prom",
+   "kind": "node",
+   "at": [
+    0,
+    0.9
+   ],
+   "tone": "n",
+   "size": [
+    6.6,
+    1.8,
+    1
+   ],
+   "in": "ec-cncf",
+   "title": "Prometheus",
+   "sub": "la supervision"
+  },
+  {
+   "id": "ec-helm",
+   "kind": "node",
+   "at": [
+    7.6,
+    0.9
+   ],
+   "tone": "n",
+   "size": [
+    6.6,
+    1.8,
+    1
+   ],
+   "in": "ec-cncf",
+   "title": "Helm",
+   "sub": "les paquets"
+  },
+  {
+   "id": "ec-more",
+   "kind": "node",
+   "at": [
+    15.2,
+    0.9
+   ],
+   "tone": "n",
+   "size": [
+    6.6,
+    1.8,
+    1
+   ],
+   "in": "ec-cncf",
+   "title": "et d'autres",
+   "sub": "plus d'une centaine"
+  }
+ ],
+ "steps": [
+  {
+   "id": "standard",
+   "label": "Un standard",
+   "title": "Un standard : les mêmes images, partout",
+   "body": [
+    "Les images suivent le **standard OCI** ; la description est celle de Kubernetes.",
+    "Le même paquet tourne sur vos machines, chez un fournisseur ou sur votre poste : seuls quelques réglages changent."
+   ],
+   "hud": [
+    {
+     "label": "endroits",
+     "value": 0
+    },
+    {
+     "label": "images",
+     "value": 5
+    },
+    {
+     "label": "standard",
+     "value": "—"
+    }
+   ],
+   "show": [
+    "st-app",
+    "st-i-vote",
+    "st-i-redis",
+    "st-i-worker",
+    "st-i-db",
+    "st-i-result",
+    "st-desc",
+    "st-t0",
+    "st-t1",
+    "st-t2"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "show": [
+      "st-oci",
+      "st-oci-img",
+      "st-oci-dist",
+      "st-oci-run"
+     ],
+     "hud": [
+      {
+       "label": "standard",
+       "value": "OCI"
+      }
+     ],
+     "say": "Chaque pièce est une **image** au format **OCI** : un standard ouvert, que suivent Docker, Podman, containerd.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "st-t0-vote",
+      "st-t0-redis",
+      "st-t0-worker",
+      "st-t0-db",
+      "st-t0-result"
+     ],
+     "link": [
+      {
+       "from": "st-app",
+       "to": "st-t0",
+       "label": "images + description"
+      }
+     ],
+     "hud": [
+      {
+       "label": "endroits",
+       "value": 1
+      }
+     ],
+     "say": "Un cluster **sur site**, sur vos machines, lance ces images et suit la description.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "scene",
+     "show": [
+      "st-t1-vote",
+      "st-t1-redis",
+      "st-t1-worker",
+      "st-t1-db",
+      "st-t1-result"
+     ],
+     "link": [
+      {
+       "from": "st-app",
+       "to": "st-t1"
+      }
+     ],
+     "hud": [
+      {
+       "label": "endroits",
+       "value": 2
+      }
+     ],
+     "say": "Le même, chez un **fournisseur** de cloud : mêmes images, même description.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "scene",
+     "show": [
+      "st-t2-vote",
+      "st-t2-redis",
+      "st-t2-worker",
+      "st-t2-db",
+      "st-t2-result"
+     ],
+     "link": [
+      {
+       "from": "st-app",
+       "to": "st-t2"
+      }
+     ],
+     "hud": [
+      {
+       "label": "endroits",
+       "value": 3
+      }
+     ],
+     "say": "Et sur **votre poste**, pour essayer : un cluster d'un seul nœud.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "st-t1",
+       "sub": "autre stockage, même appli"
+      }
+     ],
+     "hud": [
+      {
+       "label": "réglages",
+       "value": "quelques-uns"
+      }
+     ],
+     "say": "Seuls quelques réglages changent d'un endroit à l'autre, comme le stockage ou l'entrée : c'est la **portabilité**."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "desired-state",
+   "label": "L'état voulu",
+   "title": "L'état voulu dans Git : Kubernetes réconcilie",
+   "body": [
+    "On décrit ce qu'on veut dans des fichiers rangés dans **Git** ; Kubernetes compare et corrige l'écart.",
+    "Une exploitation décrite, automatisée et observée : c'est la démarche **SRE**."
+   ],
+   "hud": [
+    {
+     "label": "voulu",
+     "value": "3 copies · v1"
+    },
+    {
+     "label": "en service",
+     "value": "3 copies · v1"
+    }
+   ],
+   "show": [
+    "cl",
+    "n0",
+    "n1",
+    "n2",
+    {
+     "id": "v0",
+     "sub": "v1"
+    },
+    {
+     "id": "v1",
+     "sub": "v1"
+    },
+    {
+     "id": "v2",
+     "sub": "v1"
+    },
+    "redis",
+    "db",
+    "worker",
+    "result",
+    "go-you",
+    "go-git",
+    {
+     "id": "k8s",
+     "at": [
+      -14,
+      0.0
+     ],
+     "sub": "compare, corrige"
+    }
+   ],
+   "links": [
+    {
+     "from": "go-you",
+     "to": "go-git"
+    },
+    {
+     "from": "go-git",
+     "to": "k8s",
+     "label": "appliqué"
+    },
+    {
+     "from": "k8s",
+     "to": "cl"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "send",
+     "path": [
+      "go-you",
+      "go-git"
+     ],
+     "label": "commit",
+     "explain": [
+      "Vous changez une ligne du fichier, **4 copies**, et vous l'enregistrez dans Git."
+     ]
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "go-git",
+       "note": "vote : 4 copies, v1"
+      }
+     ],
+     "hud": [
+      {
+       "label": "voulu",
+       "value": "4 copies · v1"
+      }
+     ],
+     "ms": 400
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "send",
+     "path": [
+      "go-git",
+      "k8s"
+     ],
+     "label": "appliqué",
+     "explain": [
+      "Le fichier est **appliqué** au cluster, par une commande ou un outil comme Argo CD : 3 copies tournent, 4 sont voulues."
+     ]
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "k8s",
+       "sub": "écart : 1 copie"
+      }
+     ],
+     "ms": 400
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "v3",
+       "dim": true,
+       "sub": "v1"
+      }
+     ],
+     "set": [
+      {
+       "id": "v0",
+       "in": "n0",
+       "at": [
+        -1.9,
+        -0.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ]
+      }
+     ],
+     "say": "Kubernetes voit l'**écart** et le corrige : une quatrième copie démarre sur un nœud.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v3",
+       "dim": null
+      },
+      {
+       "id": "k8s",
+       "sub": "compare, corrige"
+      }
+     ],
+     "hud": [
+      {
+       "label": "en service",
+       "value": "4 copies · v1"
+      }
+     ],
+     "ms": 500
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "go-git",
+       "note": "vote : 4 copies, v2"
+      },
+      {
+       "id": "v3",
+       "sub": "v2"
+      }
+     ],
+     "hud": [
+      {
+       "label": "voulu",
+       "value": "4 copies · v2"
+      }
+     ],
+     "say": "Même geste pour une **nouvelle version** : v2 dans le fichier, les copies sont remplacées une à une."
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v2",
+       "sub": "v2"
+      }
+     ],
+     "ms": 500
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v1",
+       "sub": "v2"
+      }
+     ],
+     "ms": 500
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v0",
+       "sub": "v2"
+      }
+     ],
+     "hud": [
+      {
+       "label": "en service",
+       "value": "4 copies · v2"
+      }
+     ],
+     "ms": 500
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "scene",
+     "show": [
+      "go-sup"
+     ],
+     "link": [
+      {
+       "from": "cl",
+       "to": "go-sup",
+       "label": "mesures"
+      }
+     ],
+     "say": "Chaque pièce est **observée** : on voit ce qui tourne, et Git garde l'historique de chaque changement."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "node-down",
+   "label": "Une machine tombe",
+   "title": "Une machine tombe : les copies repartent ailleurs",
+   "body": [
+    "Kubernetes relance les pièces d'un nœud perdu sur les autres nœuds : l'application **continue de répondre**.",
+    "Il le fait après un délai (environ cinq minutes par défaut), au cas où le nœud reviendrait."
+   ],
+   "hud": [
+    {
+     "label": "nœuds",
+     "value": "3 sur 3"
+    },
+    {
+     "label": "copies de vote",
+     "value": 3
+    },
+    {
+     "label": "application",
+     "value": "en service"
+    }
+   ],
+   "show": [
+    "cl",
+    "n0",
+    "n1",
+    "n2",
+    "svc",
+    "v0",
+    "v1",
+    "v2",
+    "redis",
+    "db",
+    "worker",
+    "result",
+    "users",
+    "k8s"
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "svc"
+    },
+    {
+     "from": "k8s",
+     "to": "cl"
+    },
+    {
+     "from": "svc",
+     "to": "v0"
+    },
+    {
+     "from": "svc",
+     "to": "v1"
+    },
+    {
+     "from": "svc",
+     "to": "v2"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "svc"
+     ],
+     "spread": true,
+     "gap": 420,
+     "tone": "y",
+     "fallback": "erreur"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2200
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "n2",
+       "dim": true,
+       "sub": "en panne"
+      },
+      {
+       "id": "v2",
+       "dim": true
+      },
+      {
+       "id": "worker",
+       "dim": true
+      },
+      {
+       "id": "result",
+       "dim": true
+      }
+     ],
+     "hud": [
+      {
+       "label": "nœuds",
+       "value": "2 sur 3"
+      },
+      {
+       "label": "copies de vote",
+       "value": "2 sur 3"
+      }
+     ],
+     "say": "Un nœud tombe en panne : ce qu'il porte s'arrête avec lui, et ne reçoit plus de votes."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "svc",
+       "sub": "vote · 2 copies répondent"
+      }
+     ],
+     "say": "Les deux autres copies de vote **répondent toujours** : l'application reste en service."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v0",
+       "in": "n0",
+       "at": [
+        -1.9,
+        -0.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ]
+      },
+      {
+       "id": "v2",
+       "in": "n0",
+       "at": [
+        1.9,
+        -0.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ],
+       "dim": null
+      },
+      {
+       "id": "redis",
+       "in": "n0",
+       "at": [
+        -1.9,
+        1.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ]
+      },
+      {
+       "id": "result",
+       "in": "n0",
+       "at": [
+        1.9,
+        1.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ],
+       "dim": null
+      },
+      {
+       "id": "db",
+       "in": "n1",
+       "at": [
+        -1.9,
+        1.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ]
+      },
+      {
+       "id": "worker",
+       "in": "n1",
+       "at": [
+        1.9,
+        1.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ],
+       "dim": null
+      },
+      {
+       "id": "svc",
+       "sub": "vote"
+      }
+     ],
+     "hud": [
+      {
+       "label": "copies de vote",
+       "value": 3
+      }
+     ],
+     "say": "Kubernetes **relance** la copie de vote, le worker et result sur les nœuds qui restent.",
+     "ms": 1100
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "application",
+       "value": "toujours en service"
+      }
+     ],
+     "say": "Les votes arrivent sur trois copies, avec un nœud de moins : c'est la **haute disponibilité**."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "single-node",
+   "label": "Le piège",
+   "title": "Le piège : Kubernetes sur une seule machine",
+   "body": [
+    "Sur un seul nœud, Kubernetes relance une copie qui s'arrête, mais si la machine tombe, **rien ne repart**.",
+    "Utile pour apprendre, pas pour la production."
+   ],
+   "hud": [
+    {
+     "label": "nœuds",
+     "value": "1 sur 1"
+    },
+    {
+     "label": "copies de vote",
+     "value": 3
+    },
+    {
+     "label": "application",
+     "value": "en service"
+    }
+   ],
+   "show": [
+    {
+     "id": "users",
+     "at": [
+      -18,
+      0
+     ]
+    },
+    "sn-n",
+    {
+     "id": "svc",
+     "at": [
+      -8.6,
+      0.4
+     ],
+     "in": "sn-n",
+     "size": [
+      7.0,
+      1.6,
+      1
+     ]
+    },
+    {
+     "id": "k8s",
+     "at": [
+      7.6,
+      2.8
+     ],
+     "in": "sn-n",
+     "size": [
+      8.8,
+      1.6,
+      1
+     ],
+     "sub": "control plane"
+    },
+    {
+     "id": "v0",
+     "at": [
+      -0.8,
+      -1.8
+     ],
+     "in": "sn-n",
+     "size": [
+      4.0,
+      1.6,
+      1
+     ]
+    },
+    {
+     "id": "v1",
+     "at": [
+      -0.8,
+      0.4
+     ],
+     "in": "sn-n",
+     "size": [
+      4.0,
+      1.6,
+      1
+     ]
+    },
+    {
+     "id": "v2",
+     "at": [
+      -0.8,
+      2.6
+     ],
+     "in": "sn-n",
+     "size": [
+      4.0,
+      1.6,
+      1
+     ]
+    },
+    {
+     "id": "redis",
+     "at": [
+      5.4,
+      -1.8
+     ],
+     "in": "sn-n",
+     "size": [
+      4.0,
+      1.6,
+      1
+     ],
+     "detail": null
+    },
+    {
+     "id": "worker",
+     "at": [
+      9.8,
+      -1.8
+     ],
+     "in": "sn-n",
+     "size": [
+      4.0,
+      1.6,
+      1
+     ],
+     "detail": null
+    },
+    {
+     "id": "db",
+     "at": [
+      5.4,
+      0.4
+     ],
+     "in": "sn-n",
+     "size": [
+      4.0,
+      1.6,
+      1
+     ],
+     "detail": null
+    },
+    {
+     "id": "result",
+     "at": [
+      9.8,
+      0.4
+     ],
+     "in": "sn-n",
+     "size": [
+      4.0,
+      1.6,
+      1
+     ],
+     "detail": null
+    }
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "svc"
+    },
+    {
+     "from": "svc",
+     "to": "v0"
+    },
+    {
+     "from": "svc",
+     "to": "v1"
+    },
+    {
+     "from": "svc",
+     "to": "v2"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "svc"
+     ],
+     "spread": true,
+     "gap": 420,
+     "tone": "y",
+     "fallback": "erreur"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v2",
+       "dim": true
+      }
+     ],
+     "hud": [
+      {
+       "label": "copies de vote",
+       "value": "2 sur 3"
+      }
+     ],
+     "say": "Une copie de vote s'arrête ? Kubernetes la **relance**, sur le même nœud."
+    },
+    {
+     "do": "wait",
+     "ms": 1100
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v2",
+       "dim": null
+      }
+     ],
+     "hud": [
+      {
+       "label": "copies de vote",
+       "value": 3
+      }
+     ],
+     "ms": 500
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "sn-n",
+       "dim": true,
+       "sub": "en panne"
+      },
+      {
+       "id": "svc",
+       "dim": true
+      },
+      {
+       "id": "k8s",
+       "dim": true
+      },
+      {
+       "id": "v0",
+       "dim": true
+      },
+      {
+       "id": "v1",
+       "dim": true
+      },
+      {
+       "id": "v2",
+       "dim": true
+      },
+      {
+       "id": "redis",
+       "dim": true
+      },
+      {
+       "id": "worker",
+       "dim": true
+      },
+      {
+       "id": "db",
+       "dim": true
+      },
+      {
+       "id": "result",
+       "dim": true
+      }
+     ],
+     "hud": [
+      {
+       "label": "nœuds",
+       "value": "0 sur 1"
+      },
+      {
+       "label": "copies de vote",
+       "value": 0
+      },
+      {
+       "label": "application",
+       "value": "hors service"
+      }
+     ],
+     "say": "Mais la machine elle-même tombe : tout s'arrête, Kubernetes compris.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "sn-n",
+       "sub": "en panne, rien ne repart"
+      }
+     ],
+     "say": "Il n'y a **pas d'autre nœud** où relancer : rien ne repart tant que la machine n'est pas réparée."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "usage",
+       "value": "apprendre"
+      }
+     ],
+     "say": "Un seul nœud sert à **apprendre** et à tester ; la production demande plusieurs nœuds."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "scale",
+   "label": "La charge monte",
+   "title": "La charge monte : plus de copies, sur plus de nœuds",
+   "body": [
+    "Plus de copies de vote, **réparties sur plusieurs nœuds** ; et des nœuds en plus quand ils sont pleins.",
+    "La limite n'est plus la taille d'une machine, mais celle du cluster."
+   ],
+   "hud": [
+    {
+     "label": "charge",
+     "value": "normale"
+    },
+    {
+     "label": "copies de vote",
+     "value": 3
+    },
+    {
+     "label": "nœuds",
+     "value": 3
+    }
+   ],
+   "show": [
+    {
+     "id": "cl",
+     "at": [
+      10.6,
+      0
+     ],
+     "size": [
+      38.0,
+      10.4,
+      1
+     ],
+     "sub": "3 nœuds"
+    },
+    {
+     "id": "n0",
+     "at": [
+      -13.8,
+      1.4
+     ]
+    },
+    {
+     "id": "n1",
+     "at": [
+      -4.600000000000001,
+      1.4
+     ]
+    },
+    {
+     "id": "n2",
+     "at": [
+      4.599999999999998,
+      1.4
+     ]
+    },
+    "svc",
+    "v0",
+    "v1",
+    "v2",
+    "redis",
+    "db",
+    "worker",
+    "result",
+    "users",
+    {
+     "id": "k8s",
+     "sub": "répartit"
+    }
+   ],
+   "links": [
+    {
+     "from": "users",
+     "to": "svc"
+    },
+    {
+     "from": "k8s",
+     "to": "cl"
+    },
+    {
+     "from": "svc",
+     "to": "v0"
+    },
+    {
+     "from": "svc",
+     "to": "v1"
+    },
+    {
+     "from": "svc",
+     "to": "v2"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "svc"
+     ],
+     "spread": true,
+     "gap": 260,
+     "tone": "y"
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "svc",
+       "sub": "vote · 3 copies saturées"
+      }
+     ],
+     "hud": [
+      {
+       "label": "charge",
+       "value": "forte"
+      }
+     ],
+     "say": "Le soir du vote, la **charge monte** : les trois copies sont à pleine capacité."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v0",
+       "in": "n0",
+       "at": [
+        -1.9,
+        -0.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ]
+      },
+      {
+       "id": "v1",
+       "in": "n1",
+       "at": [
+        -1.9,
+        -0.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ]
+      },
+      {
+       "id": "v2",
+       "in": "n2",
+       "at": [
+        -1.9,
+        -0.5
+       ],
+       "size": [
+        3.4,
+        1.6,
+        1
+       ]
+      }
+     ],
+     "show": [
+      {
+       "id": "v3",
+       "dim": true
+      },
+      {
+       "id": "v4",
+       "dim": true
+      },
+      {
+       "id": "v5",
+       "dim": true
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "v3"
+      },
+      {
+       "from": "svc",
+       "to": "v4"
+      },
+      {
+       "from": "svc",
+       "to": "v5"
+      }
+     ],
+     "say": "On demande **6 copies** : Kubernetes les **répartit** sur les nœuds.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v3",
+       "dim": null
+      },
+      {
+       "id": "v4",
+       "dim": null
+      },
+      {
+       "id": "v5",
+       "dim": null
+      },
+      {
+       "id": "svc",
+       "sub": "vote"
+      }
+     ],
+     "hud": [
+      {
+       "label": "copies de vote",
+       "value": 6
+      }
+     ],
+     "ms": 500
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "n3",
+      {
+       "id": "v6",
+       "dim": true
+      },
+      {
+       "id": "v7",
+       "dim": true
+      }
+     ],
+     "set": [
+      {
+       "id": "cl",
+       "sub": "4 nœuds"
+      }
+     ],
+     "hud": [
+      {
+       "label": "nœuds",
+       "value": 4
+      }
+     ],
+     "say": "Les nœuds sont pleins ? On ajoute un **nœud**, et deux copies de plus s'y posent.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "v6",
+       "dim": null
+      },
+      {
+       "id": "v7",
+       "dim": null
+      }
+     ],
+     "link": [
+      {
+       "from": "svc",
+       "to": "v6"
+      },
+      {
+       "from": "svc",
+       "to": "v7"
+      }
+     ],
+     "hud": [
+      {
+       "label": "copies de vote",
+       "value": 8
+      }
+     ],
+     "ms": 600
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "hud": [
+      {
+       "label": "limite",
+       "value": "le cluster"
+      }
+     ],
+     "say": "La limite n'est plus la taille d'une machine, mais celle du **cluster**, qui peut grandir."
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    }
+   ]
+  },
+  {
+   "id": "ecosystem",
+   "label": "Un écosystème",
+   "title": "Tout un écosystème : la CNCF et le cloud native",
+   "body": [
+    "Kubernetes est porté par la **CNCF**, avec des dizaines de projets qui suivent les mêmes règles.",
+    "C'est ce qui en fait **quasiment** le standard de fait, sans être le seul orchestrateur."
+   ],
+   "hud": [
+    {
+     "label": "projets",
+     "value": 0
+    },
+    {
+     "label": "standard",
+     "value": "—"
+    }
+   ],
+   "show": [
+    {
+     "id": "cl",
+     "at": [
+      0,
+      4
+     ]
+    },
+    "n0",
+    "n1",
+    "n2",
+    "v0",
+    "v1",
+    "v2",
+    "redis",
+    "db",
+    "worker",
+    "result",
+    "ec-cncf"
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "show": [
+      "ec-kube"
+     ],
+     "link": [
+      {
+       "from": "ec-kube",
+       "to": "cl",
+       "label": "pilote"
+      }
+     ],
+     "hud": [
+      {
+       "label": "projets",
+       "value": 1
+      }
+     ],
+     "say": "Kubernetes, créé chez **Google** et ouvert en 2014, a été confié à la **CNCF**, sous la Linux Foundation.",
+     "ms": 900
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "show": [
+      "ec-ctrd"
+     ],
+     "link": [
+      {
+       "from": "ec-ctrd",
+       "to": "cl",
+       "label": "lance"
+      }
+     ],
+     "hud": [
+      {
+       "label": "projets",
+       "value": 2
+      }
+     ],
+     "say": "Sur chaque nœud, **containerd**, un autre projet de la CNCF, lance les conteneurs."
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "scene",
+     "show": [
+      "ec-prom",
+      "ec-helm"
+     ],
+     "link": [
+      {
+       "from": "cl",
+       "to": "ec-prom",
+       "label": "mesures"
+      },
+      {
+       "from": "ec-helm",
+       "to": "cl",
+       "label": "installe"
+      }
+     ],
+     "hud": [
+      {
+       "label": "projets",
+       "value": 4
+      }
+     ],
+     "say": "**Prometheus** mesure chaque pièce ; **Helm** installe une application en un seul paquet."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "show": [
+      "ec-more"
+     ],
+     "hud": [
+      {
+       "label": "projets",
+       "value": "100 et plus"
+      }
+     ],
+     "say": "Et plus d'une centaine d'autres, pensés pour des pièces en conteneurs : c'est le **cloud native**."
+    },
+    {
+     "do": "wait",
+     "ms": 1600
+    },
+    {
+     "do": "scene",
+     "set": [
+      {
+       "id": "ec-kube",
+       "sub": "proposé par les clouds"
+      }
+     ],
+     "hud": [
+      {
+       "label": "standard",
+       "value": "quasiment"
+      }
+     ],
+     "say": "Les grands fournisseurs de cloud le proposent en service géré : c'est **quasiment** le standard de fait."
+    },
+    {
+     "do": "wait",
+     "ms": 3000
+    }
+   ]
+  }
+ ]
+}

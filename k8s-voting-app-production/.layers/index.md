@@ -20,7 +20,7 @@ Il y a moins de commandes toutes faites ici. Chaque exigence donne un objectif e
 
 **Niveau** : débutant, en fin de parcours. Vous avez déjà déployé l'application de vote et ses cinq morceaux, dans [Déployer la voting app complète](https://byte-layers.com/fr/labs/k8s-voting-app), et vous lui avez ouvert une porte d'entrée, dans [Ouvrir une porte d'entrée avec un Ingress](https://byte-layers.com/fr/skills/k8s-ingress). Vous savez créer un namespace et lui adresser une commande avec `-n`, ce qu'enseigne [Ranger et encadrer avec un namespace et un quota](https://byte-layers.com/fr/skills/k8s-namespaces-quotas). La ConfigMap, le Secret et les sondes de santé viennent de [Sortir les réglages de l'image avec une ConfigMap](https://byte-layers.com/fr/skills/k8s-configmap), de [Ranger un mot de passe dans un Secret](https://byte-layers.com/fr/skills/k8s-secret) et de [Dire à Kubernetes si l'application va bien : les sondes](https://byte-layers.com/fr/skills/k8s-probes).
 
-**Ce qu'il faut** : un cluster `layers-k8s` auquel `kubectl` répond, celui du lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), un navigateur, `curl`, et les ports **28670** et **28671** de votre machine libres.
+**Ce qu'il faut** : un cluster `layers-k8s` auquel `kubectl` répond, celui du lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), un navigateur, `curl`, et les ports **28670** et **28671** de votre machine libres.
 
 **Où vivent les fichiers** : dans `~/byte-layers/kubernetes/l7/`. Rien n'est supprimé de ce dossier à la fin.
 

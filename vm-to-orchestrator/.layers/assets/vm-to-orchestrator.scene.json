@@ -1,0 +1,825 @@
+{
+ "format": "bl-scenes/0.3",
+ "id": "vm-to-orchestrator",
+ "title": "De la VM aux conteneurs",
+ "lang": "fr",
+ "kit": "feuillete",
+ "legend": [
+  {
+   "kind": "req",
+   "label": "requête"
+  },
+  {
+   "kind": "read",
+   "label": "téléchargement"
+  }
+ ],
+ "entities": [
+  {
+   "id": "vote",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y",
+   "title": "vote",
+   "sub": "Python",
+   "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
+  },
+  {
+   "id": "vote-2",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y"
+  },
+  {
+   "id": "vote-3",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y"
+  },
+  {
+   "id": "redis",
+   "kind": "store",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    1.0
+   ],
+   "tone": "r",
+   "title": "redis",
+   "detail": "**redis** garde les votes en attente, en mémoire, le temps que le worker les traite."
+  },
+  {
+   "id": "worker",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "v",
+   "title": "worker",
+   "sub": ".NET",
+   "detail": "Le **worker**, écrit en .NET, prend les votes dans redis et les enregistre dans la base de données."
+  },
+  {
+   "id": "db",
+   "kind": "store",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    1.0
+   ],
+   "tone": "b",
+   "title": "db",
+   "sub": "PostgreSQL",
+   "detail": "**db** est la base de données PostgreSQL : elle garde les votes pour de bon."
+  },
+  {
+   "id": "result",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "g",
+   "title": "result",
+   "sub": "Node.js",
+   "detail": "**result** est la page des résultats, écrite en Node.js. Elle lit la base de données."
+  }
+ ],
+ "steps": [
+  {
+   "id": "single-vm",
+   "label": "Une VM",
+   "title": "Tout installer à la main sur une seule VM",
+   "body": [
+    "Les cinq pièces de l'application de vote tournent sur la même machine. Python, .NET, Node.js, PostgreSQL et Redis y sont installés et réglés à la main, en suivant un manuel de déploiement.",
+    "Grossir la machine est facile, jusqu'à une limite. La dupliquer est difficile. Et si elle tombe, tout tombe."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 1
+    },
+    {
+     "label": "déploiement",
+     "value": "à la main"
+    }
+   ],
+   "show": [
+    {
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      2.6,
+      18.6,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux",
+     "sub": "8 vCPU, 16 Go",
+     "detail": "La **VM**, avec tout ce que l'application demande : Python 3.11, .NET, Node 20, PostgreSQL 15, Redis, et les services qui démarrent le tout. Chaque logiciel est installé, réglé et mis à jour à la main."
+    },
+    {
+     "id": "vote",
+     "in": "vm",
+     "at": [
+      0.0,
+      7.2
+     ]
+    },
+    {
+     "id": "redis",
+     "in": "vm",
+     "at": [
+      0.0,
+      3.6
+     ]
+    },
+    {
+     "id": "worker",
+     "in": "vm",
+     "at": [
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "db",
+     "in": "vm",
+     "at": [
+      0.0,
+      -3.6
+     ]
+    },
+    {
+     "id": "result",
+     "in": "vm",
+     "at": [
+      0.0,
+      -7.2
+     ]
+    },
+    {
+     "id": "manual",
+     "kind": "file",
+     "at": [
+      8,
+      -3
+     ],
+     "tone": "n",
+     "title": "Manuel de déploiement",
+     "size": [
+      1.8,
+      1.8,
+      0.4
+     ],
+     "note": "40 pages, 150 commandes",
+     "detail": "Le **manuel de déploiement** : une quarantaine de pages et environ 150 commandes à suivre dans l'ordre pour installer l'application. Les chiffres sont inventés, pas l'ordre de grandeur."
+    }
+   ]
+  },
+  {
+   "id": "two-vms",
+   "label": "Deux VM",
+   "title": "Plusieurs VM, plusieurs systèmes",
+   "body": [
+    "Imaginez un ancien worker écrit en .NET Framework : il impose un Windows Server, donc une seconde VM.",
+    "Il y a maintenant deux systèmes à tenir à jour, deux manuels, deux expertises, et des adresses IP écrites en dur d'une machine à l'autre."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 2
+    },
+    {
+     "label": "systèmes",
+     "value": 2
+    }
+   ],
+   "links": [
+    {
+     "from": "redis",
+     "to": "worker",
+     "label": "10.0.0.12:6379"
+    }
+   ],
+   "show": [
+    {
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      -4.5,
+      1.8,
+      0
+     ],
+     "size": [
+      2.6,
+      7.8,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux",
+     "detail": "La **VM Linux**, avec Python, Redis et leurs services, installés à la main."
+    },
+    {
+     "id": "vote",
+     "in": "vm",
+     "at": [
+      0.0,
+      1.8
+     ]
+    },
+    {
+     "id": "redis",
+     "in": "vm",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "vm-win",
+     "kind": "layer",
+     "at": [
+      4.5,
+      0,
+      0
+     ],
+     "size": [
+      2.6,
+      11.4,
+      0.5
+     ],
+     "tone": "b",
+     "title": "VM Windows Server",
+     "detail": "La **VM Windows Server**, avec .NET Framework, PostgreSQL, Node.js et des services Windows. Un second système à tenir à jour, et une seconde expertise."
+    },
+    {
+     "id": "worker",
+     "in": "vm-win",
+     "at": [
+      0.0,
+      3.6
+     ],
+     "sub": ".NET Framework"
+    },
+    {
+     "id": "db",
+     "in": "vm-win",
+     "at": [
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "result",
+     "in": "vm-win",
+     "at": [
+      0.0,
+      -3.6
+     ]
+    },
+    {
+     "id": "manual",
+     "kind": "file",
+     "at": [
+      -11,
+      -2
+     ],
+     "tone": "n",
+     "title": "Manuel de déploiement",
+     "size": [
+      1.8,
+      1.8,
+      0.4
+     ],
+     "note": "Linux, 25 pages"
+    },
+    {
+     "id": "manual-win",
+     "kind": "file",
+     "at": [
+      11,
+      -2
+     ],
+     "tone": "b",
+     "title": "Manuel de déploiement",
+     "size": [
+      1.8,
+      1.8,
+      0.4
+     ],
+     "note": "Windows, 35 pages"
+    }
+   ]
+  },
+  {
+   "id": "containers",
+   "label": "Conteneurs",
+   "title": "Conteneuriser : la même VM, un seul outil à installer",
+   "body": [
+    "Chaque pièce devient une image, rangée dans un registre. Sur la VM, on n'installe plus qu'un moteur de conteneurs, et `docker compose up` lance le tout.",
+    "On peut même lancer trois copies de vote derrière un reverse proxy. Mais il n'y a toujours qu'une machine : si elle tombe, tout tombe."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 1
+    },
+    {
+     "label": "déploiement",
+     "value": "compose up"
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "registry",
+      "db"
+     ],
+     "label": "pull",
+     "kind": "read",
+     "explain": [
+      "Le moteur télécharge chaque image depuis le registre."
+     ]
+    }
+   ],
+   "show": [
+    {
+     "id": "registry",
+     "kind": "store",
+     "at": [
+      9,
+      -8
+     ],
+     "tone": "v",
+     "title": "Registre",
+     "size": [
+      1.5,
+      1.5,
+      1.0
+     ],
+     "sub": "les images",
+     "detail": "Le **registre d'images** garde les images de l'application. Chaque machine y télécharge ce qu'elle doit lancer."
+    },
+    {
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      4.6,
+      22.2,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux",
+     "detail": "La **VM Linux**. Elle ne porte plus que le moteur de conteneurs."
+    },
+    {
+     "id": "rt",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      4.6,
+      22.2,
+      0.5
+     ],
+     "tone": "v",
+     "title": "Docker + Compose",
+     "sub": "seul outil installé",
+     "detail": "Le **moteur de conteneurs** (*runtime*), ici Docker avec Compose : la seule chose à installer sur la machine. Les logiciels de l'application ne sont plus installés sur le système, ils viennent dans les images.",
+     "in": "vm"
+    },
+    {
+     "id": "proxy",
+     "kind": "node",
+     "tone": "n",
+     "title": "proxy",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "reverse proxy",
+     "detail": "Le **reverse proxy** reçoit les requêtes et les répartit entre les copies de vote. Avec plusieurs copies sur une machine, ce routage est à mettre en place soi-même.",
+     "in": "rt",
+     "at": [
+      -1.0,
+      9.0
+     ]
+    },
+    {
+     "id": "vote",
+     "in": "rt",
+     "at": [
+      -1.0,
+      5.4
+     ],
+     "sub": "3 copies",
+     "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis. Ici, trois copies tournent côte à côte."
+    },
+    {
+     "id": "redis",
+     "in": "rt",
+     "at": [
+      -1.0,
+      1.8
+     ]
+    },
+    {
+     "id": "worker",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "db",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -5.4
+     ]
+    },
+    {
+     "id": "result",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -9.0
+     ]
+    },
+    {
+     "id": "vote-2",
+     "in": "rt",
+     "at": [
+      1.2,
+      6.4
+     ]
+    },
+    {
+     "id": "vote-3",
+     "in": "rt",
+     "at": [
+      1.2,
+      4.4
+     ]
+    },
+    {
+     "id": "compose",
+     "kind": "file",
+     "at": [
+      9,
+      3
+     ],
+     "tone": "n",
+     "title": "compose.yml",
+     "size": [
+      1.8,
+      1.8,
+      0.4
+     ],
+     "note": "docker compose up",
+     "detail": "Le fichier **compose.yml** décrit toute l'application. Le même paquet sert partout : un nouveau système, une VM de plus, un environnement de démonstration. On installe le moteur, et c'est tout."
+    }
+   ]
+  },
+  {
+   "id": "containers-two-hosts",
+   "label": "Deux hôtes",
+   "title": "Conteneuriser en gardant les deux machines",
+   "body": [
+    "Les deux mêmes machines, avec la même répartition, chacune avec son moteur de conteneurs et son reverse proxy.",
+    "Il faut maintenant deux fichiers Compose, deux proxies à configurer et un réseau branché à la main entre les machines."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 2
+    },
+    {
+     "label": "proxies",
+     "value": 2
+    }
+   ],
+   "show": [
+    {
+     "id": "vm",
+     "kind": "layer",
+     "at": [
+      -6.5,
+      1.8,
+      0
+     ],
+     "size": [
+      4.6,
+      11.4,
+      0.5
+     ],
+     "tone": "n",
+     "title": "VM Linux",
+     "detail": "La **VM Linux**, qui ne porte plus que le moteur de conteneurs."
+    },
+    {
+     "id": "rt",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      4.6,
+      11.4,
+      0.5
+     ],
+     "tone": "v",
+     "title": "Docker + Compose",
+     "detail": "Le **moteur de conteneurs** (*runtime*), ici Docker avec Compose : la seule chose à installer sur la machine. Les logiciels de l'application ne sont plus installés sur le système, ils viennent dans les images.",
+     "in": "vm"
+    },
+    {
+     "id": "proxy",
+     "kind": "node",
+     "tone": "n",
+     "title": "proxy",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "un par machine",
+     "detail": "Un **reverse proxy** sur chaque machine : l'un répartit les requêtes entre les copies de vote, l'autre sert result. Deux configurations à écrire et à tenir à jour.",
+     "in": "rt",
+     "at": [
+      -1.0,
+      3.6
+     ]
+    },
+    {
+     "id": "proxy-win",
+     "kind": "node",
+     "tone": "n",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "in": "rt-win",
+     "at": [
+      0.0,
+      -5.4
+     ]
+    },
+    {
+     "id": "vote",
+     "in": "rt",
+     "at": [
+      -1.0,
+      0.0
+     ],
+     "sub": "3 copies",
+     "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis. Ici, trois copies tournent côte à côte."
+    },
+    {
+     "id": "redis",
+     "in": "rt",
+     "at": [
+      -1.0,
+      -3.6
+     ]
+    },
+    {
+     "id": "vote-2",
+     "in": "rt",
+     "at": [
+      1.2,
+      1.0
+     ]
+    },
+    {
+     "id": "vote-3",
+     "in": "rt",
+     "at": [
+      1.2,
+      -1.0
+     ]
+    },
+    {
+     "id": "vm-win",
+     "kind": "layer",
+     "at": [
+      6.0,
+      0.5,
+      0
+     ],
+     "size": [
+      2.6,
+      15.0,
+      0.5
+     ],
+     "tone": "b",
+     "title": "VM Windows Server",
+     "detail": "La **VM Windows Server**, avec son moteur de conteneurs et son propre reverse proxy, devant result."
+    },
+    {
+     "id": "rt-win",
+     "kind": "layer",
+     "at": [
+      0,
+      0,
+      0
+     ],
+     "size": [
+      2.6,
+      15.0,
+      0.5
+     ],
+     "tone": "v",
+     "title": "conteneurs Windows",
+     "in": "vm-win",
+     "detail": "Le **moteur de conteneurs** de la VM Windows."
+    },
+    {
+     "id": "worker",
+     "in": "rt-win",
+     "at": [
+      0.0,
+      5.4
+     ],
+     "sub": ".NET Framework"
+    },
+    {
+     "id": "db",
+     "in": "rt-win",
+     "at": [
+      0.0,
+      1.8
+     ]
+    },
+    {
+     "id": "result",
+     "in": "rt-win",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    }
+   ],
+   "script": [
+    {
+     "do": "wait",
+     "ms": 2600
+    },
+    {
+     "do": "scene",
+     "show": [
+      {
+       "id": "compose",
+       "kind": "file",
+       "at": [
+        -14,
+        -1
+       ],
+       "tone": "n",
+       "title": "compose.yml",
+       "size": [
+        1.8,
+        1.8,
+        0.4
+       ],
+       "note": ".env, secrets",
+       "detail": "Chaque machine a son **fichier Compose** et son `.env`. Le mot de passe de db ne sert que sur la VM Windows (db, worker, result), mais l'adresse de redis, le réseau commun et l'accès au registre d'images sont à tenir à jour sur les deux."
+      },
+      {
+       "id": "compose-win",
+       "kind": "file",
+       "at": [
+        12.5,
+        -1.5
+       ],
+       "tone": "b",
+       "title": "compose.yml",
+       "size": [
+        1.8,
+        1.8,
+        0.4
+       ],
+       "note": ".env, secrets, en double"
+      }
+     ],
+     "hud": [
+      {
+       "label": "fichiers Compose",
+       "value": 2
+      }
+     ],
+     "say": "Deux fichiers Compose, deux `.env` : l'adresse de redis, le réseau, l'accès au registre sont à tenir sur les deux."
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "scene",
+     "link": [
+      {
+       "from": "redis",
+       "to": "worker"
+      }
+     ],
+     "hud": [
+      {
+       "label": "réseau",
+       "value": "à la main",
+       "tone": "r"
+      }
+     ],
+     "say": "Le worker lit redis sur l'autre machine : le réseau se branche à la main, overlay ou ports ouverts."
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "send",
+     "path": [
+      "redis",
+      "worker",
+      "db"
+     ],
+     "label": "vote",
+     "tone": "y",
+     "explain": [
+      "Le worker lit le vote dans redis, sur la VM Linux.",
+      "Puis il l'écrit dans db, sur sa propre machine."
+     ]
+    },
+    {
+     "do": "wait",
+     "ms": 2600
+    }
+   ]
+  }
+ ]
+}

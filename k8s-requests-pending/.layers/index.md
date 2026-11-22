@@ -18,7 +18,7 @@ Un cluster n'a pas des ressources infinies. Vous allez voir où Kubernetes place
 
 **Niveau** : débutant. Vous savez écrire et appliquer le fichier d'un Deployment, et vous connaissez les notions de pod, de ReplicaSet et de réconciliation : c'est le cours [Déployer une application avec un Deployment](https://byte-layers.com/fr/skills/k8s-deployment). Le fichier de départ demande 3 exemplaires de l'application, ses **réplicas**, par sa ligne `replicas: 3` ; vous n'avez rien d'autre à en savoir ici.
 
-**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install), et un éditeur de texte. Aucun port de votre machine n'est utilisé.
+**Ce qu'il faut** : un cluster qui répond à `kubectl get nodes`, celui du lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install), et un éditeur de texte. Aucun port de votre machine n'est utilisé.
 
 **Vos fichiers** vivent dans `~/byte-layers/kubernetes/l2`. Rien n'est supprimé à la fin : le Deployment `vote` reste dans le cluster avec **3 réplicas, chacun réservant un dixième de processeur (`100m`) et 64 Mi de mémoire**, et son fichier `vote.deploy.yml` reste dans ce dossier. C'est de cet état que partent les cours suivants ; le fichier final se trouve aussi dans [`solution/vote.deploy.yml`](../solution/vote.deploy.yml).
 

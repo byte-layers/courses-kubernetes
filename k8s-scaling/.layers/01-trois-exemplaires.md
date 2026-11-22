@@ -69,7 +69,7 @@ Vérifiez enfin que le Deployment est là :
 kubectl get deployments
 ```
 
-Le terminal doit afficher `vote` avec `READY 1/1`. Si la commande échoue avec `connection refused`, votre cluster est arrêté : relancez-le comme dans le lab [Démarrer son cluster Kubernetes](https://byte-layers.com/fr/labs/k8s-install).
+Le terminal doit afficher `vote` avec `READY 1/1`. Si la commande échoue avec `connection refused`, votre cluster est arrêté : relancez-le comme dans le lab [Démarrer son cluster Kubernetes avec minikube](https://byte-layers.com/fr/labs/k8s-minikube-install).
 
 ```text
 NAME   READY   UP-TO-DATE   AVAILABLE   AGE

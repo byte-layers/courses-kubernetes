@@ -1,0 +1,495 @@
+{
+ "format": "bl-scenes/0.2",
+ "id": "k8s-on-prem-cluster",
+ "title": "Un cluster sur site",
+ "lang": "fr",
+ "kit": "feuillete",
+ "legend": [
+  {
+   "kind": "req",
+   "label": "requête"
+  },
+  {
+   "kind": "read",
+   "label": "téléchargement"
+  }
+ ],
+ "entities": [
+  {
+   "id": "users",
+   "kind": "actor",
+   "at": [
+    0.0,
+    8.0
+   ],
+   "label": "utilisateurs"
+  },
+  {
+   "id": "vote",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y",
+   "title": "vote",
+   "sub": "Python",
+   "detail": "**vote** est la page où l'on vote, écrite en Python. Elle range chaque vote dans redis."
+  },
+  {
+   "id": "vote-2",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y"
+  },
+  {
+   "id": "vote-3",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "y"
+  },
+  {
+   "id": "redis",
+   "kind": "store",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    1.0
+   ],
+   "tone": "r",
+   "title": "redis",
+   "detail": "**redis** garde les votes en attente, en mémoire, le temps que le worker les traite."
+  },
+  {
+   "id": "worker",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "v",
+   "title": "worker",
+   "sub": ".NET",
+   "detail": "Le **worker**, écrit en .NET, prend les votes dans redis et les enregistre dans la base de données."
+  },
+  {
+   "id": "db",
+   "kind": "store",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    1.0
+   ],
+   "tone": "b",
+   "title": "db",
+   "sub": "PostgreSQL",
+   "detail": "**db** est la base de données PostgreSQL : elle garde les votes pour de bon."
+  },
+  {
+   "id": "result",
+   "kind": "node",
+   "at": [
+    0,
+    0
+   ],
+   "size": [
+    1.5,
+    1.5,
+    0.9
+   ],
+   "tone": "g",
+   "title": "result",
+   "sub": "Node.js",
+   "detail": "**result** est la page des résultats, écrite en Node.js. Elle lit la base de données."
+  }
+ ],
+ "steps": [
+  {
+   "id": "on-prem",
+   "label": "Sur site",
+   "title": "Un cluster sur site, avec Rancher et RKE2",
+   "body": [
+    "Sur ses propres machines, avec Rancher et la distribution RKE2 : trois nœuds pour le control plane, trois nœuds Linux où l'ordonnanceur répartit les pods, et un nœud Windows pour le worker.",
+    "Autour : une porte d'entrée, du stockage, des sauvegardes, un registre interne. Chaque pièce est une machine ou un logiciel que votre équipe installe et tient à jour."
+   ],
+   "labels": "left",
+   "hud": [
+    {
+     "label": "machines",
+     "value": 7
+    },
+    {
+     "label": "haute dispo",
+     "value": "oui"
+    }
+   ],
+   "links": [
+    {
+     "from": "rancher",
+     "to": "cp-1",
+     "label": "gère",
+     "dashed": true
+    }
+   ],
+   "flows": [
+    {
+     "path": [
+      "users",
+      "ingress",
+      "vote"
+     ],
+     "label": "vote",
+     "explain": [
+      "La requête arrive sur l'Ingress, la porte d'entrée du cluster.",
+      "Elle est confiée à l'un des trois pods vote, chacun sur son nœud."
+     ]
+    }
+   ],
+   "show": [
+    {
+     "id": "rancher",
+     "kind": "node",
+     "at": [
+      -15.5,
+      2.5
+     ],
+     "tone": "n",
+     "title": "Rancher",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "gère le cluster",
+     "detail": "**Rancher** (open source, édité par SUSE) sert à créer et à gérer un ou plusieurs clusters. **RKE2** est la distribution de Kubernetes installée ici. D'autres chemins existent : un cloud managé, OpenShift, Talos."
+    },
+    {
+     "id": "cpn-1",
+     "kind": "layer",
+     "at": [
+      -11.0,
+      -2.0,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "v"
+    },
+    {
+     "id": "cp-1",
+     "kind": "node",
+     "in": "cpn-1",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "tone": "v",
+     "size": [
+      1.3,
+      1.3,
+      0.8
+     ],
+     "title": "API, etcd…"
+    },
+    {
+     "id": "cpn-2",
+     "kind": "layer",
+     "at": [
+      -6.5,
+      -6.5,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "v"
+    },
+    {
+     "id": "cp-2",
+     "kind": "node",
+     "in": "cpn-2",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "tone": "v",
+     "size": [
+      1.3,
+      1.3,
+      0.8
+     ]
+    },
+    {
+     "id": "cpn-3",
+     "kind": "layer",
+     "at": [
+      -2.0,
+      -11.0,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "v",
+     "title": "control plane",
+     "sub": "3 nœuds",
+     "detail": "Les trois nœuds du **control plane** : l'API, l'ordonnanceur, la base etcd. À trois, le cluster continue de fonctionner si l'un d'eux tombe. Le control plane est toujours sous Linux."
+    },
+    {
+     "id": "cp-3",
+     "kind": "node",
+     "in": "cpn-3",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "tone": "v",
+     "size": [
+      1.3,
+      1.3,
+      0.8
+     ]
+    },
+    {
+     "id": "n1",
+     "kind": "layer",
+     "at": [
+      -2.25,
+      2.25,
+      0
+     ],
+     "size": [
+      2.6,
+      7.8,
+      0.5
+     ],
+     "tone": "n"
+    },
+    {
+     "id": "vote",
+     "in": "n1",
+     "at": [
+      0.0,
+      1.8
+     ],
+     "sub": "3 pods"
+    },
+    {
+     "id": "redis",
+     "in": "n1",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "n2",
+     "kind": "layer",
+     "at": [
+      2.25,
+      -2.25,
+      0
+     ],
+     "size": [
+      2.6,
+      7.8,
+      0.5
+     ],
+     "tone": "n"
+    },
+    {
+     "id": "vote-2",
+     "in": "n2",
+     "at": [
+      0.0,
+      1.8
+     ]
+    },
+    {
+     "id": "result",
+     "in": "n2",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "n3",
+     "kind": "layer",
+     "at": [
+      6.75,
+      -6.75,
+      0
+     ],
+     "size": [
+      2.6,
+      7.8,
+      0.5
+     ],
+     "tone": "n",
+     "title": "nœud Linux",
+     "sub": "3 nœuds",
+     "detail": "Trois **nœuds Linux** : l'ordonnanceur y répartit les pods. Les trois pods vote sont sur trois nœuds différents : si l'un tombe, les deux autres répondent."
+    },
+    {
+     "id": "vote-3",
+     "in": "n3",
+     "at": [
+      0.0,
+      1.8
+     ]
+    },
+    {
+     "id": "db",
+     "in": "n3",
+     "at": [
+      0.0,
+      -1.8
+     ]
+    },
+    {
+     "id": "n-win",
+     "kind": "layer",
+     "at": [
+      -8.25,
+      8.25,
+      0
+     ],
+     "size": [
+      3.0,
+      3.0,
+      0.5
+     ],
+     "tone": "b",
+     "title": "nœud Windows",
+     "detail": "Le **nœud Windows** ne fait que du travail : il porte le worker, qu'on lui adresse par un `nodeSelector` (`kubernetes.io/os: windows`)."
+    },
+    {
+     "id": "worker",
+     "in": "n-win",
+     "at": [
+      0,
+      0
+     ],
+     "sub": ".NET Framework"
+    },
+    {
+     "id": "ingress",
+     "kind": "node",
+     "at": [
+      -1.25,
+      12.25
+     ],
+     "tone": "r",
+     "title": "Ingress + LB",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "l'entrée",
+     "detail": "La **porte d'entrée** : un Ingress, derrière un répartiteur de charge (*load balancer*), fait entrer les requêtes dans le cluster."
+    },
+    {
+     "id": "storage",
+     "kind": "store",
+     "at": [
+      3.25,
+      7.75
+     ],
+     "tone": "b",
+     "title": "Stockage",
+     "size": [
+      1.5,
+      1.5,
+      1.0
+     ],
+     "sub": "volumes",
+     "detail": "Le **stockage** : où vivent les volumes des données ? Dans le cluster, ou dans une base de données managée, en dehors ?"
+    },
+    {
+     "id": "backup",
+     "kind": "node",
+     "at": [
+      7.75,
+      3.25
+     ],
+     "tone": "g",
+     "title": "Velero",
+     "size": [
+      1.5,
+      1.5,
+      0.9
+     ],
+     "sub": "sauvegardes",
+     "detail": "Les **sauvegardes** du cluster, ici avec Velero. Une sauvegarde ne vaut que si l'on a déjà essayé de la restaurer."
+    },
+    {
+     "id": "harbor",
+     "kind": "store",
+     "at": [
+      12.25,
+      -1.25
+     ],
+     "tone": "v",
+     "title": "Harbor",
+     "size": [
+      1.5,
+      1.5,
+      1.0
+     ],
+     "sub": "registre",
+     "detail": "Un **registre interne**, ici Harbor. Autour de lui s'ajoutent la supervision, la sécurité et les droits d'accès."
+    },
+    {
+     "id": "users",
+     "at": [
+      -4.5,
+      15.5
+     ]
+    }
+   ]
+  }
+ ]
+}
